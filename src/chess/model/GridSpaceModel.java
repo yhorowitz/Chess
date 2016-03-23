@@ -20,6 +20,10 @@ public class GridSpaceModel {
         this.piece = piece;
     }
 
+    public Vector getPosition() {
+        return this.position;
+    }
+
     public boolean isOccupied() {
         return false;
     }
