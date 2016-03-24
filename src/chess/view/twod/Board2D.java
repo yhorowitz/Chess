@@ -13,6 +13,15 @@ import javafx.stage.Stage;
 public class Board2D extends Application {
 
     private Scene scene = null;
+    private GridSpace2D[][] grid;
+
+    public Board2D () {
+        Application.launch();
+    }
+
+    public GridSpace2D[][] getGridGUI() {
+        return this.grid;
+    }
 
     public Scene getScene () {
         return this.scene;
@@ -33,7 +42,7 @@ public class Board2D extends Application {
         Scene scene = new Scene(boardPane, 875, 875);
         scene.getStylesheets().add(Board2D.class.getResource("Board2D.css").toExternalForm());
 
-        GridSpace2D[][] grid = new GridSpace2D[8][8];
+        grid = new GridSpace2D[8][8];
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 grid[j][i] = new GridSpace2D(new Vector(j, i));

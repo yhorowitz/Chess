@@ -8,6 +8,7 @@ public class GridSpace {
     private Vector position;
     private ChessPiece piece;
     private boolean highlighted;
+    private boolean selected;
 
     public GridSpace(Vector position) {
         this.position = position;
@@ -35,5 +36,14 @@ public class GridSpace {
 
     public boolean isHighlighted() {
         return this.highlighted;
+    }
+
+
+    public void select(boolean select) {
+        this.selected = select;
+    }
+
+    public boolean isSelected() {
+        return this.selected;
     }
 }
