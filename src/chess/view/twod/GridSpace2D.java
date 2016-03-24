@@ -1,7 +1,6 @@
 package chess.view.twod;
 
-import chess.model.Color;
-import chess.model.GridSpaceModel;
+import chess.model.GridSpace;
 import chess.model.pieces.*;
 import javafx.scene.control.Button;
 
@@ -11,12 +10,11 @@ import javafx.scene.image.ImageView;
 
 public class GridSpace2D extends Button {
 
-    private GridSpaceModel info;
-    private boolean highlighted = false;
+    private GridSpace info;
 
     GridSpace2D(Vector vector) {
         super();
-        this.info = new GridSpaceModel(vector);
+        this.info = new GridSpace(vector);
         this.getStyleClass().add("boardSpace");
     }
 
@@ -30,18 +28,12 @@ public class GridSpace2D extends Button {
     }
 
     public void highlight(boolean highlight) {
-        if (highlight) {
-            this.highlighted = true;
-            this.getStyleClass().add("highlight");
-        }
-        else {
-            this.highlighted = false;
-            this.getStyleClass().remove("highlight");
-        }
-    }
+        this.info.highlight(highlight);
 
-    public boolean isHighlighted() {
-        return this.highlighted;
+        if (highlight)
+            this.getStyleClass().add("highlight");
+        else
+            this.getStyleClass().remove("highlight");
     }
 
     public void setPieceImage() {

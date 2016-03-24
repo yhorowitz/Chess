@@ -10,7 +10,7 @@ import java.util.List;
 public class ChessGame {
     final int SIZE = 8;
 
-    private GridSpaceModel[][] board = new GridSpaceModel[8][8];
+    private GridSpace[][] board = new GridSpace[8][8];
     private Color currentTurn = Color.WHITE;
 
     public ChessGame() {
@@ -28,7 +28,7 @@ public class ChessGame {
         //set up all spaces on the game
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                board[i][j] = new GridSpaceModel(new Vector(i, j));
+                board[i][j] = new GridSpace(new Vector(i, j));
             }
         }
 
@@ -68,7 +68,7 @@ public class ChessGame {
 
     }
 
-    public GridSpaceModel[][] getBoard() {
+    public GridSpace[][] getBoard() {
         return this.board;
     }
 

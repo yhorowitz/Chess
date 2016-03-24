@@ -3,12 +3,13 @@ package chess.model;
 import chess.model.pieces.ChessPiece;
 
 
-public class GridSpaceModel {
+public class GridSpace {
 
     private Vector position;
     private ChessPiece piece;
+    private boolean highlighted;
 
-    public GridSpaceModel(Vector position) {
+    public GridSpace(Vector position) {
         this.position = position;
     }
 
@@ -26,5 +27,13 @@ public class GridSpaceModel {
 
     public boolean isOccupied() {
         return false;
+    }
+
+    public void highlight(boolean highlight) {
+        this.highlighted = highlight;
+    }
+
+    public boolean isHighlighted() {
+        return this.highlighted;
     }
 }
