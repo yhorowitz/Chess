@@ -34,29 +34,29 @@ public class ChessGame {
 
         //add black pieces to the game
         board[0][0].setPiece(new Rook(Color.BLACK, board[0][0].getPosition()));
-        board[0][1].setPiece(new Knight(Color.BLACK, board[0][1].getPosition()));
-        board[0][2].setPiece(new Bishop(Color.BLACK, board[0][2].getPosition()));
-        board[0][3].setPiece(new King(Color.BLACK, board[0][3].getPosition()));
-        board[0][4].setPiece(new Queen(Color.BLACK, board[0][4].getPosition()));
-        board[0][5].setPiece(new Bishop(Color.BLACK, board[0][5].getPosition()));
-        board[0][6].setPiece(new Knight(Color.BLACK, board[0][6].getPosition()));
-        board[0][7].setPiece(new Rook(Color.BLACK, board[0][17].getPosition()));
-        for (int i = 0; i < SIZE; i++) {
-            board[1][i].setPiece(new Pawn(Color.BLACK, board[1][i].getPosition()));
+        board[1][0].setPiece(new Knight(Color.BLACK, board[1][0].getPosition()));
+        board[2][0].setPiece(new Bishop(Color.BLACK, board[2][0].getPosition()));
+        board[3][0].setPiece(new Queen(Color.BLACK, board[3][0].getPosition()));
+        board[4][0].setPiece(new King(Color.BLACK, board[4][0].getPosition()));
+        board[5][0].setPiece(new Bishop(Color.BLACK, board[5][0].getPosition()));
+        board[6][0].setPiece(new Knight(Color.BLACK, board[6][0].getPosition()));
+        board[7][0].setPiece(new Rook(Color.BLACK, board[7][0].getPosition()));
+        for (int i = 0; i < 8; i++) {
+            board[i][1].setPiece(new Pawn(Color.BLACK, board[i][1].getPosition()));
         }
 
         //add white pieces to the game
-        for (int i = 0; i < SIZE; i++) {
-            board[6][i].setPiece(new Pawn(Color.WHITE, board[6][i].getPosition()));
+        for (int i = 0; i < 8; i++) {
+            board[i][6].setPiece(new Pawn(Color.WHITE, board[i][6].getPosition()));
         }
-        board[7][0].setPiece(new Rook(Color.BLACK, board[0][0].getPosition()));
-        board[7][1].setPiece(new Knight(Color.BLACK, board[0][1].getPosition()));
-        board[7][2].setPiece(new Bishop(Color.BLACK, board[0][2].getPosition()));
-        board[7][3].setPiece(new King(Color.BLACK, board[0][3].getPosition()));
-        board[7][4].setPiece(new Queen(Color.BLACK, board[0][4].getPosition()));
-        board[7][5].setPiece(new Bishop(Color.BLACK, board[0][5].getPosition()));
-        board[7][6].setPiece(new Knight(Color.BLACK, board[0][6].getPosition()));
-        board[7][7].setPiece(new Rook(Color.BLACK, board[0][7].getPosition()));
+        board[0][7].setPiece(new Rook(Color.WHITE, board[0][7].getPosition()));
+        board[1][7].setPiece(new Knight(Color.WHITE, board[1][7].getPosition()));
+        board[2][7].setPiece(new Bishop(Color.WHITE, board[2][7].getPosition()));
+        board[3][7].setPiece(new Queen(Color.WHITE, board[3][7].getPosition()));
+        board[4][7].setPiece(new King(Color.WHITE, board[4][7].getPosition()));
+        board[5][7].setPiece(new Bishop(Color.WHITE, board[5][7].getPosition()));
+        board[6][7].setPiece(new Knight(Color.WHITE, board[6][7].getPosition()));
+        board[7][7].setPiece(new Rook(Color.WHITE, board[7][7].getPosition()));
 
     }
 

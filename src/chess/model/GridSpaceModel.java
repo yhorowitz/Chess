@@ -8,7 +8,7 @@ public class GridSpaceModel {
     private Vector position;
     private ChessPiece piece;
 
-    GridSpaceModel(Vector position) {
+    public GridSpaceModel(Vector position) {
         this.position = position;
     }
 

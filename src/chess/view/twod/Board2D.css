@@ -1,0 +1,27 @@
+.root {
+    -fx-background-color: #614126;
+    -fx-border-color: #614126;
+    -fx-border-width: 25;
+}
+
+.boardSpace {
+    -fx-pref-width: 100;
+    -fx-pref-height: 100;
+
+    -fx-border-width: 3;
+
+    -fx-background-radius: 0;
+    -fx-background-position: center;
+}
+
+.highlight {
+    -fx-border-color: #FFFF00;
+}
+
+.lightBrown {
+    -fx-background-color: #DB9356;
+}
+
+.grey {
+    -fx-background-color: #D3D3D3;
+}
