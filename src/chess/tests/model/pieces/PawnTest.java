@@ -7,7 +7,6 @@ import chess.model.pieces.Pawn;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,15 +17,17 @@ import static org.junit.Assert.*;
  *      It can only move forward (based on color)
  *      Its first move can move 2 spaces
  *      Its first move can only move 1 space if it is blocked
- *
+ *      When a piece is moved it is moved to the right place
+ *      A piece can be captured if it is the opposing color and in the right location
+ *      A piece can not be captured if it is of the same color
  *
  * Still needs testing for:
- *      When a piece is moved it is moved to the right place
  *      Moving in the right direction depending on what color it is
  *      After its first move it can only move 1 space
  *      Reaching the edge of the board allows it to change into another piece
  *      En Passant (special chess move)
  *      What happens when the piece moves to an area it is not allowed to move to
+ *      Check legal move when at the edge of the board (pawns can move sideways during capture)
  *
  */
 public class PawnTest {
@@ -72,7 +73,7 @@ public class PawnTest {
         game.getBoardSpace(blockingPosition).setPiece(blockingPiece);
 
         List<Vector> legalMoves = pawn.getLegalMoves(game);
-        System.out.println(legalMoves.size());
+
         List<Vector> whatResultsShouldBe = new ArrayList<>();
         whatResultsShouldBe.add(new Vector(column, row + 1));
 
@@ -95,4 +96,49 @@ public class PawnTest {
         assertNull(game.getBoardSpace(startPos).getPiece());
     }
 
+
+
+    @Test
+    public void pawnCanCaptureIfPieceIsInTheRightPlace() {
+        if (game.getCurrentTurn() != Color.BLACK)
+            game.changeTurns();
+
+        Vector startPos = new Vector(3, 1);
+        Pawn pawn = new Pawn(Color.BLACK, startPos);
+        game.getBoardSpace(startPos).setPiece(pawn);
+
+        Vector capturePiecePos = new Vector(2,2);
+        Pawn capturePiece = new Pawn(Color.WHITE, capturePiecePos);
+        game.getBoardSpace(capturePiecePos).setPiece(capturePiece);
+
+        Vector capturePiecePos2 = new Vector(4,2);
+        Pawn capturePiece2 = new Pawn(Color.WHITE, capturePiecePos);
+        game.getBoardSpace(capturePiecePos2).setPiece(capturePiece2);
+
+        List<Vector> legalMoves = pawn.getLegalMoves(game);
+        assertTrue(legalMoves.contains(capturePiecePos));
+        assertTrue(legalMoves.contains(capturePiecePos2));
+    }
+
+    @Test
+    public void pawnCantCaptureAPieceOfItsOwnColor() {
+        if (game.getCurrentTurn() != Color.BLACK)
+            game.changeTurns();
+
+        Vector startPos = new Vector(3, 1);
+        Pawn pawn = new Pawn(Color.BLACK, startPos);
+        game.getBoardSpace(startPos).setPiece(pawn);
+
+        Vector capturePiecePos = new Vector(2,2);
+        Pawn capturePiece = new Pawn(Color.BLACK, capturePiecePos);
+        game.getBoardSpace(capturePiecePos).setPiece(capturePiece);
+
+        Vector capturePiecePos2 = new Vector(4,2);
+        Pawn capturePiece2 = new Pawn(Color.BLACK, capturePiecePos);
+        game.getBoardSpace(capturePiecePos2).setPiece(capturePiece2);
+
+        List<Vector> legalMoves = pawn.getLegalMoves(game);
+        assertFalse(legalMoves.contains(capturePiecePos));
+        assertFalse(legalMoves.contains(capturePiecePos2));
+    }
 }
