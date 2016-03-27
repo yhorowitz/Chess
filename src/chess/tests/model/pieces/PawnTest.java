@@ -21,10 +21,12 @@ import static org.junit.Assert.*;
  *
  *
  * Still needs testing for:
+ *      When a piece is moved it is moved to the right place
  *      Moving in the right direction depending on what color it is
  *      After its first move it can only move 1 space
  *      Reaching the edge of the board allows it to change into another piece
  *      En Passant (special chess move)
+ *      What happens when the piece moves to an area it is not allowed to move to
  *
  */
 public class PawnTest {
@@ -77,6 +79,18 @@ public class PawnTest {
         assertTrue(legalMoves.size() == whatResultsShouldBe.size());
         assertTrue(whatResultsShouldBe.containsAll(legalMoves)
                 && legalMoves.containsAll(whatResultsShouldBe));
+    }
+
+    @Test
+    public void pieceMovesToTheCorrectLocation() {
+        Vector startPos = new Vector(1, 3);
+        Pawn pawn = new Pawn(Color.BLACK, startPos);
+        game.getBoardSpace(startPos).setPiece(pawn);
+
+        List<Vector> legalMoves = pawn.getLegalMoves(game);
+        Vector endPos = legalMoves.get(0);
+        game.makeMove(pawn, startPos, endPos);
+        assertSame(game.getBoardSpace(endPos).getPiece(), pawn);
     }
 
 }
