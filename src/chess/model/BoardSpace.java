@@ -3,14 +3,14 @@ package chess.model;
 import chess.model.pieces.ChessPiece;
 
 
-public class GridSpace {
+public class BoardSpace {
 
     private Vector position;
     private ChessPiece piece;
     private boolean highlighted;
     private boolean selected;
 
-    public GridSpace(Vector position) {
+    public BoardSpace(Vector position) {
         this.position = position;
     }
 

@@ -1,6 +1,6 @@
 package chess.view.twod;
 
-import chess.model.GridSpace;
+import chess.model.BoardSpace;
 import chess.model.pieces.*;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -11,11 +11,11 @@ import javafx.scene.image.ImageView;
 
 public class BoardPosition extends Button {
 
-    private GridSpace info;
+    private BoardSpace info;
 
     BoardPosition(Vector vector) {
         super();
-        this.info = new GridSpace(vector);
+        this.info = new BoardSpace(vector);
         this.getStyleClass().add("boardSpace");
     }
 

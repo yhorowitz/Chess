@@ -2,7 +2,7 @@ package chess.controller.twod;
 
 
 import chess.model.ChessGame;
-import chess.model.GridSpace;
+import chess.model.BoardSpace;
 import chess.model.Vector;
 import chess.view.twod.Board;
 import chess.view.twod.BoardPosition;
@@ -95,7 +95,7 @@ public class BoardController {
 
         //update model
         for (int i = 0; i < game.getBoard().length; i++) {
-            for (GridSpace position : game.getBoard()[i]) {
+            for (BoardSpace position : game.getBoard()[i]) {
                 position.select(false);
             }
         }
@@ -111,7 +111,7 @@ public class BoardController {
 
         //update model
         for (int i = 0; i < game.getBoard().length; i++) {
-            for (GridSpace position : game.getBoard()[i]) {
+            for (BoardSpace position : game.getBoard()[i]) {
                 position.highlight(false);
             }
         }
