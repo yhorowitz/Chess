@@ -14,23 +14,28 @@ public class ChessGame {
     private Color currentTurn = Color.WHITE;
 
     public ChessGame() {
+        createBoard();
         setUpNewGame();
     }
 
     public ChessGame(boolean setUpPieces) {
+        createBoard();
+
         if (setUpPieces) {
             setUpNewGame();
         }
     }
 
-    private void setUpNewGame() {
-
+    private void createBoard() {
         //set up all spaces on the game
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 board[i][j] = new BoardSpace(new Vector(i, j));
             }
         }
+    }
+
+    private void setUpNewGame() {
 
         //add black pieces to the game
         board[0][0].setPiece(new Rook(Color.BLACK, board[0][0].getPosition()));
@@ -70,6 +75,13 @@ public class ChessGame {
 
     public BoardSpace[][] getBoard() {
         return this.board;
+    }
+
+    public BoardSpace getBoardSpace(Vector vector) {
+        int row = vector.getY();
+        int column = vector.getX();
+
+        return board[column][row];
     }
 
     /**

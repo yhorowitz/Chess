@@ -30,6 +30,14 @@ public abstract class ChessPiece {
         this.currentPosition = currentPosition;
     }
 
+    public void move(Vector vector) {
+        this.setCurrentPosition(vector);
+    }
+
+    public boolean isLegalMove(Vector vector) {
+        return false;
+    }
+
     abstract List<Vector> getLegalMoves(ChessGame game);
 
 }

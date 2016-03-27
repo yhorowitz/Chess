@@ -4,11 +4,13 @@ import chess.model.ChessGame;
 import chess.model.Color;
 import chess.model.Vector;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class Pawn extends ChessPiece  {
 
+    private boolean moved = false;
 
     public Pawn(Color color) {
         this.setColor(color);
@@ -19,8 +21,37 @@ public class Pawn extends ChessPiece  {
         this.setCurrentPosition(position);
     }
 
+    public boolean hasMoved() {
+        return moved;
+    }
+
+    public void move(Vector vector) {
+        super.move(vector);
+        this.moved = true;
+    }
+
     @Override
-    List<Vector> getLegalMoves(ChessGame game) {
-        return null;
+    public List<Vector> getLegalMoves(ChessGame game) {
+        //used to determine which direction the pawn can move based on its color
+        int direction = this.getColor() == Color.BLACK ? 1 : -1;
+        //how many spaces forward it can move based on its color
+        int spacesCanMove = hasMoved() ? 1 : 2;
+
+        int currentRow = this.getCurrentPosition().getY();
+        int currentColumn = this.getCurrentPosition().getX();
+
+        List<Vector> legalMoves = new ArrayList<>();
+
+        for (int i = 1; i <= spacesCanMove; i++) {
+            int newRow = currentRow + (i * direction);
+            Vector spaceBeingChecked = new Vector(currentColumn, newRow);
+
+            if (!game.getBoardSpace(spaceBeingChecked).isOccupied())
+                legalMoves.add(spaceBeingChecked);
+            else
+                break;
+        }
+
+        return legalMoves;
     }
 }
