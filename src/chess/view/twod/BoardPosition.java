@@ -46,7 +46,6 @@ public class BoardPosition extends Button {
         }
         else{
             this.getStyleClass().remove("selected");
-            this.getStyleClass().add("highlight");
         }
     }
 
