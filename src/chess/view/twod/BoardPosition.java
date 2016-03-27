@@ -9,11 +9,11 @@ import chess.model.Vector;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class GridSpace2D extends Button {
+public class BoardPosition extends Button {
 
     private GridSpace info;
 
-    GridSpace2D(Vector vector) {
+    BoardPosition(Vector vector) {
         super();
         this.info = new GridSpace(vector);
         this.getStyleClass().add("boardSpace");

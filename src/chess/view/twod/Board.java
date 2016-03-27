@@ -4,52 +4,62 @@ import chess.model.pieces.*;
 import chess.model.Color;
 import chess.model.Vector;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-public class Board2D extends Application {
+public class Board extends Application {
 
-    private Scene scene = null;
-    private GridSpace2D[][] grid;
-
-    public Board2D () {
-        Application.launch();
+    private BoardPosition[][] grid;
+    private TilePane boardPane= new TilePane();
+    public Board() {
+        initBoard();
     }
 
-    public GridSpace2D[][] getGridGUI() {
+    public BoardPosition[][] getGridGUI() {
         return this.grid;
-    }
-
-    public Scene getScene () {
-        return this.scene;
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("2D Chess");
-        TilePane boardPane = new TilePane();
+
+        Scene scene = new Scene(boardPane, 875, 875);
+        scene.getStylesheets().add(Board.class.getResource("Board.css").toExternalForm());
+
+        primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
+        primaryStage.show();
+    }
+
+    public void initBoard(){
+
         boardPane.setPrefColumns(8);
         boardPane.setHgap(5);
         boardPane.setVgap(5);
 
-        Scene scene = new Scene(boardPane, 875, 875);
-        scene.getStylesheets().add(Board2D.class.getResource("Board2D.css").toExternalForm());
-
-        grid = new GridSpace2D[8][8];
+        grid = new BoardPosition[8][8];
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                grid[j][i] = new GridSpace2D(new Vector(j, i));
+                grid[j][i] = new BoardPosition(new Vector(j, i));
 
                 setBackgroundColorForGridSpace(grid[j][i], j, i);
 
                 boardPane.getChildren().add(grid[j][i]);
+
+                grid[j][i].addEventListener(new EventHandler() {
+                    @Override
+                    public void handle(Event event) {
+                        BoardPosition gridSpace = (BoardPosition) event.getSource();
+                        if (gridSpace.isSelected()) {
+                            gridSpace.select(false);
+                        } else {
+                            gridSpace.select(true);
+                        }
+                    }
+                });
 
             }
         }
@@ -79,12 +89,9 @@ public class Board2D extends Application {
         grid[6][7].setPiece(new Knight(Color.WHITE, grid[6][7].getPosition()));
         grid[7][7].setPiece(new Rook(Color.WHITE, grid[7][7].getPosition()));
 
-        primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
-        primaryStage.show();
     }
 
-    private void setBackgroundColorForGridSpace(GridSpace2D btn, int x, int y) {
+    private void setBackgroundColorForGridSpace(BoardPosition btn, int x, int y) {
         if (x % 2 == 0) {
             if (y % 2 == 0)
                 btn.getStyleClass().add("grey");
