@@ -27,7 +27,7 @@ public class BoardSpace {
     }
 
     public boolean isOccupied() {
-        return false;
+        return this.piece != null;
     }
 
     public void highlight(boolean highlight) {
