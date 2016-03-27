@@ -3,17 +3,12 @@ package chess.view.twod;
 import chess.model.pieces.*;
 import chess.model.Color;
 import chess.model.Vector;
-import javafx.application.Application;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
 import javafx.scene.layout.*;
-import javafx.stage.Stage;
 
-public class Board extends Application {
+public class Board extends TilePane {
 
     private BoardPosition[][] grid;
-    private TilePane boardPane= new TilePane();
+    
     public Board() {
         initBoard();
     }
@@ -22,23 +17,11 @@ public class Board extends Application {
         return this.grid;
     }
 
-    @Override
-    public void start(Stage primaryStage) {
-        primaryStage.setTitle("2D Chess");
-
-        Scene scene = new Scene(boardPane, 875, 875);
-        scene.getStylesheets().add(Board.class.getResource("Board.css").toExternalForm());
-
-        primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
-        primaryStage.show();
-    }
-
     public void initBoard(){
 
-        boardPane.setPrefColumns(8);
-        boardPane.setHgap(5);
-        boardPane.setVgap(5);
+        this.setPrefColumns(8);
+        this.setHgap(5);
+        this.setVgap(5);
 
         grid = new BoardPosition[8][8];
         for (int i = 0; i < 8; i++) {
@@ -47,19 +30,7 @@ public class Board extends Application {
 
                 setBackgroundColorForGridSpace(grid[j][i], j, i);
 
-                boardPane.getChildren().add(grid[j][i]);
-
-                grid[j][i].addEventListener(new EventHandler() {
-                    @Override
-                    public void handle(Event event) {
-                        BoardPosition gridSpace = (BoardPosition) event.getSource();
-                        if (gridSpace.isSelected()) {
-                            gridSpace.select(false);
-                        } else {
-                            gridSpace.select(true);
-                        }
-                    }
-                });
+                this.getChildren().add(grid[j][i]);
 
             }
         }
