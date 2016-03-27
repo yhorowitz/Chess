@@ -16,20 +16,40 @@ public class BoardController {
         this.gameUI = gameUI;
         this.game = game;
 
-        for (int i = 0; i < gameUI.getGridGUI().length; i++) {
-            for (int j = 0; j < gameUI.getGridGUI().length; j++) {
-                gameUI.getGridGUI()[i][j].addEventListener(new EventHandler() {
+        for (int i = 0; i < gameUI.getGrid().length; i++) {
+            for (int j = 0; j < gameUI.getGrid().length; j++) {
+                gameUI.getGrid()[i][j].addEventListener(new EventHandler() {
                     @Override
                     public void handle(Event event) {
                         BoardPosition gridSpace = (BoardPosition) event.getSource();
+
                         if (gridSpace.isSelected()) {
                             gridSpace.select(false);
+                            removeHighlightFromAllBoardPositions();
                         }
                         else {
+                            deselectAllBoardPositions();
+                            removeHighlightFromAllBoardPositions();
                             gridSpace.select(true);
                         }
                     }
                 });
+            }
+        }
+    }
+
+    private void deselectAllBoardPositions() {
+        for (int i = 0; i < gameUI.getGrid().length; i++) {
+            for (BoardPosition position : gameUI.getGrid()[i]) {
+                position.select(false);
+            }
+        }
+    }
+
+    private void removeHighlightFromAllBoardPositions() {
+        for (int i = 0; i < gameUI.getGrid().length; i++) {
+            for (BoardPosition position : gameUI.getGrid()[i]) {
+                position.highlight(false);
             }
         }
     }

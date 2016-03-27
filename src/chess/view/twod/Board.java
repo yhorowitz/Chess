@@ -13,7 +13,7 @@ public class Board extends TilePane {
         initBoard();
     }
 
-    public BoardPosition[][] getGridGUI() {
+    public BoardPosition[][] getGrid() {
         return this.grid;
     }
 
