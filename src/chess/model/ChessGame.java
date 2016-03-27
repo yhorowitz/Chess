@@ -28,9 +28,9 @@ public class ChessGame {
 
     private void createBoard() {
         //set up all spaces on the game
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                board[i][j] = new BoardSpace(new Vector(i, j));
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col < SIZE; col++) {
+                board[row][col] = new BoardSpace(new Vector(col, row));
             }
         }
     }
@@ -39,30 +39,29 @@ public class ChessGame {
 
         //add black pieces to the game
         board[0][0].setPiece(new Rook(Color.BLACK, board[0][0].getPosition()));
-        board[1][0].setPiece(new Knight(Color.BLACK, board[1][0].getPosition()));
-        board[2][0].setPiece(new Bishop(Color.BLACK, board[2][0].getPosition()));
-        board[3][0].setPiece(new Queen(Color.BLACK, board[3][0].getPosition()));
-        board[4][0].setPiece(new King(Color.BLACK, board[4][0].getPosition()));
-        board[5][0].setPiece(new Bishop(Color.BLACK, board[5][0].getPosition()));
-        board[6][0].setPiece(new Knight(Color.BLACK, board[6][0].getPosition()));
-        board[7][0].setPiece(new Rook(Color.BLACK, board[7][0].getPosition()));
-        for (int i = 0; i < 8; i++) {
-            board[i][1].setPiece(new Pawn(Color.BLACK, board[i][1].getPosition()));
+        board[0][1].setPiece(new Knight(Color.BLACK, board[0][1].getPosition()));
+        board[0][2].setPiece(new Bishop(Color.BLACK, board[0][2].getPosition()));
+        board[0][3].setPiece(new Queen(Color.BLACK, board[0][3].getPosition()));
+        board[0][4].setPiece(new King(Color.BLACK, board[0][4].getPosition()));
+        board[0][5].setPiece(new Bishop(Color.BLACK, board[0][5].getPosition()));
+        board[0][6].setPiece(new Knight(Color.BLACK, board[0][6].getPosition()));
+        board[0][7].setPiece(new Rook(Color.BLACK, board[0][7].getPosition()));
+        for (int col = 0; col < 8; col++) {
+            board[1][col].setPiece(new Pawn(Color.BLACK, board[1][col].getPosition()));
         }
 
         //add white pieces to the game
-        for (int i = 0; i < 8; i++) {
-            board[i][6].setPiece(new Pawn(Color.WHITE, board[i][6].getPosition()));
+        for (int col = 0; col < 8; col++) {
+            board[6][col].setPiece(new Pawn(Color.WHITE, board[6][col].getPosition()));
         }
-        board[0][7].setPiece(new Rook(Color.WHITE, board[0][7].getPosition()));
-        board[1][7].setPiece(new Knight(Color.WHITE, board[1][7].getPosition()));
-        board[2][7].setPiece(new Bishop(Color.WHITE, board[2][7].getPosition()));
-        board[3][7].setPiece(new Queen(Color.WHITE, board[3][7].getPosition()));
-        board[4][7].setPiece(new King(Color.WHITE, board[4][7].getPosition()));
-        board[5][7].setPiece(new Bishop(Color.WHITE, board[5][7].getPosition()));
-        board[6][7].setPiece(new Knight(Color.WHITE, board[6][7].getPosition()));
+        board[7][0].setPiece(new Rook(Color.WHITE, board[7][0].getPosition()));
+        board[7][1].setPiece(new Knight(Color.WHITE, board[7][1].getPosition()));
+        board[7][2].setPiece(new Bishop(Color.WHITE, board[7][2].getPosition()));
+        board[7][3].setPiece(new Queen(Color.WHITE, board[7][3].getPosition()));
+        board[7][4].setPiece(new King(Color.WHITE, board[7][4].getPosition()));
+        board[7][5].setPiece(new Bishop(Color.WHITE, board[7][5].getPosition()));
+        board[7][6].setPiece(new Knight(Color.WHITE, board[7][6].getPosition()));
         board[7][7].setPiece(new Rook(Color.WHITE, board[7][7].getPosition()));
-
     }
 
     public Color getCurrentTurn() {
@@ -81,7 +80,7 @@ public class ChessGame {
         int row = vector.getY();
         int column = vector.getX();
 
-        return board[column][row];
+        return board[row][column];
     }
 
     /**
@@ -93,10 +92,6 @@ public class ChessGame {
      */
     public boolean makeMove(ChessPiece piece, Vector from, Vector to) {
         return false;
-    }
-
-    public List<Vector> getLegalMoves(ChessPiece piece) {
-        return null;
     }
 
     public boolean checkForWin() {

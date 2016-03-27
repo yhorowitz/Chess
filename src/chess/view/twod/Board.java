@@ -17,6 +17,13 @@ public class Board extends TilePane {
         return this.grid;
     }
 
+    public BoardPosition getBoardPosition(Vector vector) {
+        int row = vector.getY();
+        int column = vector.getX();
+
+        return grid[row][column];
+    }
+
     public void initBoard(){
 
         this.setPrefColumns(8);
@@ -24,40 +31,40 @@ public class Board extends TilePane {
         this.setVgap(5);
 
         grid = new BoardPosition[8][8];
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                grid[j][i] = new BoardPosition(new Vector(j, i));
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                grid[row][col] = new BoardPosition(new Vector(col, row));
 
-                setBackgroundColorForGridSpace(grid[j][i], j, i);
+                setBackgroundColorForGridSpace(grid[row][col], col, row);
 
-                this.getChildren().add(grid[j][i]);
+                this.getChildren().add(grid[row][col]);
 
             }
         }
         //add black pieces to the game
         grid[0][0].setPiece(new Rook(Color.BLACK, grid[0][0].getPosition()));
-        grid[1][0].setPiece(new Knight(Color.BLACK, grid[1][0].getPosition()));
-        grid[2][0].setPiece(new Bishop(Color.BLACK, grid[2][0].getPosition()));
-        grid[3][0].setPiece(new Queen(Color.BLACK, grid[3][0].getPosition()));
-        grid[4][0].setPiece(new King(Color.BLACK, grid[4][0].getPosition()));
-        grid[5][0].setPiece(new Bishop(Color.BLACK, grid[5][0].getPosition()));
-        grid[6][0].setPiece(new Knight(Color.BLACK, grid[6][0].getPosition()));
-        grid[7][0].setPiece(new Rook(Color.BLACK, grid[7][0].getPosition()));
-        for (int i = 0; i < 8; i++) {
-            grid[i][1].setPiece(new Pawn(Color.BLACK, grid[i][1].getPosition()));
+        grid[0][1].setPiece(new Knight(Color.BLACK, grid[0][1].getPosition()));
+        grid[0][2].setPiece(new Bishop(Color.BLACK, grid[0][2].getPosition()));
+        grid[0][3].setPiece(new Queen(Color.BLACK, grid[0][3].getPosition()));
+        grid[0][4].setPiece(new King(Color.BLACK, grid[0][4].getPosition()));
+        grid[0][5].setPiece(new Bishop(Color.BLACK, grid[0][5].getPosition()));
+        grid[0][6].setPiece(new Knight(Color.BLACK, grid[0][6].getPosition()));
+        grid[0][7].setPiece(new Rook(Color.BLACK, grid[0][7].getPosition()));
+        for (int col = 0; col < 8; col++) {
+            grid[1][col].setPiece(new Pawn(Color.BLACK, grid[1][col].getPosition()));
         }
 
         //add white pieces to the game
-        for (int i = 0; i < 8; i++) {
-            grid[i][6].setPiece(new Pawn(Color.WHITE, grid[i][6].getPosition()));
+        for (int col = 0; col < 8; col++) {
+            grid[6][col].setPiece(new Pawn(Color.WHITE, grid[6][col].getPosition()));
         }
-        grid[0][7].setPiece(new Rook(Color.WHITE, grid[0][7].getPosition()));
-        grid[1][7].setPiece(new Knight(Color.WHITE, grid[1][7].getPosition()));
-        grid[2][7].setPiece(new Bishop(Color.WHITE, grid[2][7].getPosition()));
-        grid[3][7].setPiece(new Queen(Color.WHITE, grid[3][7].getPosition()));
-        grid[4][7].setPiece(new King(Color.WHITE, grid[4][7].getPosition()));
-        grid[5][7].setPiece(new Bishop(Color.WHITE, grid[5][7].getPosition()));
-        grid[6][7].setPiece(new Knight(Color.WHITE, grid[6][7].getPosition()));
+        grid[7][0].setPiece(new Rook(Color.WHITE, grid[7][0].getPosition()));
+        grid[7][1].setPiece(new Knight(Color.WHITE, grid[7][1].getPosition()));
+        grid[7][2].setPiece(new Bishop(Color.WHITE, grid[7][2].getPosition()));
+        grid[7][3].setPiece(new Queen(Color.WHITE, grid[7][3].getPosition()));
+        grid[7][4].setPiece(new King(Color.WHITE, grid[7][4].getPosition()));
+        grid[7][5].setPiece(new Bishop(Color.WHITE, grid[7][5].getPosition()));
+        grid[7][6].setPiece(new Knight(Color.WHITE, grid[7][6].getPosition()));
         grid[7][7].setPiece(new Rook(Color.WHITE, grid[7][7].getPosition()));
 
     }

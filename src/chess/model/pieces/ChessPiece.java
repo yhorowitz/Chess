@@ -38,6 +38,6 @@ public abstract class ChessPiece {
         return false;
     }
 
-    abstract List<Vector> getLegalMoves(ChessGame game);
+    public abstract List<Vector> getLegalMoves(ChessGame game);
 
 }

@@ -19,7 +19,7 @@ public class Bishop extends ChessPiece {
     }
 
     @Override
-    List<Vector> getLegalMoves(ChessGame game) {
+    public List<Vector> getLegalMoves(ChessGame game) {
         return null;
     }
 }

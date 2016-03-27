@@ -41,4 +41,9 @@ public class Vector {
         else
             return true;
     }
+
+    @Override
+    public String toString() {
+        return "X: " + getX() + ", Y: " + getY();
+    }
 }

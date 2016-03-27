@@ -4,10 +4,13 @@ package chess.controller.twod;
 import chess.model.ChessGame;
 import chess.model.BoardSpace;
 import chess.model.Vector;
+import chess.model.pieces.ChessPiece;
 import chess.view.twod.Board;
 import chess.view.twod.BoardPosition;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+
+import java.util.List;
 
 public class BoardController {
 
@@ -18,14 +21,15 @@ public class BoardController {
         this.gameUI = gameUI;
         this.game = game;
 
-        for (int i = 0; i < gameUI.getGrid().length; i++) {
-            for (int j = 0; j < gameUI.getGrid().length; j++) {
-                gameUI.getGrid()[i][j].addEventListener(new EventHandler() {
+        for (int row = 0; row < gameUI.getGrid().length; row++) {
+            for (int col = 0; col < gameUI.getGrid().length; col++) {
+                gameUI.getGrid()[row][col].addEventListener(new EventHandler() {
                     @Override
                     public void handle(Event event) {
                         BoardPosition gridSpace = (BoardPosition) event.getSource();
+                        Vector position = gridSpace.getPosition();
 
-                        //todo highlight all squares that are legal moves of the piece
+                        System.out.println("Current position is " + position.toString());
                         if (gridSpace.isSelected()) {
                             deselectPositionAtVector(gridSpace.getPosition());
                             removeHighlightFromAllBoardPositions();
@@ -34,6 +38,14 @@ public class BoardController {
                             deselectAllBoardPositions();
                             removeHighlightFromAllBoardPositions();
                             selectPositionAtVector(gridSpace.getPosition());
+
+                            //if space is not empty highlight legal moves
+                            if (game.getBoardSpace(position).isOccupied()) {
+                                List<Vector> legalMoves = getLegalMoves(position);
+
+                                if (legalMoves.size() > 0)
+                                    highlightPositions(legalMoves);
+                            }
                         }
                     }
                 });
@@ -41,48 +53,51 @@ public class BoardController {
         }
     }
 
-    private void selectPositionAtVector(Vector vector) {
-        int row = vector.getY();
-        int column = vector.getX();
+    private List<Vector> getLegalMoves(Vector vector) {
+        ChessPiece piece = game.getBoardSpace(vector).getPiece();
+        return piece.getLegalMoves(game);
+    }
 
+    private void highlightPositions(List<Vector> positions) {
+        for (Vector position : positions) {
+            System.out.println("Legal Move is " + position.toString());
+            //update view
+            gameUI.getBoardPosition(position).highlight(true);
+            //update model
+            game.getBoardSpace(position).highlight(true);
+        }
+    }
+
+    private void selectPositionAtVector(Vector vector) {
         //update view
-        gameUI.getGrid()[row][column].select(true);
+        gameUI.getBoardPosition(vector).select(true);
 
         //update model
-        game.getBoard()[row][column].select(true);
+        game.getBoardSpace(vector).select(true);
     }
 
     private void deselectPositionAtVector(Vector vector) {
-        int row = vector.getY();
-        int column = vector.getX();
-
         //update view
-        gameUI.getGrid()[row][column].select(false);
+        gameUI.getBoardPosition(vector).select(false);
 
         //update model
-        game.getBoard()[row][column].select(false);
+        game.getBoardSpace(vector).select(false);
     }
 
     private void highlightPositionAtVector(Vector vector) {
-        int row = vector.getY();
-        int column = vector.getX();
-
         //update view
-        gameUI.getGrid()[row][column].highlight(true);
+        gameUI.getBoardPosition(vector).highlight(true);
 
         //update model
-        game.getBoard()[row][column].highlight(true);
+        game.getBoardSpace(vector).highlight(true);
     }
 
     private void removeHighlightFromPositionAtVector(Vector vector) {
-        int row = vector.getY();
-        int column = vector.getX();
-
         //update view
-        gameUI.getGrid()[row][column].highlight(false);
+        gameUI.getBoardPosition(vector).highlight(false);
 
         //update model
-        game.getBoard()[row][column].highlight(false);
+        game.getBoardSpace(vector).highlight(false);
     }
 
     private void deselectAllBoardPositions() {
