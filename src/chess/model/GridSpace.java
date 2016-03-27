@@ -38,9 +38,11 @@ public class GridSpace {
         return this.highlighted;
     }
 
-
     public void select(boolean select) {
         this.selected = select;
+        if (select) {
+            this.highlight(false);
+        }
     }
 
     public boolean isSelected() {
