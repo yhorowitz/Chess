@@ -29,12 +29,11 @@ public class BoardController {
                         BoardPosition gridSpace = (BoardPosition) event.getSource();
                         Vector position = gridSpace.getPosition();
 
-                        System.out.println("Current position is " + position.toString());
                         if (gridSpace.isSelected()) {
                             deselectPositionAtVector(gridSpace.getPosition());
                             removeHighlightFromAllBoardPositions();
                         }
-                        else {
+                        else if (game.getBoardSpace(position).isOccupied()){
                             deselectAllBoardPositions();
                             removeHighlightFromAllBoardPositions();
                             selectPositionAtVector(gridSpace.getPosition());
@@ -60,7 +59,6 @@ public class BoardController {
 
     private void highlightPositions(List<Vector> positions) {
         for (Vector position : positions) {
-            System.out.println("Legal Move is " + position.toString());
             //update view
             gameUI.getBoardPosition(position).highlight(true);
             //update model
