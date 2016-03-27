@@ -1,5 +1,6 @@
 package chess.view.twod;
 
+import chess.model.ChessGame;
 import chess.model.pieces.*;
 import chess.model.Color;
 import chess.model.Vector;
@@ -11,6 +12,12 @@ public class Board extends TilePane {
     
     public Board() {
         initBoard();
+        addPiecesAsNewGame();
+    }
+
+    public Board(ChessGame game) {
+        initBoard();
+        addPiecesFromGame(game);
     }
 
     public BoardPosition[][] getGrid() {
@@ -24,23 +31,20 @@ public class Board extends TilePane {
         return grid[row][column];
     }
 
-    public void initBoard(){
-
-        this.setPrefColumns(8);
-        this.setHgap(5);
-        this.setVgap(5);
-
-        grid = new BoardPosition[8][8];
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                grid[row][col] = new BoardPosition(new Vector(col, row));
-
-                setBackgroundColorForGridSpace(grid[row][col], col, row);
-
-                this.getChildren().add(grid[row][col]);
-
+    public void addPiecesFromGame(ChessGame game) {
+        for (int row = 0; row < grid.length; row++) {
+            for (int col = 0; col < grid[row].length; col++) {
+                Vector pos = new Vector(col, row);
+                ChessPiece piece = game.getBoardSpace(pos).getPiece();
+                if (piece != null) {
+                    getBoardPosition(pos).setPiece(piece);
+                }
             }
         }
+    }
+
+    public  void addPiecesAsNewGame() {
+
         //add black pieces to the game
         grid[0][0].setPiece(new Rook(Color.BLACK, grid[0][0].getPosition()));
         grid[0][1].setPiece(new Knight(Color.BLACK, grid[0][1].getPosition()));
@@ -66,6 +70,26 @@ public class Board extends TilePane {
         grid[7][5].setPiece(new Bishop(Color.WHITE, grid[7][5].getPosition()));
         grid[7][6].setPiece(new Knight(Color.WHITE, grid[7][6].getPosition()));
         grid[7][7].setPiece(new Rook(Color.WHITE, grid[7][7].getPosition()));
+
+    }
+
+    public void initBoard(){
+
+        this.setPrefColumns(8);
+        this.setHgap(5);
+        this.setVgap(5);
+
+        grid = new BoardPosition[8][8];
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                grid[row][col] = new BoardPosition(new Vector(col, row));
+
+                setBackgroundColorForGridSpace(grid[row][col], col, row);
+
+                this.getChildren().add(grid[row][col]);
+
+            }
+        }
 
     }
 
