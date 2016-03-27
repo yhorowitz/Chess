@@ -91,6 +91,8 @@ public class ChessGame {
         return false;
     }
 
+    public boolean checkForDraw() {return false; }
+
 
 
 }
