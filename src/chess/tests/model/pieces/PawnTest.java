@@ -88,9 +88,11 @@ public class PawnTest {
         game.getBoardSpace(startPos).setPiece(pawn);
 
         List<Vector> legalMoves = pawn.getLegalMoves(game);
+        assertTrue(legalMoves.size() > 0);
         Vector endPos = legalMoves.get(0);
         game.makeMove(pawn, startPos, endPos);
         assertSame(game.getBoardSpace(endPos).getPiece(), pawn);
+        assertNull(game.getBoardSpace(startPos).getPiece());
     }
 
 }
