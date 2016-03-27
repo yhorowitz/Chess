@@ -43,14 +43,12 @@ public class PawnTest {
         int column = position.getX();
 
         Pawn pawn = new Pawn(color, position);
-        game.getBoard()[row][column].setPiece(pawn);
-        List<Vector> legalMoves = game.getLegalMoves(pawn);
-
-       JOptionPane.showMessageDialog(null, legalMoves.get(0).getX() + ", " + legalMoves.get(0).getY());
+        game.getBoardSpace(position).setPiece(pawn);
+        List<Vector> legalMoves = pawn.getLegalMoves(game);
 
         List<Vector> whatResultsShouldBe = new ArrayList<>();
-        whatResultsShouldBe.add(new Vector(row + 1, column));
-        whatResultsShouldBe.add(new Vector(row + 2, column));
+        whatResultsShouldBe.add(new Vector(column, row + 1));
+        whatResultsShouldBe.add(new Vector(column, row + 2));
 
         assertTrue(legalMoves.size() == whatResultsShouldBe.size());
         assertTrue(whatResultsShouldBe.containsAll(legalMoves)
@@ -65,18 +63,16 @@ public class PawnTest {
         int column = position.getX();
 
         Pawn pawn = new Pawn(Color.BLACK, position);
-        game.getBoard()[row][column].setPiece(pawn);
+        game.getBoardSpace(position).setPiece(pawn);
 
-        Vector blockingPosition = new Vector(column + 2, row);
-        int blockingRow = blockingPosition.getY();
-        int blockingColumn = blockingPosition.getX();
+        Vector blockingPosition = new Vector(column, row + 2);
         Pawn blockingPiece = new Pawn(Color.WHITE, blockingPosition);
-        game.getBoard()[blockingRow][blockingColumn].setPiece(blockingPiece);
+        game.getBoardSpace(blockingPosition).setPiece(blockingPiece);
 
-        List<Vector> legalMoves = game.getLegalMoves(pawn);
-
+        List<Vector> legalMoves = pawn.getLegalMoves(game);
+        System.out.println(legalMoves.size());
         List<Vector> whatResultsShouldBe = new ArrayList<>();
-        whatResultsShouldBe.add(new Vector(row + 1, column));
+        whatResultsShouldBe.add(new Vector(column, row + 1));
 
         assertTrue(legalMoves.size() == whatResultsShouldBe.size());
         assertTrue(whatResultsShouldBe.containsAll(legalMoves)
