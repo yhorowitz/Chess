@@ -13,6 +13,20 @@ import chess.model.Vector;
 
 import static org.junit.Assert.*;
 
+/**
+ * Current tests as of 3/27/16:
+ *      Each corner
+ *      Being on the different edges
+ *      Being in the center with no pieces around it
+ *      Being in the center with a few piece around it
+ *      Being in the center with it blocked from every piece
+ *
+ * Still needs testing for:
+ *      Castling (ensure that it can't if blocked or one of the pieces already moved)
+ *      Moving into a check
+ *      Moving through a check (when castling)
+ *
+ */
 public class KingTest {
 
     private ChessGame game;
