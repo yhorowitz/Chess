@@ -30,8 +30,8 @@ public abstract class ChessPiece {
         this.currentPosition = currentPosition;
     }
 
-    public void move(Vector vector) {
-        this.setCurrentPosition(vector);
+    public void moveTo(Vector vector) {
+        setCurrentPosition(vector);
     }
 
     public boolean isLegalMove(Vector vector) {

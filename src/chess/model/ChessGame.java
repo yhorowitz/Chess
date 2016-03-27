@@ -12,6 +12,8 @@ public class ChessGame {
 
     private BoardSpace[][] board = new BoardSpace[8][8];
     private Color currentTurn = Color.WHITE;
+    private Vector selectedPosition = null;
+
 
     public ChessGame() {
         createBoard();
@@ -64,12 +66,24 @@ public class ChessGame {
         board[7][7].setPiece(new Rook(Color.WHITE, board[7][7].getPosition()));
     }
 
+    public void selectNewPosition(Vector vector) {
+        selectedPosition = vector;
+    }
+
+    public Vector getSelectedPosition() {
+        return selectedPosition;
+    }
+
+    public ChessPiece getSelectedPiece() {
+        return getBoardSpace(getSelectedPosition()).getPiece();
+    }
+
     public Color getCurrentTurn() {
-        return null;
+        return currentTurn;
     }
 
     public void changeTurns() {
-
+        currentTurn = getCurrentTurn() == Color.BLACK ? Color.WHITE : Color.BLACK;
     }
 
     public BoardSpace[][] getBoard() {
@@ -91,7 +105,15 @@ public class ChessGame {
      * @return Whether the move was successfully completed
      */
     public boolean makeMove(ChessPiece piece, Vector from, Vector to) {
-        return false;
+        //ensure the correct piece is being move
+        if (getBoardSpace(from).getPiece() != piece)
+            return false;
+
+        getBoardSpace(from).setPiece(null);
+        getBoardSpace(to).setPiece(piece);
+        piece.moveTo(to);
+        return true;
+
     }
 
     public boolean checkForWin() {

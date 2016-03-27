@@ -83,4 +83,15 @@ public class Board extends TilePane {
                 btn.getStyleClass().add("grey");
         }
     }
+
+    public boolean movePiece(ChessPiece piece, Vector from, Vector to) {
+//        //ensure the correct piece is being move
+//        if (getBoardPosition(from).getPiece() != piece)
+//            return false;
+
+        getBoardPosition(from).setPiece(null);
+        getBoardPosition(to).setPiece(piece);
+        piece.moveTo(to);
+        return true;
+    }
 }

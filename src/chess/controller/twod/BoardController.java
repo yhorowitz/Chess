@@ -30,10 +30,13 @@ public class BoardController {
                         Vector position = gridSpace.getPosition();
 
                         if (gridSpace.isSelected()) {
+                            //remove the selection and all highlights on the board
                             deselectPositionAtVector(gridSpace.getPosition());
                             removeHighlightFromAllBoardPositions();
                         }
                         else if (game.getBoardSpace(position).isOccupied()){
+                            //select the space and highlight all legal moves
+
                             deselectAllBoardPositions();
                             removeHighlightFromAllBoardPositions();
                             selectPositionAtVector(gridSpace.getPosition());
@@ -45,6 +48,20 @@ public class BoardController {
                                 if (legalMoves.size() > 0)
                                     highlightPositions(legalMoves);
                             }
+                        }
+                        else if (game.getBoardSpace(position).isHighlighted()) {
+                            //move the selected piece to the selected position and clear all highlights
+                            ChessPiece piece = game.getSelectedPiece();
+                            Vector from = game.getSelectedPosition();
+                            Vector to = position;
+
+                            boolean changedModel = game.makeMove(piece, from, to);
+                            boolean changedUI = gameUI.movePiece(piece, from, to);
+
+                            System.out.println(changedModel + ", " + changedUI);
+                            deselectAllBoardPositions();
+                            removeHighlightFromAllBoardPositions();
+
                         }
                     }
                 });
@@ -72,6 +89,7 @@ public class BoardController {
 
         //update model
         game.getBoardSpace(vector).select(true);
+        game.selectNewPosition(vector);
     }
 
     private void deselectPositionAtVector(Vector vector) {
@@ -80,6 +98,7 @@ public class BoardController {
 
         //update model
         game.getBoardSpace(vector).select(false);
+        game.selectNewPosition(null);
     }
 
     private void highlightPositionAtVector(Vector vector) {
@@ -112,6 +131,8 @@ public class BoardController {
                 position.select(false);
             }
         }
+        game.selectNewPosition(null);
+
     }
 
     private void removeHighlightFromAllBoardPositions() {

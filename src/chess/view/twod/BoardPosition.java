@@ -19,6 +19,10 @@ public class BoardPosition extends Button {
         this.getStyleClass().add("boardSpace");
     }
 
+    public ChessPiece getPiece() {
+        return info.getPiece();
+    }
+
     public void setPiece(ChessPiece piece) {
         this.info.setPiece(piece);
         this.setPieceImage();
@@ -54,15 +58,21 @@ public class BoardPosition extends Button {
     }
 
     public void setPieceImage() {
-        String color = this.info.getPiece().getColor().toString().toLowerCase();
-        String pieceType = this.info.getPiece().getClass().getSimpleName().toLowerCase();
+        if (getPiece() == null) {
+            this.setGraphic(null);
+        }
+        else {
+            String color = this.info.getPiece().getColor().toString().toLowerCase();
+            String pieceType = this.info.getPiece().getClass().getSimpleName().toLowerCase();
 
-        //System.out.println((getClass().getResource("../../..")));
-        Image image = new Image(getClass().getResourceAsStream("../../../res/images/pieces/" +
-                                color + "/" +
-                                pieceType + ".png"));
+            //System.out.println((getClass().getResource("../../..")));
+            Image image = new Image(getClass().getResourceAsStream("../../../res/images/pieces/" +
+                    color + "/" +
+                    pieceType + ".png"));
 
-        this.setGraphic(new ImageView(image));
+            this.setGraphic(new ImageView(image));
+        }
+
     }
 
     public void addEventListener(EventHandler handler) {

@@ -25,8 +25,8 @@ public class Pawn extends ChessPiece  {
         return moved;
     }
 
-    public void move(Vector vector) {
-        super.move(vector);
+    public void moveTo(Vector vector) {
+        super.moveTo(vector);
         this.moved = true;
     }
 
