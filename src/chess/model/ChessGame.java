@@ -112,6 +112,7 @@ public class ChessGame {
         getBoardSpace(from).setPiece(null);
         getBoardSpace(to).setPiece(piece);
         piece.moveTo(to);
+        changeTurns();
         return true;
 
     }

@@ -28,13 +28,14 @@ public class BoardController {
                     public void handle(Event event) {
                         BoardPosition gridSpace = (BoardPosition) event.getSource();
                         Vector position = gridSpace.getPosition();
+                        BoardSpace space = game.getBoardSpace(position);
 
                         if (gridSpace.isSelected()) {
                             //remove the selection and all highlights on the board
                             deselectPositionAtVector(gridSpace.getPosition());
                             removeHighlightFromAllBoardPositions();
                         }
-                        else if (game.getBoardSpace(position).isOccupied()){
+                        else if (space.isOccupied() && (space).getPiece().getColor() == game.getCurrentTurn()){
                             //select the space and highlight all legal moves
 
                             deselectAllBoardPositions();
@@ -42,14 +43,14 @@ public class BoardController {
                             selectPositionAtVector(gridSpace.getPosition());
 
                             //if space is not empty highlight legal moves
-                            if (game.getBoardSpace(position).isOccupied()) {
+                            if (space.isOccupied()) {
                                 List<Vector> legalMoves = getLegalMoves(position);
 
                                 if (legalMoves.size() > 0)
                                     highlightPositions(legalMoves);
                             }
                         }
-                        else if (game.getBoardSpace(position).isHighlighted()) {
+                        else if (space.isHighlighted()) {
                             //move the selected piece to the selected position and clear all highlights
                             ChessPiece piece = game.getSelectedPiece();
                             Vector from = game.getSelectedPosition();
@@ -58,7 +59,6 @@ public class BoardController {
                             boolean changedModel = game.makeMove(piece, from, to);
                             boolean changedUI = gameUI.movePiece(piece, from, to);
 
-                            System.out.println(changedModel + ", " + changedUI);
                             deselectAllBoardPositions();
                             removeHighlightFromAllBoardPositions();
 
