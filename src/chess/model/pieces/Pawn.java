@@ -22,15 +22,36 @@ public class Pawn extends ChessPiece  {
         this.setPosition(position);
     }
 
+    /**
+     * Checks if the pawn has moved yet. Needed to know if it can move 1 space or 2
+     * @return
+     */
     public boolean hasMoved() {
         return moved;
     }
 
+    @Override
     public void moveTo(Vector vector) {
         super.moveTo(vector);
         this.moved = true;
     }
 
+    /**
+     * Pawns can make the following moves
+     *
+     *  - It Can only move forward when not capturing a piece. (Down the board if black and up if white)
+     *  - If it is the pawn's first move it can move 1 or 2 spaces if not blocked
+     *  - If it is not the pawn's first move it can move 1 space forward if not blocked
+     *
+     *  - When capturing it must move forward 1 space but can only capture a piece on either side of it (not directly ahead)
+     *  - It can capture another pawn that is directly next to it if that pawn just moved 2 spaces forward last turn.
+     *    This is known as an En Passant and it moves in the regular manner of capturing and would therefore occupy the space
+     *    the opposing pawn would have been in if it had moved only 1 space forward. This can only be done on the turn immediately
+     *    following the opposing pawn moving forward 2 spaces
+     *
+     * @param game
+     * @return
+     */
     @Override
     public List<Vector> getLegalMoves(ChessGame game) {
         //used to determine which direction the pawn can move based on its color
