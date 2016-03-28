@@ -1,6 +1,7 @@
 package chess.view.twod;
 
 import chess.model.BoardSpace;
+import chess.model.Color;
 import chess.model.pieces.*;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -11,29 +12,26 @@ import javafx.scene.image.ImageView;
 
 public class BoardPosition extends Button {
 
-    private BoardSpace info;
+    private Vector position;
+    private boolean highlight = false;
+    private boolean selected = false;
 
     BoardPosition(Vector vector) {
         super();
-        this.info = new BoardSpace(vector);
+        this.setPosition(vector);
         this.getStyleClass().add("boardSpace");
     }
 
-    public ChessPiece getPiece() {
-        return info.getPiece();
-    }
-
-    public void setPiece(ChessPiece piece) {
-        this.info.setPiece(piece);
-        this.setPieceImage();
+    private void setPosition(Vector vector) {
+        this.position = vector;
     }
 
     public Vector getPosition() {
-        return this.info.getPosition();
+        return this.position;
     }
 
     public void highlight(boolean highlight) {
-        this.info.highlight(highlight);
+        this.highlight = highlight;
 
         if (highlight)
             this.getStyleClass().add("highlight");
@@ -42,7 +40,7 @@ public class BoardPosition extends Button {
     }
 
     public void select(boolean select) {
-        this.info.select(select);
+        this.selected = select;
 
         if (select) {
             this.getStyleClass().remove("highlight");
@@ -54,25 +52,28 @@ public class BoardPosition extends Button {
     }
 
     public boolean isSelected() {
-        return this.info.isSelected();
+        return this.selected;
     }
 
-    public void setPieceImage() {
-        if (getPiece() == null) {
+    private void updateImage(ChessPiece piece) {
+        if (piece == null) {
             this.setGraphic(null);
         }
         else {
-            String color = this.info.getPiece().getColor().toString().toLowerCase();
-            String pieceType = this.info.getPiece().getClass().getSimpleName().toLowerCase();
+            String pieceColor = piece.getColor().toString().toLowerCase();
+            String pieceType = piece.getClass().getSimpleName().toLowerCase();
 
-            //System.out.println((getClass().getResource("../../..")));
             Image image = new Image(getClass().getResourceAsStream("../../../res/images/pieces/" +
-                    color + "/" +
+                    pieceColor + "/" +
                     pieceType + ".png"));
 
             this.setGraphic(new ImageView(image));
         }
 
+    }
+
+    public void update(BoardSpace space) {
+        updateImage(space.getPiece());
     }
 
     public void addEventListener(EventHandler handler) {

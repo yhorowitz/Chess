@@ -56,8 +56,8 @@ public class BoardController {
                             Vector from = game.getSelectedPosition();
                             Vector to = position;
 
-                            boolean changedModel = game.makeMove(piece, from, to);
-                            boolean changedUI = gameUI.movePiece(piece, from, to);
+                            game.makeMove(piece, from, to);
+                            gameUI.updateAll(game);
 
                             deselectAllBoardPositions();
                             removeHighlightFromAllBoardPositions();
