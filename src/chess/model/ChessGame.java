@@ -1,6 +1,7 @@
 package chess.model;
 
 import chess.model.pieces.*;
+import chess.view.twod.Board;
 
 import java.util.List;
 
@@ -146,10 +147,73 @@ public class ChessGame {
 
         getBoardSpace(from).setPiece(null);
         getBoardSpace(to).setPiece(piece);
+        if (isEnPassant(piece, from, to)) { //must be done before setting all pawns to no longer be eligible. See method documentation for details.
+            int direction = piece.getColor() == Color.BLACK ? -1 : 1;
+            BoardSpace captureSpace = getBoardSpace(new Vector(to.getX(), to.getY() + direction));
+            captureSpace.setPiece(null);
+        }
+        removeEnPassantFromAllEligiblePawns(); //must be called before the moveTo method. See method documentation for details
         piece.moveTo(to);
         changeTurns();
+
+
         return true;
 
+    }
+
+    /**
+     * Checks if a move is performing an En Passant
+     * @param piece
+     * @param from
+     * @param to
+     * @return
+     */
+    private boolean isEnPassant(ChessPiece piece, Vector from, Vector to) {
+
+        if (!(piece instanceof Pawn))  //piece being moved is not a pawn
+            return false;
+        else if (from.getX() == to.getX()) //is pawn but not a capture move (pawns only move diagonal when capturing)
+            return false;
+
+        //get piece in space above the one being moved to
+        //if it is a pawn that is eligible for en passant return true
+        int direction = piece.getColor() == Color.BLACK ? -1 : 1;
+        Vector potentialCaptureVector = new Vector(to.getX(), to.getY() + direction);
+        BoardSpace potentialCaptureSpace = getBoardSpace(potentialCaptureVector);
+        ChessPiece potentialCapturePiece = potentialCaptureSpace.getPiece();
+
+        if (!(potentialCapturePiece instanceof Pawn))  //the piece is not a pawn
+            return false;
+        else if (((Pawn) potentialCapturePiece).isEligibleForEnPassant()) {
+            System.out.println("is en passant");
+            return true;
+        }
+        else {
+            System.out.println("is not en passant");
+            return false;
+        }
+    }
+
+    /**
+     * Set all pawns which are eligible for En Passant to no longer be eligible
+     *
+     * NOTE: This must be done before the piece is moved, otherwise if it is a pawn moving 2 spaces it will become ineligible
+     */
+    public void removeEnPassantFromAllEligiblePawns() {
+        for (int row = 0; row < board.length; row++) {
+            for (int col = 0; col < board[0].length; col++) {
+                ChessPiece piece = getBoardSpace(new Vector(col, row)).getPiece();
+
+                if (piece instanceof Pawn && ((Pawn) piece).isEligibleForEnPassant())
+                    ((Pawn) piece).setEligibleForEnPassant(false);
+
+            }
+        }
+    }
+
+    @Deprecated
+    public BoardSpace[][] getBoard() {
+        return this.board;
     }
 
     /**

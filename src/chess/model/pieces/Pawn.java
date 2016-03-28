@@ -12,6 +12,7 @@ import java.util.List;
 public class Pawn extends ChessPiece  {
 
     private boolean moved = false;
+    private boolean eligibleForEnPassant = false;
 
     public Pawn(Color color) {
         this.setColor(color);
@@ -20,6 +21,19 @@ public class Pawn extends ChessPiece  {
     public Pawn(Color color, Vector position) {
         this.setColor(color);
         this.setPosition(position);
+    }
+
+    /**
+     * Checks if this piece is eligible to have the En Passant move used against it
+     *
+     * @return
+     */
+    public boolean isEligibleForEnPassant() {
+        return this.eligibleForEnPassant;
+    }
+
+    public void setEligibleForEnPassant(boolean eligible) {
+        this.eligibleForEnPassant = eligible;
     }
 
     /**
@@ -32,6 +46,11 @@ public class Pawn extends ChessPiece  {
 
     @Override
     public void moveTo(Vector vector) {
+
+        //check if the piece will move forward 2 spaces. If yes it is now eligible for En Passant
+        if (Math.abs(this.getPosition().getY() - vector.getY()) == 2)
+            setEligibleForEnPassant(true);
+
         super.moveTo(vector);
         this.moved = true;
     }
@@ -77,17 +96,39 @@ public class Pawn extends ChessPiece  {
         }
 
         //check if any spaces have a piece that can be captured
+        Vector vectorForCapture;
+        BoardSpace captureSpace;
+
         if (currentColumn - 1 >= 0) {
-            Vector vectorForCapture = new Vector(currentColumn - 1, currentRow + direction);
-            BoardSpace captureSpace = game.getBoardSpace(vectorForCapture);
+            //check for regular capture
+            vectorForCapture = new Vector(currentColumn - 1, currentRow + direction);
+            captureSpace = game.getBoardSpace(vectorForCapture);
             if(captureSpace.isOccupied() && captureSpace.getPiece().getColor() != game.getCurrentTurn()){
                 legalMoves.add(vectorForCapture);
             }
+
+            //check for En Passant
+            Vector vectorToCheck = new Vector(currentColumn - 1, currentRow);
+            BoardSpace spaceToCheck = game.getBoardSpace(vectorToCheck);
+            if (spaceToCheck.isOccupied() && spaceToCheck.getPiece() instanceof Pawn &&
+                    ((Pawn) spaceToCheck.getPiece()).isEligibleForEnPassant()) {
+                legalMoves.add(vectorForCapture);
+            }
         }
+
         if (currentColumn + 1 < 8) {
-            Vector vectorForCapture = new Vector(currentColumn + 1, currentRow + direction);
-            BoardSpace captureSpace = game.getBoardSpace(vectorForCapture);
+            //check for regular capture
+            vectorForCapture = new Vector(currentColumn + 1, currentRow + direction);
+            captureSpace = game.getBoardSpace(vectorForCapture);
             if(captureSpace.isOccupied() && captureSpace.getPiece().getColor() != game.getCurrentTurn()){
+                legalMoves.add(vectorForCapture);
+            }
+
+            //check for En Passant
+            Vector vectorToCheck = new Vector(currentColumn + 1, currentRow);
+            BoardSpace spaceToCheck = game.getBoardSpace(vectorToCheck);
+            if (spaceToCheck.isOccupied() && spaceToCheck.getPiece() instanceof Pawn &&
+                    ((Pawn) spaceToCheck.getPiece()).isEligibleForEnPassant()) {
                 legalMoves.add(vectorForCapture);
             }
         }

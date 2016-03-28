@@ -54,4 +54,18 @@ public abstract class ChessPiece {
      */
     public abstract List<Vector> getLegalMoves(ChessGame game);
 
+    /**
+     * Handles the capturing of the piece
+     */
+    public void capture() {
+        this.setPosition(null);
+    }
+
+    /**
+     * Checks if a piece has been captured
+     */
+    public boolean isCaptured() {
+        return this.getPosition() != null;
+    }
+
 }
