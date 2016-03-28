@@ -26,6 +26,10 @@ public class BoardSpace {
         return this.position;
     }
 
+    /**
+     * Checks if this space has a piece on it
+     * @return
+     */
     public boolean isOccupied() {
         return this.piece != null;
     }

@@ -20,14 +20,23 @@ public class ChessGame {
         setUpNewGame();
     }
 
-    public ChessGame(boolean setUpPieces) {
+    /**
+     * Constructor that allows you to create an instance with an
+     * empty board
+     *
+     * @param setUpAsNewGame
+     */
+    public ChessGame(boolean setUpAsNewGame) {
         createBoard();
 
-        if (setUpPieces) {
+        if (setUpAsNewGame) {
             setUpNewGame();
         }
     }
 
+    /**
+     * Initializes the array for all spaces on the board
+     */
     private void createBoard() {
         //set up all spaces on the game
         for (int row = 0; row < SIZE; row++) {
@@ -37,6 +46,9 @@ public class ChessGame {
         }
     }
 
+    /**
+     * Sets up the pieces in the correct places for a new game
+     */
     private void setUpNewGame() {
 
         //add black pieces to the game
@@ -66,30 +78,53 @@ public class ChessGame {
         board[7][7].setPiece(new Rook(Color.WHITE, board[7][7].getPosition()));
     }
 
+    /**
+     * Sets a new position as the currently selected position
+     *
+     * @param vector
+     */
     public void selectNewPosition(Vector vector) {
         selectedPosition = vector;
     }
 
+    /**
+     * Gets the currently selected position
+     * @return
+     */
     public Vector getSelectedPosition() {
         return selectedPosition;
     }
 
+    /**
+     * Gets the pieces at the currently selected position
+     * @return
+     */
     public ChessPiece getSelectedPiece() {
         return getBoardSpace(getSelectedPosition()).getPiece();
     }
 
+    /**
+     * Gets the current players turn (based on color)
+     *
+     * @return
+     */
     public Color getCurrentTurn() {
         return currentTurn;
     }
 
+    /**
+     * Changes which player's turn it is
+     */
     public void changeTurns() {
         currentTurn = getCurrentTurn() == Color.BLACK ? Color.WHITE : Color.BLACK;
     }
 
-    public BoardSpace[][] getBoard() {
-        return this.board;
-    }
-
+    /**
+     * Returns a single space on the board based on its position on the board
+     *
+     * @param vector
+     * @return
+     */
     public BoardSpace getBoardSpace(Vector vector) {
         int row = vector.getY();
         int column = vector.getX();
@@ -117,11 +152,27 @@ public class ChessGame {
 
     }
 
-    public boolean checkForWin() {
+    /**
+     * Checks if the current state of the game is a checkmate
+     * @return
+     */
+    public boolean isCheckmate() {
         return false;
     }
 
-    public boolean checkForDraw() {return false; }
+    /**
+     * Checks if the current state of the game is a check
+     * @return
+     */
+    public boolean isCheck() {
+        return false;
+    }
+
+    /**
+     * Checks if the current state of the game is a stalemate
+     * @return
+     */
+    public boolean iaStalematertt() {return false; }
 
 
 
