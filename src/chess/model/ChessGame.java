@@ -156,13 +156,16 @@ public class ChessGame {
         piece.moveTo(to);
         changeTurns();
 
-
         return true;
 
     }
 
     /**
-     * Checks if a move is performing an En Passant
+     * Checks if a move is performing an En Passant.
+     *
+     * NOTE: This must be done before all pawns that are eligible for En Passant are reset to be ineligible.
+     *       This is for the obvious reason that if it first resets it, the pawn will never be able to do an en passant.
+     *
      * @param piece
      * @param from
      * @param to
