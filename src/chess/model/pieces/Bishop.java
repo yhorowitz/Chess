@@ -15,7 +15,7 @@ public class Bishop extends ChessPiece {
 
     public Bishop(Color color, Vector position) {
         this.setColor(color);
-        this.setCurrentPosition(position);
+        this.setPosition(position);
     }
 
     @Override

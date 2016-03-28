@@ -15,7 +15,7 @@ public class Knight extends ChessPiece  {
 
     public Knight(Color color, Vector position) {
         this.setColor(color);
-        this.setCurrentPosition(position);
+        this.setPosition(position);
     }
 
     @Override

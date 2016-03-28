@@ -16,7 +16,7 @@ public class King extends ChessPiece  {
 
     public King(Color color, Vector position) {
         this.setColor(color);
-        this.setCurrentPosition(position);
+        this.setPosition(position);
     }
 
     @Override

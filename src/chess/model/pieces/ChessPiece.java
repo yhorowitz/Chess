@@ -12,7 +12,7 @@ import java.util.List;
 public abstract class ChessPiece {
 
     private Color color;
-    private Vector currentPosition;
+    private Vector position;
 
     public Color getColor() {
         return this.color;
@@ -22,22 +22,36 @@ public abstract class ChessPiece {
         this.color = color;
     }
 
-    public Vector getCurrentPosition() {
-        return currentPosition;
+    public Vector getPosition() {
+        return position;
     }
 
-    public void setCurrentPosition(Vector currentPosition) {
-        this.currentPosition = currentPosition;
+    public void setPosition(Vector position) {
+        this.position = position;
     }
 
+    /**
+     * Changes the position of this piece
+     * @param vector
+     */
     public void moveTo(Vector vector) {
-        setCurrentPosition(vector);
+        setPosition(vector);
     }
 
+    /**
+     * Checks if the current move is a legal move for this piece
+     * @param vector
+     * @return
+     */
     public boolean isLegalMove(Vector vector) {
         return false;
     }
 
+    /**
+     * Gets all the legal moves for a piece
+     * @param game
+     * @return
+     */
     public abstract List<Vector> getLegalMoves(ChessGame game);
 
 }

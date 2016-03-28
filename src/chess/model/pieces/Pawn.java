@@ -19,7 +19,7 @@ public class Pawn extends ChessPiece  {
 
     public Pawn(Color color, Vector position) {
         this.setColor(color);
-        this.setCurrentPosition(position);
+        this.setPosition(position);
     }
 
     public boolean hasMoved() {
@@ -38,8 +38,8 @@ public class Pawn extends ChessPiece  {
         //how many spaces forward it can move based on its color
         int spacesCanMove = hasMoved() ? 1 : 2;
 
-        int currentRow = this.getCurrentPosition().getY();
-        int currentColumn = this.getCurrentPosition().getX();
+        int currentRow = this.getPosition().getY();
+        int currentColumn = this.getPosition().getX();
 
         List<Vector> legalMoves = new ArrayList<>();
 

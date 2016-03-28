@@ -16,7 +16,7 @@ public class Rook extends ChessPiece  {
 
     public Rook(Color color, Vector position) {
         this.setColor(color);
-        this.setCurrentPosition(position);
+        this.setPosition(position);
     }
 
     @Override

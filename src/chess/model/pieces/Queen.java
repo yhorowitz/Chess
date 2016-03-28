@@ -16,7 +16,7 @@ public class Queen extends ChessPiece  {
 
     public Queen(Color color, Vector position) {
         this.setColor(color);
-        this.setCurrentPosition(position);
+        this.setPosition(position);
     }
 
     @Override
