@@ -57,7 +57,7 @@ public class BoardController {
                             Vector to = position;
 
                             game.makeMove(piece, from, to);
-                            gameUI.updateAll(game);
+                            gameUI.update(game);
 
                             deselectAllBoardPositions();
                             removeHighlightFromAllBoardPositions();

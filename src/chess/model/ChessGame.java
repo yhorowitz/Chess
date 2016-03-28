@@ -214,6 +214,13 @@ public class ChessGame {
         }
     }
 
+    /**
+     * SHOULD NOT BE USED.
+     * Get board spaces using the getBoardSpace(Vector vector) method by specifying
+     * the vector
+     *
+     * @return
+     */
     @Deprecated
     public BoardSpace[][] getBoard() {
         return this.board;
