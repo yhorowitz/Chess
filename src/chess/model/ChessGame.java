@@ -231,7 +231,7 @@ public class ChessGame {
      * Checks if the current state of the game is a stalemate
      * @return
      */
-    public boolean iaStalematertt() {return false; }
+    public boolean iaStalemate() {return false; }
 
 
 
