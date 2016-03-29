@@ -8,9 +8,9 @@ import chess.model.pieces.*;
 public class ChessGame {
     public final static int BOARD_SIZE = 8;
 
-    private BoardSpace[][] board = new BoardSpace[8][8];
+    private BoardSpace[][] board = new BoardSpace[BOARD_SIZE][BOARD_SIZE];
     private Color currentTurn = Color.WHITE;
-    private Vector selectedPosition = null;
+    private Position selectedPosition = null;
 
 
     public ChessGame() {
@@ -39,7 +39,7 @@ public class ChessGame {
         //set up all spaces on the game
         for (int row = 0; row < BOARD_SIZE; row++) {
             for (int col = 0; col < BOARD_SIZE; col++) {
-                board[row][col] = new BoardSpace(new Vector(col, row));
+                board[row][col] = new BoardSpace(new Position(row, col));
             }
         }
     }
@@ -79,17 +79,17 @@ public class ChessGame {
     /**
      * Sets a new position as the currently selected position
      *
-     * @param vector
+     * @param position
      */
-    public void selectNewPosition(Vector vector) {
-        selectedPosition = vector;
+    public void selectNewPosition(Position position) {
+        selectedPosition = position;
     }
 
     /**
      * Gets the currently selected position
      * @return
      */
-    public Vector getSelectedPosition() {
+    public Position getSelectedPosition() {
         return selectedPosition;
     }
 
@@ -120,12 +120,12 @@ public class ChessGame {
     /**
      * Returns a single space on the board based on its position on the board
      *
-     * @param vector
+     * @param position
      * @return
      */
-    public BoardSpace getBoardSpace(Vector vector) {
-        int row = vector.getY();
-        int column = vector.getX();
+    public BoardSpace getBoardSpace(Position position) {
+        int row = position.getRow();
+        int column = position.getCol();
 
         return board[row][column];
     }
@@ -137,7 +137,7 @@ public class ChessGame {
      * @param to The ending position
      * @return Whether the move was successfully completed
      */
-    public boolean makeMove(ChessPiece piece, Vector from, Vector to) {
+    public boolean makeMove(ChessPiece piece, Position from, Position to) {
         //ensure the correct piece is being move
         if (getBoardSpace(from).getPiece() != piece)
             return false;
@@ -146,7 +146,7 @@ public class ChessGame {
         getBoardSpace(to).setPiece(piece);
         if (isEnPassant(piece, from, to)) { //must be done before setting all pawns to no longer be eligible. See method documentation for details.
             int direction = piece.getColor() == Color.BLACK ? -1 : 1;
-            BoardSpace captureSpace = getBoardSpace(new Vector(to.getX(), to.getY() + direction));
+            BoardSpace captureSpace = getBoardSpace(new Position(to.getRow() + direction, to.getCol()));
             captureSpace.setPiece(null);
         }
         setAllPawnToNotEligibleForEnPassant(); //must be called before the moveTo method. See method documentation for details
@@ -168,28 +168,29 @@ public class ChessGame {
      * @param to
      * @return
      */
-    private boolean isEnPassant(ChessPiece piece, Vector from, Vector to) {
+    private boolean isEnPassant(ChessPiece piece, Position from, Position to) {
 
-        if (!(piece instanceof Pawn))  //piece being moved is not a pawn
+        if (!(piece instanceof Pawn)) { //piece being moved is not a pawn
             return false;
-        else if (from.getX() == to.getX()) //is pawn but not a capture move (pawns only move diagonal when capturing)
+        }
+        else if (from.getCol() == to.getCol()) { //is pawn but not a capture move (pawns only move diagonal when capturing)
             return false;
+        }
 
         //get piece in space above the one being moved to
         //if it is a pawn that is eligible for en passant return true
         int direction = piece.getColor() == Color.BLACK ? -1 : 1;
-        Vector potentialCaptureVector = new Vector(to.getX(), to.getY() + direction);
-        BoardSpace potentialCaptureSpace = getBoardSpace(potentialCaptureVector);
+        Position potentialCapturePosition = new Position(to.getRow() + direction, to.getCol());
+        BoardSpace potentialCaptureSpace = getBoardSpace(potentialCapturePosition);
         ChessPiece potentialCapturePiece = potentialCaptureSpace.getPiece();
 
-        if (!(potentialCapturePiece instanceof Pawn))  //the piece is not a pawn
+        if (!(potentialCapturePiece instanceof Pawn)) {  //the piece is not a pawn
             return false;
+        }
         else if (((Pawn) potentialCapturePiece).isEligibleForEnPassant()) {
-            System.out.println("is en passant");
             return true;
         }
         else {
-            System.out.println("is not en passant");
             return false;
         }
     }
@@ -202,7 +203,7 @@ public class ChessGame {
     public void setAllPawnToNotEligibleForEnPassant() {
         for (int row = 0; row < board.length; row++) {
             for (int col = 0; col < board[0].length; col++) {
-                ChessPiece piece = getBoardSpace(new Vector(col, row)).getPiece();
+                ChessPiece piece = getBoardSpace(new Position(row, col)).getPiece();
 
                 if (piece instanceof Pawn && ((Pawn) piece).isEligibleForEnPassant())
                     ((Pawn) piece).setEligibleForEnPassant(false);

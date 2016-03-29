@@ -9,7 +9,7 @@
 //
 //import java.util.ArrayList;
 //import java.util.List;
-//import chess.model.Vector;
+//import chess.model.Position;
 //
 //import static org.junit.Assert.*;
 //
@@ -43,12 +43,12 @@
 //        final int Y = 0;
 //
 //        game.getBoard()[Y][X].setPiece(new King(Color.BLACK, game.getBoard()[Y][X].getPosition()));
-//        List<Vector> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
+//        List<Position> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
 //
-//        List<Vector> whatResultsShouldBe = new ArrayList<>();
-//        whatResultsShouldBe.add(new Vector(0, 1));
-//        whatResultsShouldBe.add(new Vector(1, 0));
-//        whatResultsShouldBe.add(new Vector(1, 1));
+//        List<Position> whatResultsShouldBe = new ArrayList<>();
+//        whatResultsShouldBe.add(new Position(0, 1));
+//        whatResultsShouldBe.add(new Position(1, 0));
+//        whatResultsShouldBe.add(new Position(1, 1));
 //
 //        assertTrue(legalMoves.size() == whatResultsShouldBe.size());
 //        assertTrue(whatResultsShouldBe.containsAll(legalMoves) && legalMoves.containsAll(whatResultsShouldBe));
@@ -60,12 +60,12 @@
 //        final int Y = 0;
 //
 //        game.getBoard()[Y][X].setPiece(new King(Color.BLACK, game.getBoard()[Y][X].getPosition()));
-//        List<Vector> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
+//        List<Position> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
 //
-//        List<Vector> whatResultsShouldBe = new ArrayList<>();
-//        whatResultsShouldBe.add(new Vector(7, 1));
-//        whatResultsShouldBe.add(new Vector(6, 0));
-//        whatResultsShouldBe.add(new Vector(6, 1));
+//        List<Position> whatResultsShouldBe = new ArrayList<>();
+//        whatResultsShouldBe.add(new Position(7, 1));
+//        whatResultsShouldBe.add(new Position(6, 0));
+//        whatResultsShouldBe.add(new Position(6, 1));
 //
 //        assertTrue(legalMoves.size() == whatResultsShouldBe.size());
 //        assertTrue(whatResultsShouldBe.containsAll(legalMoves) && legalMoves.containsAll(whatResultsShouldBe));
@@ -77,12 +77,12 @@
 //        final int Y = 7;
 //
 //        game.getBoard()[Y][X].setPiece(new King(Color.BLACK, game.getBoard()[Y][X].getPosition()));
-//        List<Vector> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
+//        List<Position> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
 //
-//        List<Vector> whatResultsShouldBe = new ArrayList<>();
-//        whatResultsShouldBe.add(new Vector(0, 6));
-//        whatResultsShouldBe.add(new Vector(1, 6));
-//        whatResultsShouldBe.add(new Vector(1, 7));
+//        List<Position> whatResultsShouldBe = new ArrayList<>();
+//        whatResultsShouldBe.add(new Position(0, 6));
+//        whatResultsShouldBe.add(new Position(1, 6));
+//        whatResultsShouldBe.add(new Position(1, 7));
 //
 //        assertTrue(legalMoves.size() == whatResultsShouldBe.size());
 //        assertTrue(whatResultsShouldBe.containsAll(legalMoves) && legalMoves.containsAll(whatResultsShouldBe));
@@ -94,12 +94,12 @@
 //        final int Y = 7;
 //
 //        game.getBoard()[Y][X].setPiece(new King(Color.BLACK, game.getBoard()[Y][X].getPosition()));
-//        List<Vector> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
+//        List<Position> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
 //
-//        List<Vector> whatResultsShouldBe = new ArrayList<>();
-//        whatResultsShouldBe.add(new Vector(6, 6));
-//        whatResultsShouldBe.add(new Vector(6, 7));
-//        whatResultsShouldBe.add(new Vector(7, 6));
+//        List<Position> whatResultsShouldBe = new ArrayList<>();
+//        whatResultsShouldBe.add(new Position(6, 6));
+//        whatResultsShouldBe.add(new Position(6, 7));
+//        whatResultsShouldBe.add(new Position(7, 6));
 //
 //        assertTrue(legalMoves.size() == whatResultsShouldBe.size());
 //        assertTrue(whatResultsShouldBe.containsAll(legalMoves) && legalMoves.containsAll(whatResultsShouldBe));
@@ -111,14 +111,14 @@
 //        final int Y = 0;
 //
 //        game.getBoard()[Y][X].setPiece(new King(Color.BLACK, game.getBoard()[Y][X].getPosition()));
-//        List<Vector> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
+//        List<Position> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
 //
-//        List<Vector> whatResultsShouldBe = new ArrayList<>();
-//        whatResultsShouldBe.add(new Vector(0, 3));
-//        whatResultsShouldBe.add(new Vector(0, 5));
-//        whatResultsShouldBe.add(new Vector(1, 3));
-//        whatResultsShouldBe.add(new Vector(1, 4));
-//        whatResultsShouldBe.add(new Vector(1, 5));
+//        List<Position> whatResultsShouldBe = new ArrayList<>();
+//        whatResultsShouldBe.add(new Position(0, 3));
+//        whatResultsShouldBe.add(new Position(0, 5));
+//        whatResultsShouldBe.add(new Position(1, 3));
+//        whatResultsShouldBe.add(new Position(1, 4));
+//        whatResultsShouldBe.add(new Position(1, 5));
 //
 //        assertTrue(legalMoves.size() == whatResultsShouldBe.size());
 //        assertTrue(whatResultsShouldBe.containsAll(legalMoves) && legalMoves.containsAll(whatResultsShouldBe));
@@ -130,14 +130,14 @@
 //        final int Y = 7;
 //
 //        game.getBoard()[Y][X].setPiece(new King(Color.BLACK, game.getBoard()[Y][X].getPosition()));
-//        List<Vector> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
+//        List<Position> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
 //
-//        List<Vector> whatResultsShouldBe = new ArrayList<>();
-//        whatResultsShouldBe.add(new Vector(7, 3));
-//        whatResultsShouldBe.add(new Vector(7, 5));
-//        whatResultsShouldBe.add(new Vector(6, 3));
-//        whatResultsShouldBe.add(new Vector(6, 4));
-//        whatResultsShouldBe.add(new Vector(6, 5));
+//        List<Position> whatResultsShouldBe = new ArrayList<>();
+//        whatResultsShouldBe.add(new Position(7, 3));
+//        whatResultsShouldBe.add(new Position(7, 5));
+//        whatResultsShouldBe.add(new Position(6, 3));
+//        whatResultsShouldBe.add(new Position(6, 4));
+//        whatResultsShouldBe.add(new Position(6, 5));
 //
 //        assertTrue(legalMoves.size() == whatResultsShouldBe.size());
 //        assertTrue(whatResultsShouldBe.containsAll(legalMoves) && legalMoves.containsAll(whatResultsShouldBe));
@@ -149,14 +149,14 @@
 //        final int Y = 4;
 //
 //        game.getBoard()[Y][X].setPiece(new King(Color.BLACK, game.getBoard()[Y][X].getPosition()));
-//        List<Vector> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
+//        List<Position> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
 //
-//        List<Vector> whatResultsShouldBe = new ArrayList<>();
-//        whatResultsShouldBe.add(new Vector(7, 3));
-//        whatResultsShouldBe.add(new Vector(7, 5));
-//        whatResultsShouldBe.add(new Vector(6, 3));
-//        whatResultsShouldBe.add(new Vector(6, 4));
-//        whatResultsShouldBe.add(new Vector(6, 5));
+//        List<Position> whatResultsShouldBe = new ArrayList<>();
+//        whatResultsShouldBe.add(new Position(7, 3));
+//        whatResultsShouldBe.add(new Position(7, 5));
+//        whatResultsShouldBe.add(new Position(6, 3));
+//        whatResultsShouldBe.add(new Position(6, 4));
+//        whatResultsShouldBe.add(new Position(6, 5));
 //
 //        assertTrue(legalMoves.size() == whatResultsShouldBe.size());
 //        assertTrue(whatResultsShouldBe.containsAll(legalMoves) && legalMoves.containsAll(whatResultsShouldBe));
@@ -168,14 +168,14 @@
 //        final int Y = 4;
 //
 //        game.getBoard()[Y][X].setPiece(new King(Color.BLACK, game.getBoard()[Y][X].getPosition()));
-//        List<Vector> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
+//        List<Position> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
 //
-//        List<Vector> whatResultsShouldBe = new ArrayList<>();
-//        whatResultsShouldBe.add(new Vector(0, 3));
-//        whatResultsShouldBe.add(new Vector(0, 5));
-//        whatResultsShouldBe.add(new Vector(1, 3));
-//        whatResultsShouldBe.add(new Vector(1, 4));
-//        whatResultsShouldBe.add(new Vector(1, 5));
+//        List<Position> whatResultsShouldBe = new ArrayList<>();
+//        whatResultsShouldBe.add(new Position(0, 3));
+//        whatResultsShouldBe.add(new Position(0, 5));
+//        whatResultsShouldBe.add(new Position(1, 3));
+//        whatResultsShouldBe.add(new Position(1, 4));
+//        whatResultsShouldBe.add(new Position(1, 5));
 //
 //        assertTrue(legalMoves.size() == whatResultsShouldBe.size());
 //        assertTrue(whatResultsShouldBe.containsAll(legalMoves) && legalMoves.containsAll(whatResultsShouldBe));
@@ -187,17 +187,17 @@
 //        final int Y = 4;
 //
 //        game.getBoard()[Y][X].setPiece(new King(Color.BLACK, game.getBoard()[Y][X].getPosition()));
-//        List<Vector> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
+//        List<Position> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
 //
-//        List<Vector> whatResultsShouldBe = new ArrayList<>();
-//        whatResultsShouldBe.add(new Vector(3, 3));
-//        whatResultsShouldBe.add(new Vector(3, 4));
-//        whatResultsShouldBe.add(new Vector(3, 5));
-//        whatResultsShouldBe.add(new Vector(4, 3));
-//        whatResultsShouldBe.add(new Vector(4, 5));
-//        whatResultsShouldBe.add(new Vector(5, 3));
-//        whatResultsShouldBe.add(new Vector(5, 4));
-//        whatResultsShouldBe.add(new Vector(5, 5));
+//        List<Position> whatResultsShouldBe = new ArrayList<>();
+//        whatResultsShouldBe.add(new Position(3, 3));
+//        whatResultsShouldBe.add(new Position(3, 4));
+//        whatResultsShouldBe.add(new Position(3, 5));
+//        whatResultsShouldBe.add(new Position(4, 3));
+//        whatResultsShouldBe.add(new Position(4, 5));
+//        whatResultsShouldBe.add(new Position(5, 3));
+//        whatResultsShouldBe.add(new Position(5, 4));
+//        whatResultsShouldBe.add(new Position(5, 5));
 //
 //        assertTrue(legalMoves.size() == whatResultsShouldBe.size());
 //        assertTrue(whatResultsShouldBe.containsAll(legalMoves) && legalMoves.containsAll(whatResultsShouldBe));
@@ -211,15 +211,15 @@
 //        game.getBoard()[Y][X].setPiece(new King(Color.BLACK, game.getBoard()[Y][X].getPosition()));
 //        game.getBoard()[Y - 1][X + 1].setPiece(new Pawn(Color.BLACK, game.getBoard()[Y - 1][X + 1].getPosition()));
 //        game.getBoard()[Y][X - 1].setPiece(new Pawn(Color.BLACK, game.getBoard()[Y][X - 1].getPosition()));
-//        List<Vector> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
+//        List<Position> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
 //
-//        List<Vector> whatResultsShouldBe = new ArrayList<>();
-//        whatResultsShouldBe.add(new Vector(3, 3));
-//        whatResultsShouldBe.add(new Vector(3, 5));
-//        whatResultsShouldBe.add(new Vector(4, 3));
-//        whatResultsShouldBe.add(new Vector(4, 5));
-//        whatResultsShouldBe.add(new Vector(5, 4));
-//        whatResultsShouldBe.add(new Vector(5, 5));
+//        List<Position> whatResultsShouldBe = new ArrayList<>();
+//        whatResultsShouldBe.add(new Position(3, 3));
+//        whatResultsShouldBe.add(new Position(3, 5));
+//        whatResultsShouldBe.add(new Position(4, 3));
+//        whatResultsShouldBe.add(new Position(4, 5));
+//        whatResultsShouldBe.add(new Position(5, 4));
+//        whatResultsShouldBe.add(new Position(5, 5));
 //
 //        assertTrue(legalMoves.size() == whatResultsShouldBe.size());
 //        assertTrue(whatResultsShouldBe.containsAll(legalMoves) && legalMoves.containsAll(whatResultsShouldBe));
@@ -241,7 +241,7 @@
 //        game.getBoard()[Y + 1][X - 1].setPiece(new Pawn(Color.BLACK, game.getBoard()[Y + 1][X - 1].getPosition()));
 //        game.getBoard()[Y + 1][X].setPiece(new Pawn(Color.BLACK, game.getBoard()[Y + 1][X].getPosition()));
 //        game.getBoard()[Y + 1][X + 1].setPiece(new Pawn(Color.BLACK, game.getBoard()[Y + 1][X + 1].getPosition()));
-//        List<Vector> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
+//        List<Position> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
 //
 //        assertTrue(legalMoves.size() == 0);
 //    }

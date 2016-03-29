@@ -5,12 +5,12 @@ import chess.model.pieces.ChessPiece;
 
 public class BoardSpace {
 
-    private Vector position;
+    private Position position;
     private ChessPiece piece;
     private boolean highlighted;
     private boolean selected;
 
-    public BoardSpace(Vector position) {
+    public BoardSpace(Position position) {
         this.position = position;
     }
 
@@ -22,7 +22,7 @@ public class BoardSpace {
         this.piece = piece;
     }
 
-    public Vector getPosition() {
+    public Position getPosition() {
         return this.position;
     }
 

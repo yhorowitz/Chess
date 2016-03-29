@@ -1,7 +1,7 @@
 package chess.view.twod;
 
 import chess.model.ChessGame;
-import chess.model.Vector;
+import chess.model.Position;
 import javafx.scene.layout.*;
 
 public class Board extends TilePane {
@@ -22,9 +22,9 @@ public class Board extends TilePane {
         return this.grid;
     }
 
-    public BoardPosition getBoardPosition(Vector vector) {
-        int row = vector.getY();
-        int column = vector.getX();
+    public BoardPosition getBoardPosition(Position position) {
+        int row = position.getRow();
+        int column = position.getCol();
 
         return grid[row][column];
     }
@@ -38,9 +38,9 @@ public class Board extends TilePane {
         grid = new BoardPosition[8][8];
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
-                grid[row][col] = new BoardPosition(new Vector(col, row));
+                grid[row][col] = new BoardPosition(new Position(row, col));
 
-                setBackgroundColorForGridSpace(grid[row][col], col, row);
+                setBackgroundColorForGridSpace(grid[row][col], row, col);
 
                 this.getChildren().add(grid[row][col]);
 
@@ -49,15 +49,15 @@ public class Board extends TilePane {
 
     }
 
-    private void setBackgroundColorForGridSpace(BoardPosition btn, int x, int y) {
-        if (x % 2 == 0) {
-            if (y % 2 == 0)
+    private void setBackgroundColorForGridSpace(BoardPosition btn, int row, int col) {
+        if (col % 2 == 0) {
+            if (row % 2 == 0)
                 btn.getStyleClass().add("grey");
             else
                 btn.getStyleClass().add("lightBrown");
         }
         else {
-            if (y % 2 == 0)
+            if (row % 2 == 0)
                 btn.getStyleClass().add("lightBrown");
             else
                 btn.getStyleClass().add("grey");
@@ -65,10 +65,10 @@ public class Board extends TilePane {
     }
 
     public void update(ChessGame game) {
-        for (int row = 0; row < grid.length; row++) {
-            for (int col = 0; col < grid[row].length; col++) {
-                Vector vector = new Vector(col, row);
-                getBoardPosition(vector).update(game.getBoardSpace(vector));
+        for (int row = 0; row < ChessGame.BOARD_SIZE; row++) {
+            for (int col = 0; col < ChessGame.BOARD_SIZE; col++) {
+                Position position = new Position(row, col);
+                getBoardPosition(position).update(game.getBoardSpace(position));
             }
         }
     }

@@ -3,7 +3,7 @@ package chess.model.pieces;
 import chess.model.BoardSpace;
 import chess.model.ChessGame;
 import chess.model.Color;
-import chess.model.Vector;
+import chess.model.Position;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ public class Pawn extends ChessPiece  {
         this.setColor(color);
     }
 
-    public Pawn(Color color, Vector position) {
+    public Pawn(Color color, Position position) {
         this.setColor(color);
         this.setPosition(position);
     }
@@ -45,13 +45,13 @@ public class Pawn extends ChessPiece  {
     }
 
     @Override
-    public void moveTo(Vector vector) {
+    public void moveTo(Position position) {
 
         //check if the piece will move forward 2 spaces. If yes it is now eligible for En Passant
-        if (Math.abs(this.getPosition().getY() - vector.getY()) == 2)
+        if (Math.abs(this.getPosition().getRow() - position.getRow()) == 2)
             setEligibleForEnPassant(true);
 
-        super.moveTo(vector);
+        super.moveTo(position);
         this.moved = true;
     }
 
@@ -72,21 +72,21 @@ public class Pawn extends ChessPiece  {
      * @return
      */
     @Override
-    public List<Vector> getLegalMoves(ChessGame game) {
+    public List<Position> getLegalMoves(ChessGame game) {
         //used to determine which direction the pawn can move based on its color
         int direction = this.getColor() == Color.BLACK ? 1 : -1;
         //how many spaces forward it can move based on its color
         int spacesCanMove = hasMoved() ? 1 : 2;
 
-        int currentRow = this.getPosition().getY();
-        int currentColumn = this.getPosition().getX();
+        int currentRow = this.getPosition().getRow();
+        int currentColumn = this.getPosition().getCol();
 
-        List<Vector> legalMoves = new ArrayList<>();
+        List<Position> legalMoves = new ArrayList<>();
 
         //add any spaces 1 ahead (or 2 if first move) that arent blocked
         for (int i = 1; i <= spacesCanMove; i++) {
             int newRow = currentRow + (i * direction);
-            Vector spaceBeingChecked = new Vector(currentColumn, newRow);
+            Position spaceBeingChecked = new Position(newRow, currentColumn);
 
             if (!game.getBoardSpace(spaceBeingChecked).isOccupied()) {
                 legalMoves.add(spaceBeingChecked);
@@ -96,40 +96,40 @@ public class Pawn extends ChessPiece  {
         }
 
         //check if any spaces have a piece that can be captured
-        Vector vectorForCapture;
+        Position positionForCapture;
         BoardSpace captureSpace;
 
         if (currentColumn - 1 >= 0) {
             //check for regular capture
-            vectorForCapture = new Vector(currentColumn - 1, currentRow + direction);
-            captureSpace = game.getBoardSpace(vectorForCapture);
+            positionForCapture = new Position(currentRow + direction, currentColumn - 1);
+            captureSpace = game.getBoardSpace(positionForCapture);
             if(captureSpace.isOccupied() && captureSpace.getPiece().getColor() != game.getCurrentTurn()){
-                legalMoves.add(vectorForCapture);
+                legalMoves.add(positionForCapture);
             }
 
             //check for En Passant
-            Vector vectorToCheck = new Vector(currentColumn - 1, currentRow);
-            BoardSpace spaceToCheck = game.getBoardSpace(vectorToCheck);
+            Position positionToCheck = new Position(currentRow, currentColumn - 1);
+            BoardSpace spaceToCheck = game.getBoardSpace(positionToCheck);
             if (spaceToCheck.isOccupied() && spaceToCheck.getPiece() instanceof Pawn &&
                     ((Pawn) spaceToCheck.getPiece()).isEligibleForEnPassant()) {
-                legalMoves.add(vectorForCapture);
+                legalMoves.add(positionForCapture);
             }
         }
 
         if (currentColumn + 1 < 8) {
             //check for regular capture
-            vectorForCapture = new Vector(currentColumn + 1, currentRow + direction);
-            captureSpace = game.getBoardSpace(vectorForCapture);
+            positionForCapture = new Position(currentRow + direction, currentColumn + 1);
+            captureSpace = game.getBoardSpace(positionForCapture);
             if(captureSpace.isOccupied() && captureSpace.getPiece().getColor() != game.getCurrentTurn()){
-                legalMoves.add(vectorForCapture);
+                legalMoves.add(positionForCapture);
             }
 
             //check for En Passant
-            Vector vectorToCheck = new Vector(currentColumn + 1, currentRow);
-            BoardSpace spaceToCheck = game.getBoardSpace(vectorToCheck);
+            Position positionToCheck = new Position(currentRow, currentColumn + 1);
+            BoardSpace spaceToCheck = game.getBoardSpace(positionToCheck);
             if (spaceToCheck.isOccupied() && spaceToCheck.getPiece() instanceof Pawn &&
                     ((Pawn) spaceToCheck.getPiece()).isEligibleForEnPassant()) {
-                legalMoves.add(vectorForCapture);
+                legalMoves.add(positionForCapture);
             }
         }
 

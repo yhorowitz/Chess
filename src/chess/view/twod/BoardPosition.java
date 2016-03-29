@@ -1,32 +1,31 @@
 package chess.view.twod;
 
 import chess.model.BoardSpace;
-import chess.model.Color;
+import chess.model.Position;
 import chess.model.pieces.*;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
-import chess.model.Vector;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class BoardPosition extends Button {
 
-    private Vector position;
+    private Position position;
     private boolean highlight = false;
     private boolean selected = false;
 
-    BoardPosition(Vector vector) {
+    BoardPosition(Position position) {
         super();
-        this.setPosition(vector);
+        this.setPosition(position);
         this.getStyleClass().add("boardSpace");
     }
 
-    private void setPosition(Vector vector) {
-        this.position = vector;
+    private void setPosition(Position position) {
+        this.position = position;
     }
 
-    public Vector getPosition() {
+    public Position getPosition() {
         return this.position;
     }
 
@@ -37,6 +36,10 @@ public class BoardPosition extends Button {
             this.getStyleClass().add("highlight");
         else
             this.getStyleClass().remove("highlight");
+    }
+
+    public boolean isHighlighted() {
+        return this.highlight;
     }
 
     public void select(boolean select) {

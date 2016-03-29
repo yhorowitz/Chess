@@ -2,7 +2,7 @@ package chess.model.pieces;
 
 import chess.model.ChessGame;
 import chess.model.Color;
-import chess.model.Vector;
+import chess.model.Position;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
 public abstract class ChessPiece {
 
     private Color color;
-    private Vector position;
+    private Position position;
 
     public Color getColor() {
         return this.color;
@@ -22,28 +22,28 @@ public abstract class ChessPiece {
         this.color = color;
     }
 
-    public Vector getPosition() {
+    public Position getPosition() {
         return position;
     }
 
-    public void setPosition(Vector position) {
+    public void setPosition(Position position) {
         this.position = position;
     }
 
     /**
      * Changes the position of this piece
-     * @param vector
+     * @param position
      */
-    public void moveTo(Vector vector) {
-        setPosition(vector);
+    public void moveTo(Position position) {
+        setPosition(position);
     }
 
     /**
      * Checks if the current move is a legal move for this piece
-     * @param vector
+     * @param position
      * @return
      */
-    public boolean isLegalMove(Vector vector) {
+    public boolean isLegalMove(Position position) {
         return false;
     }
 
@@ -52,7 +52,7 @@ public abstract class ChessPiece {
      * @param game
      * @return
      */
-    public abstract List<Vector> getLegalMoves(ChessGame game);
+    public abstract List<Position> getLegalMoves(ChessGame game);
 
     /**
      * Handles the capturing of the piece

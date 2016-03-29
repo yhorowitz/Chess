@@ -2,7 +2,7 @@ package chess.tests.model.pieces;
 
 import chess.model.ChessGame;
 import chess.model.Color;
-import chess.model.Vector;
+import chess.model.Position;
 import chess.model.pieces.Pawn;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,17 +41,17 @@ public class PawnTest {
     @Test
     public void firstMoveCanMoveForwardTwoSpacesIfNotBlocked() {
         Color color = Color.BLACK;
-        Vector position = new Vector(1, 3);
-        int row = position.getY();
-        int column = position.getX();
+        Position position = new Position(3, 1);
+        int row = position.getCol();
+        int column = position.getRow();
 
         Pawn pawn = new Pawn(color, position);
         game.getBoardSpace(position).setPiece(pawn);
-        List<Vector> legalMoves = pawn.getLegalMoves(game);
+        List<Position> legalMoves = pawn.getLegalMoves(game);
 
-        List<Vector> whatResultsShouldBe = new ArrayList<>();
-        whatResultsShouldBe.add(new Vector(column, row + 1));
-        whatResultsShouldBe.add(new Vector(column, row + 2));
+        List<Position> whatResultsShouldBe = new ArrayList<>();
+        whatResultsShouldBe.add(new Position(row + 1, column));
+        whatResultsShouldBe.add(new Position(row + 2, column));
 
         assertTrue(legalMoves.size() == whatResultsShouldBe.size());
         assertTrue(whatResultsShouldBe.containsAll(legalMoves)
@@ -61,21 +61,21 @@ public class PawnTest {
 
     @Test
     public void firstMoveCanMoveForwardOneSpaceIfBlocked() {
-        Vector position = new Vector(1, 3);
-        int row = position.getY();
-        int column = position.getX();
+        Position position = new Position(3, 1);
+        int row = position.getCol();
+        int column = position.getRow();
 
         Pawn pawn = new Pawn(Color.BLACK, position);
         game.getBoardSpace(position).setPiece(pawn);
 
-        Vector blockingPosition = new Vector(column, row + 2);
+        Position blockingPosition = new Position(row + 2, column);
         Pawn blockingPiece = new Pawn(Color.WHITE, blockingPosition);
         game.getBoardSpace(blockingPosition).setPiece(blockingPiece);
 
-        List<Vector> legalMoves = pawn.getLegalMoves(game);
+        List<Position> legalMoves = pawn.getLegalMoves(game);
 
-        List<Vector> whatResultsShouldBe = new ArrayList<>();
-        whatResultsShouldBe.add(new Vector(column, row + 1));
+        List<Position> whatResultsShouldBe = new ArrayList<>();
+        whatResultsShouldBe.add(new Position(row + 1, column));
 
         assertTrue(legalMoves.size() == whatResultsShouldBe.size());
         assertTrue(whatResultsShouldBe.containsAll(legalMoves)
@@ -84,13 +84,13 @@ public class PawnTest {
 
     @Test
     public void pieceMovesToTheCorrectLocation() {
-        Vector startPos = new Vector(1, 3);
+        Position startPos = new Position(3, 1);
         Pawn pawn = new Pawn(Color.BLACK, startPos);
         game.getBoardSpace(startPos).setPiece(pawn);
 
-        List<Vector> legalMoves = pawn.getLegalMoves(game);
+        List<Position> legalMoves = pawn.getLegalMoves(game);
         assertTrue(legalMoves.size() > 0);
-        Vector endPos = legalMoves.get(0);
+        Position endPos = legalMoves.get(0);
         game.makeMove(pawn, startPos, endPos);
         assertSame(game.getBoardSpace(endPos).getPiece(), pawn);
         assertNull(game.getBoardSpace(startPos).getPiece());
@@ -103,19 +103,19 @@ public class PawnTest {
         if (game.getCurrentTurn() != Color.BLACK)
             game.changeTurns();
 
-        Vector startPos = new Vector(3, 1);
+        Position startPos = new Position(1, 3);
         Pawn pawn = new Pawn(Color.BLACK, startPos);
         game.getBoardSpace(startPos).setPiece(pawn);
 
-        Vector capturePiecePos = new Vector(2,2);
+        Position capturePiecePos = new Position(2, 2);
         Pawn capturePiece = new Pawn(Color.WHITE, capturePiecePos);
         game.getBoardSpace(capturePiecePos).setPiece(capturePiece);
 
-        Vector capturePiecePos2 = new Vector(4,2);
+        Position capturePiecePos2 = new Position(2, 4);
         Pawn capturePiece2 = new Pawn(Color.WHITE, capturePiecePos);
         game.getBoardSpace(capturePiecePos2).setPiece(capturePiece2);
 
-        List<Vector> legalMoves = pawn.getLegalMoves(game);
+        List<Position> legalMoves = pawn.getLegalMoves(game);
         assertTrue(legalMoves.contains(capturePiecePos));
         assertTrue(legalMoves.contains(capturePiecePos2));
     }
@@ -125,19 +125,19 @@ public class PawnTest {
         if (game.getCurrentTurn() != Color.BLACK)
             game.changeTurns();
 
-        Vector startPos = new Vector(3, 1);
+        Position startPos = new Position(1, 3);
         Pawn pawn = new Pawn(Color.BLACK, startPos);
         game.getBoardSpace(startPos).setPiece(pawn);
 
-        Vector capturePiecePos = new Vector(2,2);
+        Position capturePiecePos = new Position(2, 2);
         Pawn capturePiece = new Pawn(Color.BLACK, capturePiecePos);
         game.getBoardSpace(capturePiecePos).setPiece(capturePiece);
 
-        Vector capturePiecePos2 = new Vector(4,2);
+        Position capturePiecePos2 = new Position(2, 4);
         Pawn capturePiece2 = new Pawn(Color.BLACK, capturePiecePos);
         game.getBoardSpace(capturePiecePos2).setPiece(capturePiece2);
 
-        List<Vector> legalMoves = pawn.getLegalMoves(game);
+        List<Position> legalMoves = pawn.getLegalMoves(game);
         assertFalse(legalMoves.contains(capturePiecePos));
         assertFalse(legalMoves.contains(capturePiecePos2));
     }

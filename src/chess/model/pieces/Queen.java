@@ -2,7 +2,7 @@ package chess.model.pieces;
 
 import chess.model.ChessGame;
 import chess.model.Color;
-import chess.model.Vector;
+import chess.model.Position;
 
 import java.util.List;
 
@@ -14,13 +14,13 @@ public class Queen extends ChessPiece  {
         this.setColor(color);
     }
 
-    public Queen(Color color, Vector position) {
+    public Queen(Color color, Position position) {
         this.setColor(color);
         this.setPosition(position);
     }
 
     @Override
-    public List<Vector> getLegalMoves(ChessGame game) {
+    public List<Position> getLegalMoves(ChessGame game) {
         return null;
     }
 }
