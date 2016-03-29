@@ -1,15 +1,12 @@
 package chess.model;
 
 import chess.model.pieces.*;
-import chess.view.twod.Board;
-
-import java.util.List;
 
 /**
  * Holds the state of a single chess game
  */
 public class ChessGame {
-    final int SIZE = 8;
+    public final static int BOARD_SIZE = 8;
 
     private BoardSpace[][] board = new BoardSpace[8][8];
     private Color currentTurn = Color.WHITE;
@@ -40,8 +37,8 @@ public class ChessGame {
      */
     private void createBoard() {
         //set up all spaces on the game
-        for (int row = 0; row < SIZE; row++) {
-            for (int col = 0; col < SIZE; col++) {
+        for (int row = 0; row < BOARD_SIZE; row++) {
+            for (int col = 0; col < BOARD_SIZE; col++) {
                 board[row][col] = new BoardSpace(new Vector(col, row));
             }
         }
@@ -152,7 +149,7 @@ public class ChessGame {
             BoardSpace captureSpace = getBoardSpace(new Vector(to.getX(), to.getY() + direction));
             captureSpace.setPiece(null);
         }
-        removeEnPassantFromAllEligiblePawns(); //must be called before the moveTo method. See method documentation for details
+        setAllPawnToNotEligibleForEnPassant(); //must be called before the moveTo method. See method documentation for details
         piece.moveTo(to);
         changeTurns();
 
@@ -202,7 +199,7 @@ public class ChessGame {
      *
      * NOTE: This must be done before the piece is moved, otherwise if it is a pawn moving 2 spaces it will become ineligible
      */
-    public void removeEnPassantFromAllEligiblePawns() {
+    public void setAllPawnToNotEligibleForEnPassant() {
         for (int row = 0; row < board.length; row++) {
             for (int col = 0; col < board[0].length; col++) {
                 ChessPiece piece = getBoardSpace(new Vector(col, row)).getPiece();
@@ -212,18 +209,6 @@ public class ChessGame {
 
             }
         }
-    }
-
-    /**
-     * SHOULD NOT BE USED.
-     * Get board spaces using the getBoardSpace(Vector vector) method by specifying
-     * the vector
-     *
-     * @return
-     */
-    @Deprecated
-    public BoardSpace[][] getBoard() {
-        return this.board;
     }
 
     /**

@@ -126,9 +126,9 @@ public class BoardController {
         }
 
         //update model
-        for (int i = 0; i < game.getBoard().length; i++) {
-            for (BoardSpace position : game.getBoard()[i]) {
-                position.select(false);
+        for (int row = 0; row < ChessGame.BOARD_SIZE; row++) {
+            for (int col = 0; col < ChessGame.BOARD_SIZE; col++) {
+                game.getBoardSpace(new Vector(col, row)).highlight(false);
             }
         }
         game.selectNewPosition(null);
@@ -137,16 +137,16 @@ public class BoardController {
 
     private void removeHighlightFromAllBoardPositions() {
         //update view
-        for (int i = 0; i < gameUI.getGrid().length; i++) {
-            for (BoardPosition position : gameUI.getGrid()[i]) {
-                position.highlight(false);
+        for (int row = 0; row < ChessGame.BOARD_SIZE; row++) {
+            for (int col = 0; col < ChessGame.BOARD_SIZE; col++) {
+                gameUI.getBoardPosition(new Vector(col, row)).highlight(false);
             }
         }
 
         //update model
-        for (int i = 0; i < game.getBoard().length; i++) {
-            for (BoardSpace position : game.getBoard()[i]) {
-                position.highlight(false);
+        for (int row = 0; row < ChessGame.BOARD_SIZE; row++) {
+            for (int col = 0; col < ChessGame.BOARD_SIZE; col++) {
+                game.getBoardSpace(new Vector(col, row)).highlight(false);
             }
         }
     }
