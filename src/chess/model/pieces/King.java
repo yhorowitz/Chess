@@ -23,4 +23,9 @@ public class King extends ChessPiece  {
     public List<Position> getLegalMoves(ChessGame game) {
         return null;
     }
+
+    @Override
+    public String getNotationSymbol() {
+        return "K";
+    }
 }

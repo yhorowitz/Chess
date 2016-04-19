@@ -23,6 +23,11 @@ public class Pawn extends ChessPiece  {
         this.setPosition(position);
     }
 
+    @Override
+    public String getNotationSymbol() {
+        return "";
+    }
+
     /**
      * Checks if this piece is eligible to have the En Passant move used against it
      *

@@ -55,6 +55,12 @@ public abstract class ChessPiece {
     public abstract List<Position> getLegalMoves(ChessGame game);
 
     /**
+     * Gets the notation symbol for the piece
+     * @return
+     */
+    public abstract String getNotationSymbol();
+
+    /**
      * Handles the capturing of the piece
      */
     public void capture() {

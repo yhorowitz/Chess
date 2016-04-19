@@ -23,4 +23,9 @@ public class Rook extends ChessPiece  {
     public List<Position> getLegalMoves(ChessGame game) {
         return null;
     }
+
+    @Override
+    public String getNotationSymbol() {
+        return "R";
+    }
 }
