@@ -1,7 +1,7 @@
 package chess.model.pieces;
 
 import chess.model.ChessGame;
-import chess.model.Color;
+import chess.model.PieceColor;
 import chess.model.Position;
 
 import java.util.List;
@@ -9,12 +9,12 @@ import java.util.List;
 
 public class Bishop extends ChessPiece {
 
-    public Bishop(Color color) {
-        this.setColor(color);
+    public Bishop(PieceColor pieceColor) {
+        this.setPieceColor(pieceColor);
     }
 
-    public Bishop(Color color, Position position) {
-        this.setColor(color);
+    public Bishop(PieceColor pieceColor, Position position) {
+        this.setPieceColor(pieceColor);
         this.setPosition(position);
     }
 

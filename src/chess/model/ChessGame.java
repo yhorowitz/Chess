@@ -9,9 +9,12 @@ public class ChessGame {
     public final static int BOARD_SIZE = 8;
 
     private BoardSpace[][] board = new BoardSpace[BOARD_SIZE][BOARD_SIZE];
-    private Color currentTurn = Color.WHITE;
+    private PieceColor currentTurn = PieceColor.WHITE;
     private Position selectedPosition = null;
 
+    //
+    private King blackKing = new King(PieceColor.BLACK);
+    private King whiteKing = new King(PieceColor.WHITE);
 
     public ChessGame() {
         createBoard();
@@ -50,30 +53,30 @@ public class ChessGame {
     private void setUpNewGame() {
 
         //add black pieces to the game
-        board[0][0].setPiece(new Rook(Color.BLACK, board[0][0].getPosition()));
-        board[0][1].setPiece(new Knight(Color.BLACK, board[0][1].getPosition()));
-        board[0][2].setPiece(new Bishop(Color.BLACK, board[0][2].getPosition()));
-        board[0][3].setPiece(new Queen(Color.BLACK, board[0][3].getPosition()));
-        board[0][4].setPiece(new King(Color.BLACK, board[0][4].getPosition()));
-        board[0][5].setPiece(new Bishop(Color.BLACK, board[0][5].getPosition()));
-        board[0][6].setPiece(new Knight(Color.BLACK, board[0][6].getPosition()));
-        board[0][7].setPiece(new Rook(Color.BLACK, board[0][7].getPosition()));
+        board[0][0].setPiece(new Rook(PieceColor.BLACK, board[0][0].getPosition()));
+        board[0][1].setPiece(new Knight(PieceColor.BLACK, board[0][1].getPosition()));
+        board[0][2].setPiece(new Bishop(PieceColor.BLACK, board[0][2].getPosition()));
+        board[0][3].setPiece(new Queen(PieceColor.BLACK, board[0][3].getPosition()));
+        board[0][4].setPiece(new King(PieceColor.BLACK, board[0][4].getPosition()));
+        board[0][5].setPiece(new Bishop(PieceColor.BLACK, board[0][5].getPosition()));
+        board[0][6].setPiece(new Knight(PieceColor.BLACK, board[0][6].getPosition()));
+        board[0][7].setPiece(new Rook(PieceColor.BLACK, board[0][7].getPosition()));
         for (int col = 0; col < 8; col++) {
-            board[1][col].setPiece(new Pawn(Color.BLACK, board[1][col].getPosition()));
+            board[1][col].setPiece(new Pawn(PieceColor.BLACK, board[1][col].getPosition()));
         }
 
         //add white pieces to the game
         for (int col = 0; col < 8; col++) {
-            board[6][col].setPiece(new Pawn(Color.WHITE, board[6][col].getPosition()));
+            board[6][col].setPiece(new Pawn(PieceColor.WHITE, board[6][col].getPosition()));
         }
-        board[7][0].setPiece(new Rook(Color.WHITE, board[7][0].getPosition()));
-        board[7][1].setPiece(new Knight(Color.WHITE, board[7][1].getPosition()));
-        board[7][2].setPiece(new Bishop(Color.WHITE, board[7][2].getPosition()));
-        board[7][3].setPiece(new Queen(Color.WHITE, board[7][3].getPosition()));
-        board[7][4].setPiece(new King(Color.WHITE, board[7][4].getPosition()));
-        board[7][5].setPiece(new Bishop(Color.WHITE, board[7][5].getPosition()));
-        board[7][6].setPiece(new Knight(Color.WHITE, board[7][6].getPosition()));
-        board[7][7].setPiece(new Rook(Color.WHITE, board[7][7].getPosition()));
+        board[7][0].setPiece(new Rook(PieceColor.WHITE, board[7][0].getPosition()));
+        board[7][1].setPiece(new Knight(PieceColor.WHITE, board[7][1].getPosition()));
+        board[7][2].setPiece(new Bishop(PieceColor.WHITE, board[7][2].getPosition()));
+        board[7][3].setPiece(new Queen(PieceColor.WHITE, board[7][3].getPosition()));
+        board[7][4].setPiece(new King(PieceColor.WHITE, board[7][4].getPosition()));
+        board[7][5].setPiece(new Bishop(PieceColor.WHITE, board[7][5].getPosition()));
+        board[7][6].setPiece(new Knight(PieceColor.WHITE, board[7][6].getPosition()));
+        board[7][7].setPiece(new Rook(PieceColor.WHITE, board[7][7].getPosition()));
     }
 
     /**
@@ -106,7 +109,7 @@ public class ChessGame {
      *
      * @return
      */
-    public Color getCurrentTurn() {
+    public PieceColor getCurrentTurn() {
         return currentTurn;
     }
 
@@ -114,7 +117,7 @@ public class ChessGame {
      * Changes which player's turn it is
      */
     public void changeTurns() {
-        currentTurn = getCurrentTurn() == Color.BLACK ? Color.WHITE : Color.BLACK;
+        currentTurn = getCurrentTurn() == PieceColor.BLACK ? PieceColor.WHITE : PieceColor.BLACK;
     }
 
     /**
@@ -145,7 +148,7 @@ public class ChessGame {
         getBoardSpace(from).setPiece(null);
         getBoardSpace(to).setPiece(piece);
         if (isEnPassant(piece, from, to)) { //must be done before setting all pawns to no longer be eligible. See method documentation for details.
-            int direction = piece.getColor() == Color.BLACK ? -1 : 1;
+            int direction = piece.getPieceColor() == PieceColor.BLACK ? -1 : 1;
             BoardSpace captureSpace = getBoardSpace(new Position(to.getRow() + direction, to.getCol()));
             captureSpace.setPiece(null);
         }
@@ -179,7 +182,7 @@ public class ChessGame {
 
         //get piece in space above the one being moved to
         //if it is a pawn that is eligible for en passant return true
-        int direction = piece.getColor() == Color.BLACK ? -1 : 1;
+        int direction = piece.getPieceColor() == PieceColor.BLACK ? -1 : 1;
         Position potentialCapturePosition = new Position(to.getRow() + direction, to.getCol());
         BoardSpace potentialCaptureSpace = getBoardSpace(potentialCapturePosition);
         ChessPiece potentialCapturePiece = potentialCaptureSpace.getPiece();

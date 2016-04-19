@@ -2,7 +2,7 @@
 //
 //
 //import chess.model.ChessGame;
-//import chess.model.Color;
+//import chess.model.PieceColor;
 //import chess.model.pieces.*;
 //import org.junit.Before;
 //import org.junit.Test;
@@ -42,7 +42,7 @@
 //        final int X = 0;
 //        final int Y = 0;
 //
-//        game.getBoard()[Y][X].setPiece(new King(Color.BLACK, game.getBoard()[Y][X].getPosition()));
+//        game.getBoard()[Y][X].setPiece(new King(PieceColor.BLACK, game.getBoard()[Y][X].getPosition()));
 //        List<Position> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
 //
 //        List<Position> whatResultsShouldBe = new ArrayList<>();
@@ -59,7 +59,7 @@
 //        final int X = 7;
 //        final int Y = 0;
 //
-//        game.getBoard()[Y][X].setPiece(new King(Color.BLACK, game.getBoard()[Y][X].getPosition()));
+//        game.getBoard()[Y][X].setPiece(new King(PieceColor.BLACK, game.getBoard()[Y][X].getPosition()));
 //        List<Position> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
 //
 //        List<Position> whatResultsShouldBe = new ArrayList<>();
@@ -76,7 +76,7 @@
 //        final int X = 0;
 //        final int Y = 7;
 //
-//        game.getBoard()[Y][X].setPiece(new King(Color.BLACK, game.getBoard()[Y][X].getPosition()));
+//        game.getBoard()[Y][X].setPiece(new King(PieceColor.BLACK, game.getBoard()[Y][X].getPosition()));
 //        List<Position> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
 //
 //        List<Position> whatResultsShouldBe = new ArrayList<>();
@@ -93,7 +93,7 @@
 //        final int X = 7;
 //        final int Y = 7;
 //
-//        game.getBoard()[Y][X].setPiece(new King(Color.BLACK, game.getBoard()[Y][X].getPosition()));
+//        game.getBoard()[Y][X].setPiece(new King(PieceColor.BLACK, game.getBoard()[Y][X].getPosition()));
 //        List<Position> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
 //
 //        List<Position> whatResultsShouldBe = new ArrayList<>();
@@ -110,7 +110,7 @@
 //        final int X = 4;
 //        final int Y = 0;
 //
-//        game.getBoard()[Y][X].setPiece(new King(Color.BLACK, game.getBoard()[Y][X].getPosition()));
+//        game.getBoard()[Y][X].setPiece(new King(PieceColor.BLACK, game.getBoard()[Y][X].getPosition()));
 //        List<Position> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
 //
 //        List<Position> whatResultsShouldBe = new ArrayList<>();
@@ -129,7 +129,7 @@
 //        final int X = 4;
 //        final int Y = 7;
 //
-//        game.getBoard()[Y][X].setPiece(new King(Color.BLACK, game.getBoard()[Y][X].getPosition()));
+//        game.getBoard()[Y][X].setPiece(new King(PieceColor.BLACK, game.getBoard()[Y][X].getPosition()));
 //        List<Position> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
 //
 //        List<Position> whatResultsShouldBe = new ArrayList<>();
@@ -148,7 +148,7 @@
 //        final int X = 7;
 //        final int Y = 4;
 //
-//        game.getBoard()[Y][X].setPiece(new King(Color.BLACK, game.getBoard()[Y][X].getPosition()));
+//        game.getBoard()[Y][X].setPiece(new King(PieceColor.BLACK, game.getBoard()[Y][X].getPosition()));
 //        List<Position> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
 //
 //        List<Position> whatResultsShouldBe = new ArrayList<>();
@@ -167,7 +167,7 @@
 //        final int X = 0;
 //        final int Y = 4;
 //
-//        game.getBoard()[Y][X].setPiece(new King(Color.BLACK, game.getBoard()[Y][X].getPosition()));
+//        game.getBoard()[Y][X].setPiece(new King(PieceColor.BLACK, game.getBoard()[Y][X].getPosition()));
 //        List<Position> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
 //
 //        List<Position> whatResultsShouldBe = new ArrayList<>();
@@ -186,7 +186,7 @@
 //        final int X = 4;
 //        final int Y = 4;
 //
-//        game.getBoard()[Y][X].setPiece(new King(Color.BLACK, game.getBoard()[Y][X].getPosition()));
+//        game.getBoard()[Y][X].setPiece(new King(PieceColor.BLACK, game.getBoard()[Y][X].getPosition()));
 //        List<Position> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
 //
 //        List<Position> whatResultsShouldBe = new ArrayList<>();
@@ -208,9 +208,9 @@
 //        final int X = 4;
 //        final int Y = 4;
 //
-//        game.getBoard()[Y][X].setPiece(new King(Color.BLACK, game.getBoard()[Y][X].getPosition()));
-//        game.getBoard()[Y - 1][X + 1].setPiece(new Pawn(Color.BLACK, game.getBoard()[Y - 1][X + 1].getPosition()));
-//        game.getBoard()[Y][X - 1].setPiece(new Pawn(Color.BLACK, game.getBoard()[Y][X - 1].getPosition()));
+//        game.getBoard()[Y][X].setPiece(new King(PieceColor.BLACK, game.getBoard()[Y][X].getPosition()));
+//        game.getBoard()[Y - 1][X + 1].setPiece(new Pawn(PieceColor.BLACK, game.getBoard()[Y - 1][X + 1].getPosition()));
+//        game.getBoard()[Y][X - 1].setPiece(new Pawn(PieceColor.BLACK, game.getBoard()[Y][X - 1].getPosition()));
 //        List<Position> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
 //
 //        List<Position> whatResultsShouldBe = new ArrayList<>();
@@ -232,15 +232,15 @@
 //        final int X = 4;
 //        final int Y = 4;
 //
-//        game.getBoard()[Y][X].setPiece(new King(Color.BLACK, game.getBoard()[Y][X].getPosition()));
-//        game.getBoard()[Y - 1][X - 1].setPiece(new Pawn(Color.BLACK, game.getBoard()[Y - 1][X - 1].getPosition()));
-//        game.getBoard()[Y - 1][X].setPiece(new Pawn(Color.BLACK, game.getBoard()[Y - 1][X].getPosition()));
-//        game.getBoard()[Y - 1][X + 1].setPiece(new Pawn(Color.BLACK, game.getBoard()[Y - 1][X + 1].getPosition()));
-//        game.getBoard()[Y][X - 1].setPiece(new Pawn(Color.BLACK, game.getBoard()[Y][X - 1].getPosition()));
-//        game.getBoard()[Y][X + 1].setPiece(new Pawn(Color.BLACK, game.getBoard()[Y][X + 1].getPosition()));
-//        game.getBoard()[Y + 1][X - 1].setPiece(new Pawn(Color.BLACK, game.getBoard()[Y + 1][X - 1].getPosition()));
-//        game.getBoard()[Y + 1][X].setPiece(new Pawn(Color.BLACK, game.getBoard()[Y + 1][X].getPosition()));
-//        game.getBoard()[Y + 1][X + 1].setPiece(new Pawn(Color.BLACK, game.getBoard()[Y + 1][X + 1].getPosition()));
+//        game.getBoard()[Y][X].setPiece(new King(PieceColor.BLACK, game.getBoard()[Y][X].getPosition()));
+//        game.getBoard()[Y - 1][X - 1].setPiece(new Pawn(PieceColor.BLACK, game.getBoard()[Y - 1][X - 1].getPosition()));
+//        game.getBoard()[Y - 1][X].setPiece(new Pawn(PieceColor.BLACK, game.getBoard()[Y - 1][X].getPosition()));
+//        game.getBoard()[Y - 1][X + 1].setPiece(new Pawn(PieceColor.BLACK, game.getBoard()[Y - 1][X + 1].getPosition()));
+//        game.getBoard()[Y][X - 1].setPiece(new Pawn(PieceColor.BLACK, game.getBoard()[Y][X - 1].getPosition()));
+//        game.getBoard()[Y][X + 1].setPiece(new Pawn(PieceColor.BLACK, game.getBoard()[Y][X + 1].getPosition()));
+//        game.getBoard()[Y + 1][X - 1].setPiece(new Pawn(PieceColor.BLACK, game.getBoard()[Y + 1][X - 1].getPosition()));
+//        game.getBoard()[Y + 1][X].setPiece(new Pawn(PieceColor.BLACK, game.getBoard()[Y + 1][X].getPosition()));
+//        game.getBoard()[Y + 1][X + 1].setPiece(new Pawn(PieceColor.BLACK, game.getBoard()[Y + 1][X + 1].getPosition()));
 //        List<Position> legalMoves = game.getLegalMoves(game.getBoard()[Y][X].getPiece());
 //
 //        assertTrue(legalMoves.size() == 0);

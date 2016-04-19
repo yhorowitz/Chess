@@ -1,7 +1,7 @@
 package chess.model.pieces;
 
 import chess.model.ChessGame;
-import chess.model.Color;
+import chess.model.PieceColor;
 import chess.model.Position;
 
 import java.util.List;
@@ -9,12 +9,12 @@ import java.util.List;
 
 public class Knight extends ChessPiece  {
 
-    public Knight(Color color) {
-        this.setColor(color);
+    public Knight(PieceColor pieceColor) {
+        this.setPieceColor(pieceColor);
     }
 
-    public Knight(Color color, Position position) {
-        this.setColor(color);
+    public Knight(PieceColor pieceColor, Position position) {
+        this.setPieceColor(pieceColor);
         this.setPosition(position);
     }
 

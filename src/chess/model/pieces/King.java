@@ -1,7 +1,7 @@
 package chess.model.pieces;
 
 import chess.model.ChessGame;
-import chess.model.Color;
+import chess.model.PieceColor;
 import chess.model.Position;
 
 import java.util.List;
@@ -10,12 +10,12 @@ import java.util.List;
 public class King extends ChessPiece  {
 
 
-    public King(Color color) {
-        this.setColor(color);
+    public King(PieceColor pieceColor) {
+        this.setPieceColor(pieceColor);
     }
 
-    public King(Color color, Position position) {
-        this.setColor(color);
+    public King(PieceColor pieceColor, Position position) {
+        this.setPieceColor(pieceColor);
         this.setPosition(position);
     }
 

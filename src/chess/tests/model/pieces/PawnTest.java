@@ -1,7 +1,7 @@
 package chess.tests.model.pieces;
 
 import chess.model.ChessGame;
-import chess.model.Color;
+import chess.model.PieceColor;
 import chess.model.Position;
 import chess.model.pieces.Pawn;
 import org.junit.Before;
@@ -40,12 +40,12 @@ public class PawnTest {
 
     @Test
     public void firstMoveCanMoveForwardTwoSpacesIfNotBlocked() {
-        Color color = Color.BLACK;
+        PieceColor pieceColor = PieceColor.BLACK;
         Position position = new Position(3, 1);
         int row = position.getCol();
         int column = position.getRow();
 
-        Pawn pawn = new Pawn(color, position);
+        Pawn pawn = new Pawn(pieceColor, position);
         game.getBoardSpace(position).setPiece(pawn);
         List<Position> legalMoves = pawn.getLegalMoves(game);
 
@@ -65,11 +65,11 @@ public class PawnTest {
         int row = position.getCol();
         int column = position.getRow();
 
-        Pawn pawn = new Pawn(Color.BLACK, position);
+        Pawn pawn = new Pawn(PieceColor.BLACK, position);
         game.getBoardSpace(position).setPiece(pawn);
 
         Position blockingPosition = new Position(row + 2, column);
-        Pawn blockingPiece = new Pawn(Color.WHITE, blockingPosition);
+        Pawn blockingPiece = new Pawn(PieceColor.WHITE, blockingPosition);
         game.getBoardSpace(blockingPosition).setPiece(blockingPiece);
 
         List<Position> legalMoves = pawn.getLegalMoves(game);
@@ -85,7 +85,7 @@ public class PawnTest {
     @Test
     public void pieceMovesToTheCorrectLocation() {
         Position startPos = new Position(3, 1);
-        Pawn pawn = new Pawn(Color.BLACK, startPos);
+        Pawn pawn = new Pawn(PieceColor.BLACK, startPos);
         game.getBoardSpace(startPos).setPiece(pawn);
 
         List<Position> legalMoves = pawn.getLegalMoves(game);
@@ -100,19 +100,19 @@ public class PawnTest {
 
     @Test
     public void pawnCanCaptureIfPieceIsInTheRightPlace() {
-        if (game.getCurrentTurn() != Color.BLACK)
+        if (game.getCurrentTurn() != PieceColor.BLACK)
             game.changeTurns();
 
         Position startPos = new Position(1, 3);
-        Pawn pawn = new Pawn(Color.BLACK, startPos);
+        Pawn pawn = new Pawn(PieceColor.BLACK, startPos);
         game.getBoardSpace(startPos).setPiece(pawn);
 
         Position capturePiecePos = new Position(2, 2);
-        Pawn capturePiece = new Pawn(Color.WHITE, capturePiecePos);
+        Pawn capturePiece = new Pawn(PieceColor.WHITE, capturePiecePos);
         game.getBoardSpace(capturePiecePos).setPiece(capturePiece);
 
         Position capturePiecePos2 = new Position(2, 4);
-        Pawn capturePiece2 = new Pawn(Color.WHITE, capturePiecePos);
+        Pawn capturePiece2 = new Pawn(PieceColor.WHITE, capturePiecePos);
         game.getBoardSpace(capturePiecePos2).setPiece(capturePiece2);
 
         List<Position> legalMoves = pawn.getLegalMoves(game);
@@ -122,19 +122,19 @@ public class PawnTest {
 
     @Test
     public void pawnCantCaptureAPieceOfItsOwnColor() {
-        if (game.getCurrentTurn() != Color.BLACK)
+        if (game.getCurrentTurn() != PieceColor.BLACK)
             game.changeTurns();
 
         Position startPos = new Position(1, 3);
-        Pawn pawn = new Pawn(Color.BLACK, startPos);
+        Pawn pawn = new Pawn(PieceColor.BLACK, startPos);
         game.getBoardSpace(startPos).setPiece(pawn);
 
         Position capturePiecePos = new Position(2, 2);
-        Pawn capturePiece = new Pawn(Color.BLACK, capturePiecePos);
+        Pawn capturePiece = new Pawn(PieceColor.BLACK, capturePiecePos);
         game.getBoardSpace(capturePiecePos).setPiece(capturePiece);
 
         Position capturePiecePos2 = new Position(2, 4);
-        Pawn capturePiece2 = new Pawn(Color.BLACK, capturePiecePos);
+        Pawn capturePiece2 = new Pawn(PieceColor.BLACK, capturePiecePos);
         game.getBoardSpace(capturePiecePos2).setPiece(capturePiece2);
 
         List<Position> legalMoves = pawn.getLegalMoves(game);

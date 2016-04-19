@@ -1,7 +1,7 @@
 package chess.model;
 
 
-public enum Color {
+public enum PieceColor {
     WHITE,
     BLACK
 }

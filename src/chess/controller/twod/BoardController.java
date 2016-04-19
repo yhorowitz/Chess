@@ -35,7 +35,7 @@ public class BoardController {
                             deselectPositionAtVector(gridSpace.getPosition());
                             removeHighlightFromAllBoardPositions();
                         }
-                        else if (space.isOccupied() && (space).getPiece().getColor() == BoardController.this.game.getCurrentTurn()){
+                        else if (space.isOccupied() && (space).getPiece().getPieceColor() == BoardController.this.game.getCurrentTurn()){
                             //select the space and highlight all legal moves
 
                             deselectAllBoardPositions();

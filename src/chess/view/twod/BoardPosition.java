@@ -63,7 +63,7 @@ public class BoardPosition extends Button {
             this.setGraphic(null);
         }
         else {
-            String pieceColor = piece.getColor().toString().toLowerCase();
+            String pieceColor = piece.getPieceColor().toString().toLowerCase();
             String pieceType = piece.getClass().getSimpleName().toLowerCase();
 
             Image image = new Image(getClass().getResourceAsStream("../../res/images/pieces/" +

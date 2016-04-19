@@ -2,7 +2,7 @@ package chess.model.pieces;
 
 import chess.model.BoardSpace;
 import chess.model.ChessGame;
-import chess.model.Color;
+import chess.model.PieceColor;
 import chess.model.Position;
 
 import java.util.ArrayList;
@@ -14,12 +14,12 @@ public class Pawn extends ChessPiece  {
     private boolean moved = false;
     private boolean eligibleForEnPassant = false;
 
-    public Pawn(Color color) {
-        this.setColor(color);
+    public Pawn(PieceColor pieceColor) {
+        this.setPieceColor(pieceColor);
     }
 
-    public Pawn(Color color, Position position) {
-        this.setColor(color);
+    public Pawn(PieceColor pieceColor, Position position) {
+        this.setPieceColor(pieceColor);
         this.setPosition(position);
     }
 
@@ -74,7 +74,7 @@ public class Pawn extends ChessPiece  {
     @Override
     public List<Position> getLegalMoves(ChessGame game) {
         //used to determine which direction the pawn can move based on its color
-        int direction = this.getColor() == Color.BLACK ? 1 : -1;
+        int direction = this.getPieceColor() == PieceColor.BLACK ? 1 : -1;
         //how many spaces forward it can move based on its color
         int spacesCanMove = hasMoved() ? 1 : 2;
 
@@ -103,7 +103,7 @@ public class Pawn extends ChessPiece  {
             //check for regular capture
             positionForCapture = new Position(currentRow + direction, currentColumn - 1);
             captureSpace = game.getBoardSpace(positionForCapture);
-            if(captureSpace.isOccupied() && captureSpace.getPiece().getColor() != game.getCurrentTurn()){
+            if(captureSpace.isOccupied() && captureSpace.getPiece().getPieceColor() != game.getCurrentTurn()){
                 legalMoves.add(positionForCapture);
             }
 
@@ -120,7 +120,7 @@ public class Pawn extends ChessPiece  {
             //check for regular capture
             positionForCapture = new Position(currentRow + direction, currentColumn + 1);
             captureSpace = game.getBoardSpace(positionForCapture);
-            if(captureSpace.isOccupied() && captureSpace.getPiece().getColor() != game.getCurrentTurn()){
+            if(captureSpace.isOccupied() && captureSpace.getPiece().getPieceColor() != game.getCurrentTurn()){
                 legalMoves.add(positionForCapture);
             }
 

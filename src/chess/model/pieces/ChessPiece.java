@@ -1,7 +1,7 @@
 package chess.model.pieces;
 
 import chess.model.ChessGame;
-import chess.model.Color;
+import chess.model.PieceColor;
 import chess.model.Position;
 
 import java.util.List;
@@ -11,15 +11,15 @@ import java.util.List;
  */
 public abstract class ChessPiece {
 
-    private Color color;
+    private PieceColor pieceColor;
     private Position position;
 
-    public Color getColor() {
-        return this.color;
+    public PieceColor getPieceColor() {
+        return this.pieceColor;
     }
 
-    public void setColor(Color color) {
-        this.color = color;
+    public void setPieceColor(PieceColor pieceColor) {
+        this.pieceColor = pieceColor;
     }
 
     public Position getPosition() {
