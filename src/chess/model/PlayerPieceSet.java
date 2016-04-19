@@ -13,7 +13,8 @@ import java.util.List;
 public class PlayerPieceSet {
 
     private PieceColor pieceColor;
-    private List<ChessPiece> pieces = new ArrayList<>();
+    private List<ChessPiece> alivePieces = new ArrayList<>();
+    private List<ChessPiece> capturedPieces = new ArrayList<>();
 
     public PlayerPieceSet(PieceColor pieceColor) {
         this.pieceColor = pieceColor;
@@ -49,16 +50,45 @@ public class PlayerPieceSet {
             e.printStackTrace();
         }
 
-        this.pieces.add(piece);
+        this.alivePieces.add(piece);
 
         return piece;
     }
 
-    public <T extends ChessPiece> List<ChessPiece> getPiecesOfType(Class<T> pieceType) {
+    public <T extends ChessPiece> List<ChessPiece> getCapturedPiecesOfType(Class<T> pieceType) {
 
         List<ChessPiece> selectedPieces = new ArrayList<>();
 
-        for (ChessPiece piece : pieces) {
+        for (ChessPiece piece : capturedPieces) {
+            if (piece.getClass() == pieceType)
+                selectedPieces.add(piece);
+        }
+
+        return selectedPieces;
+    }
+
+    public <T extends ChessPiece> List<ChessPiece> getAlivePiecesOfType(Class<T> pieceType) {
+
+        List<ChessPiece> selectedPieces = new ArrayList<>();
+
+        for (ChessPiece piece : alivePieces) {
+            if (piece.getClass() == pieceType)
+                selectedPieces.add(piece);
+        }
+
+        return selectedPieces;
+    }
+
+    public <T extends ChessPiece> List<ChessPiece> getAllPiecesOfType(Class<T> pieceType) {
+
+        List<ChessPiece> selectedPieces = new ArrayList<>();
+
+        for (ChessPiece piece : alivePieces) {
+            if (piece.getClass() == pieceType)
+                selectedPieces.add(piece);
+        }
+
+        for (ChessPiece piece : capturedPieces) {
             if (piece.getClass() == pieceType)
                 selectedPieces.add(piece);
         }
@@ -67,16 +97,35 @@ public class PlayerPieceSet {
     }
 
     public List<ChessPiece> getAllPieces() {
-        return this.pieces;
+        List<ChessPiece> allPieces = new ArrayList<>();
+        allPieces.addAll(alivePieces);
+        allPieces.addAll(capturedPieces);
+
+        return allPieces;
+    }
+
+    public List<ChessPiece> getAllCapturedPieces() {
+        return this.capturedPieces;
+    }
+
+    public List<ChessPiece> getAllAlivePieces() {
+        return this.alivePieces;
     }
 
     private boolean positionIsOccupied(Position position) {
-        for (ChessPiece piece : pieces) {
+        for (ChessPiece piece : alivePieces) {
             if (piece.getPosition().equals(position))
                 return true;
         }
 
         return false;
+    }
+
+    public void capture(ChessPiece piece) {
+        if(!alivePieces.remove(piece))
+            throw new IllegalArgumentException("That piece is not in this players set");
+        else
+            capturedPieces.add(piece);
     }
 
 }

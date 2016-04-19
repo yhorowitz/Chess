@@ -145,19 +145,41 @@ public class ChessGame {
         if (getBoardSpace(from).getPiece() != piece)
             return false;
 
-        getBoardSpace(from).setPiece(null);
-        getBoardSpace(to).setPiece(piece);
         if (isEnPassant(piece, from, to)) { //must be done before setting all pawns to no longer be eligible. See method documentation for details.
             int direction = piece.getPieceColor() == PieceColor.BLACK ? -1 : 1;
             BoardSpace captureSpace = getBoardSpace(new Position(to.getRow() + direction, to.getCol()));
-            captureSpace.setPiece(null);
+            capture(captureSpace.getPosition());
         }
         setAllPawnToNotEligibleForEnPassant(); //must be called before the moveTo method. See method documentation for details
+        if (isCapture(to))
+            capture(to);
+
+        //move the piece
+        getBoardSpace(from).setPiece(null);
+        getBoardSpace(to).setPiece(piece);
         piece.moveTo(to);
+
         changeTurns();
 
         return true;
 
+    }
+
+    public boolean isCapture(Position position) {
+        if (getBoardSpace(position).isOccupied())
+            return true;
+        else
+            return false;
+    }
+
+    public void capture(Position position) {
+        ChessPiece piece = getBoardSpace(position).getPiece();
+        if (piece.getPieceColor() == PieceColor.BLACK)
+            blackPieces.capture(piece);
+        else
+            whitePieces.capture(piece);
+
+        getBoardSpace(position).setPiece(null);
     }
 
     /**
