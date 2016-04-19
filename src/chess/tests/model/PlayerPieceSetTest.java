@@ -53,7 +53,7 @@ public class PlayerPieceSetTest {
         set.addPiece(Pawn.class, new Position(1, 3));
         set.addPiece(Pawn.class, new Position(1, 4));
 
-        List<ChessPiece> pawns = set.getPiecesOfType(Pawn.class);
+        List<ChessPiece> pawns = set.getAllPiecesOfType(Pawn.class);
         for (ChessPiece piece : pawns)
             assertEquals(piece.getClass(), Pawn.class);
     }
@@ -66,8 +66,8 @@ public class PlayerPieceSetTest {
         set.addPiece(Pawn.class, new Position(1, 4));
         set.addPiece(Queen.class, new Position(1, 5));
 
-        List<ChessPiece> pawns = set.getPiecesOfType(Pawn.class);
-        List<ChessPiece> queens = set.getPiecesOfType(Queen.class);
+        List<ChessPiece> pawns = set.getAllPiecesOfType(Pawn.class);
+        List<ChessPiece> queens = set.getAllPiecesOfType(Queen.class);
         List<ChessPiece> allPieces = set.getAllPieces();
 
         assertEquals(pawns.size(), 3);
