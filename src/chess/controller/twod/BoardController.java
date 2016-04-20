@@ -3,10 +3,12 @@ package chess.controller.twod;
 
 import chess.model.ChessGame;
 import chess.model.BoardSpace;
+import chess.model.Move;
 import chess.model.Position;
 import chess.model.pieces.ChessPiece;
 import chess.view.twod.Board;
 import chess.view.twod.BoardPosition;
+import chess.view.twod.history.GameHistory;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 
@@ -15,10 +17,12 @@ import java.util.List;
 public class BoardController {
 
     private Board gameUI;
+    private GameHistory gameHistoryUI;
     private ChessGame game;
 
-    public BoardController(Board gameUI, ChessGame game) {
+    public BoardController(Board gameUI, GameHistory gameHistoryUI, ChessGame game) {
         this.gameUI = gameUI;
+        this.gameHistoryUI = gameHistoryUI;
         this.game = game;
 
         for (int row = 0; row < gameUI.getGrid().length; row++) {
@@ -61,6 +65,9 @@ public class BoardController {
 
                             deselectAllBoardPositions();
                             removeHighlightFromAllBoardPositions();
+
+                            List<Move> gameHistory = game.getGameHistory();
+                            gameHistoryUI.addMove(gameHistory.size(), gameHistory.get(gameHistory.size() - 1));
 
                         }
                     }

@@ -335,4 +335,8 @@ public class ChessGame {
      */
     public boolean isStalemate() {return false; }
 
+    public List<Move> getGameHistory() {
+        return this.gameHistory;
+    }
+
 }
