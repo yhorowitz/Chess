@@ -4,6 +4,7 @@ import chess.model.ChessGame;
 import chess.model.PieceColor;
 import chess.model.Position;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,7 +21,7 @@ public class Bishop extends ChessPiece {
 
     @Override
     public List<Position> getLegalMoves(ChessGame game) {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
