@@ -8,6 +8,7 @@ import chess.model.Position;
 import chess.model.pieces.ChessPiece;
 import chess.view.twod.Board;
 import chess.view.twod.BoardPosition;
+import chess.view.twod.ChessGameUI;
 import chess.view.twod.history.GameHistory;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -16,18 +17,17 @@ import java.util.List;
 
 public class BoardController {
 
-    private Board gameUI;
-    private GameHistory gameHistoryUI;
+    private ChessGameUI gameUI;
     private ChessGame game;
 
-    public BoardController(Board gameUI, GameHistory gameHistoryUI, ChessGame game) {
+    public BoardController(ChessGameUI gameUI, ChessGame game) {
+
         this.gameUI = gameUI;
-        this.gameHistoryUI = gameHistoryUI;
         this.game = game;
 
         for (int row = 0; row < gameUI.getGrid().length; row++) {
             for (int col = 0; col < gameUI.getGrid().length; col++) {
-                gameUI.getGrid()[row][col].addEventListener(new EventHandler() {
+                gameUI.getBoardPosition(new Position(row, col)).addEventListener(new EventHandler() {
                     @Override
                     public void handle(Event event) {
                         BoardPosition gridSpace = (BoardPosition) event.getSource();
@@ -61,13 +61,13 @@ public class BoardController {
                             Position to = position;
 
                             BoardController.this.game.makeMove(piece, from, to);
-                            BoardController.this.gameUI.update(BoardController.this.game);
+                            BoardController.this.gameUI.updateBoard(BoardController.this.game);
 
                             deselectAllBoardPositions();
                             removeHighlightFromAllBoardPositions();
 
                             List<Move> gameHistory = game.getGameHistory();
-                            gameHistoryUI.addMove(gameHistory.size(), gameHistory.get(gameHistory.size() - 1));
+                            gameUI.addMove(gameHistory.size(), gameHistory.get(gameHistory.size() - 1));
 
                         }
                     }
@@ -83,79 +83,38 @@ public class BoardController {
 
     private void highlightPositions(List<Position> positions) {
         for (Position position : positions) {
-            //update view
             gameUI.getBoardPosition(position).highlight(true);
-            //update model
-            game.getBoardSpace(position).highlight(true);
         }
     }
 
     private void selectPositionAtVector(Position position) {
-        //update view
         gameUI.getBoardPosition(position).select(true);
 
-        //update model
-        game.getBoardSpace(position).select(true);
         game.selectNewPosition(position);
     }
 
     private void deselectPositionAtVector(Position position) {
-        //update view
         gameUI.getBoardPosition(position).select(false);
 
-        //update model
-        game.getBoardSpace(position).select(false);
-        game.selectNewPosition(null);
+        if (game.getSelectedPosition().equals(position))
+            game.selectNewPosition(null);
     }
 
     private void highlightPositionAtVector(Position position) {
-        //update view
         gameUI.getBoardPosition(position).highlight(true);
-
-        //update model
-        game.getBoardSpace(position).highlight(true);
     }
 
     private void removeHighlightFromPositionAtVector(Position position) {
-        //update view
         gameUI.getBoardPosition(position).highlight(false);
-
-        //update model
-        game.getBoardSpace(position).highlight(false);
     }
 
     private void deselectAllBoardPositions() {
-        //update view
-        for (int i = 0; i < gameUI.getGrid().length; i++) {
-            for (BoardPosition position : gameUI.getGrid()[i]) {
-                position.select(false);
-            }
-        }
-
-        //update model
-        for (int row = 0; row < ChessGame.BOARD_SIZE; row++) {
-            for (int col = 0; col < ChessGame.BOARD_SIZE; col++) {
-                game.getBoardSpace(new Position(row, col)).highlight(false);
-            }
-        }
+        gameUI.removeAllBoardSelections();
         game.selectNewPosition(null);
-
     }
 
     private void removeHighlightFromAllBoardPositions() {
-        //update view
-        for (int row = 0; row < ChessGame.BOARD_SIZE; row++) {
-            for (int col = 0; col < ChessGame.BOARD_SIZE; col++) {
-                gameUI.getBoardPosition(new Position(row, col)).highlight(false);
-            }
-        }
-
-        //update model
-        for (int row = 0; row < ChessGame.BOARD_SIZE; row++) {
-            for (int col = 0; col < ChessGame.BOARD_SIZE; col++) {
-                game.getBoardSpace(new Position(row, col)).highlight(false);
-            }
-        }
+        gameUI.removeAllBoardHighlights();
     }
 
 
