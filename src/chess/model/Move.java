@@ -18,7 +18,7 @@ public class Move {
     private Position capturePosition;
 
     private boolean isCheck = false;
-    private boolean isCheckMate = false;
+    private boolean isCheckmate = false;
 
     public Move(ChessPiece piece, Position start, Position end) {
         setPiece(piece);
@@ -26,12 +26,19 @@ public class Move {
         setEndPosition(end);
     }
 
+    public boolean isCheck() {
+        return isCheck;
+    }
+    public boolean isCheckmate() {
+        return isCheckmate;
+    }
+
     public void setAsCheck() {
         this.isCheck = true;
     }
 
-    public void setAsCheckMate() {
-        this.isCheckMate = true;
+    public void setAsCheckmate() {
+        this.isCheckmate = true;
     }
 
     public ChessPiece getPiece() {
@@ -103,7 +110,7 @@ public class Move {
         notation.append((char)(endPosition.getCol() + 97));   //add column
         notation.append(8 - endPosition.getRow() + "");       //add row
 
-        if (isCheckMate)
+        if (isCheckmate)
             notation.append("++");
         else if (isCheck)
             notation.append("+");
@@ -128,7 +135,7 @@ public class Move {
             }
         }
 
-        if (isCheckMate) {
+        if (isCheckmate) {
             String checkMatedColor = movingPieceColor.equals("White") ? "Black" : "White";
             notation.append(" checkmating the " + checkMatedColor + " King");
         }
