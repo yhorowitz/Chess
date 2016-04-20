@@ -21,7 +21,7 @@ public class Launcher extends Application {
 
         primaryStage.setTitle("Chess");
 
-        Scene scene = new Scene(gameGUI, 875, 875);
+        Scene scene = new Scene(gameGUI);
 
         BoardController boardController = new BoardController(gameGUI, game);
 

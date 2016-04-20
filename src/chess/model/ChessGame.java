@@ -179,7 +179,7 @@ public class ChessGame {
         changeTurns();
 
         gameHistory.add(currentMove);
-        System.out.println(gameHistory.get(gameHistory.size() - 1).getDetailedDescription());
+
         return true;
 
     }
