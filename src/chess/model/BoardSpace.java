@@ -7,8 +7,6 @@ public class BoardSpace {
 
     private Position position;
     private ChessPiece piece;
-    private boolean highlighted;
-    private boolean selected;
 
     public BoardSpace(Position position) {
         this.position = position;
@@ -34,22 +32,4 @@ public class BoardSpace {
         return this.piece != null;
     }
 
-    public void highlight(boolean highlight) {
-        this.highlighted = highlight;
-    }
-
-    public boolean isHighlighted() {
-        return this.highlighted;
-    }
-
-    public void select(boolean select) {
-        this.selected = select;
-        if (select) {
-            this.highlight(false);
-        }
-    }
-
-    public boolean isSelected() {
-        return this.selected;
-    }
 }
