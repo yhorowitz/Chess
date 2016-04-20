@@ -32,8 +32,8 @@ public class Board extends TilePane {
     public void initBoard(){
 
         this.setPrefColumns(8);
-        this.setHgap(5);
-        this.setVgap(5);
+        this.setHgap(4);
+        this.setVgap(4);
 
         grid = new BoardPosition[8][8];
         for (int row = 0; row < 8; row++) {
