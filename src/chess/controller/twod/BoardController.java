@@ -12,6 +12,7 @@ import chess.view.twod.ChessGameUI;
 import chess.view.twod.history.GameHistory;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.input.KeyEvent;
 
 import java.util.List;
 
@@ -117,6 +118,17 @@ public class BoardController {
         gameUI.removeAllBoardHighlights();
     }
 
+    private void showGameHistory() {
+        if (gameUI.getBottom() == null) {
+            gameUI.showGameHistory();
+            Launcher.mainStage.sizeToScene();
+        }
+    }
+
+    private void hideGameHistory() {
+        gameUI.hideGameHistory();
+        Launcher.mainStage.sizeToScene();
+    }
 
 
 }

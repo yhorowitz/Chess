@@ -1,9 +1,11 @@
 package chess.view.twod;
 
+import chess.controller.twod.Launcher;
 import chess.model.ChessGame;
 import chess.model.Move;
 import chess.model.Position;
 import chess.view.twod.history.GameHistory;
+import javafx.geometry.Insets;
 import javafx.scene.layout.BorderPane;
 
 /**
@@ -16,7 +18,9 @@ public class ChessGameUI extends BorderPane {
 
     public ChessGameUI() {
         this.setCenter(gameBoard);
-        this.setBottom(gameHistory);
+        showGameHistory();
+
+        this.setMargin(gameHistory, new Insets(20, 0, 0, 0));
     }
 
     public void updateBoard(ChessGame game) {
@@ -49,5 +53,13 @@ public class ChessGameUI extends BorderPane {
                 position.highlight(false);
             }
         }
+    }
+
+    public void showGameHistory() {
+        this.setBottom(gameHistory);
+    }
+
+    public void hideGameHistory() {
+        this.setBottom(null);
     }
 }

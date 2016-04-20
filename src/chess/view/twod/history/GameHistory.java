@@ -3,21 +3,20 @@ package chess.view.twod.history;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 
-
 /**
- * Created by Yitzi on 4/20/2016.
+ * Displays every move taken in the game
  */
 public class GameHistory extends VBox {
 
     private TableView gameHistoryTable = new TableView();
 
-    private final Label headerLabel = new Label("Game History");
     private TableColumn turnNumberCol = new TableColumn("Turn");
     private TableColumn moveCol = new TableColumn("Move");
     private TableColumn detailedDescriptionCol = new TableColumn("Details");
@@ -25,6 +24,7 @@ public class GameHistory extends VBox {
     private final ObservableList<Move> moveHistory = FXCollections.observableArrayList();
 
     public GameHistory() {
+
         //set columns to not be sortable
         turnNumberCol.setSortable(false);
         moveCol.setSortable(false);
@@ -43,23 +43,20 @@ public class GameHistory extends VBox {
         detailedDescriptionCol.setCellValueFactory(new PropertyValueFactory<Move, String>("details"));
 
         gameHistoryTable.setMaxHeight(150);
-        gameHistoryTable.setMaxWidth(630);
+        gameHistoryTable.setMaxWidth(628);
         gameHistoryTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         gameHistoryTable.setEditable(false);
         gameHistoryTable.setPlaceholder(new Label("No moves have been made yet"));
         gameHistoryTable.getColumns().addAll(turnNumberCol, moveCol, detailedDescriptionCol);
         gameHistoryTable.setItems(moveHistory);
 
-        //this.setSpacing(5);
-        //this.setPadding(new Insets(10, 0, 0, 10));
-        this.getChildren().addAll(headerLabel, gameHistoryTable);
+        this.getChildren().addAll(gameHistoryTable);
 
     }
 
     public void addMove(int moveNumber, chess.model.Move move) {
         moveHistory.add(new Move(moveNumber + "", move.getAlgebraicNotation(), move.getDetailedDescription()));
         gameHistoryTable.scrollTo(moveHistory.size() - 1);
-
     }
 
 }
