@@ -2,6 +2,10 @@ package chess.model;
 
 import chess.model.pieces.*;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Holds the state of a single chess game
  */
@@ -14,6 +18,8 @@ public class ChessGame {
 
     private PlayerPieceSet blackPieces = new PlayerPieceSet(PieceColor.BLACK);
     private PlayerPieceSet whitePieces = new PlayerPieceSet(PieceColor.WHITE);
+
+    private List<Move> gameHistory = new ArrayList<>();
 
     public ChessGame() {
         createBoard();
@@ -141,18 +147,24 @@ public class ChessGame {
      * @return Whether the move was successfully completed
      */
     public boolean makeMove(ChessPiece piece, Position from, Position to) {
-        //ensure the correct piece is being move
+
+        // /ensure the correct piece is being move
         if (getBoardSpace(from).getPiece() != piece)
             return false;
+
+        Move currentMove = new Move(piece, from, to);
 
         if (isEnPassant(piece, from, to)) { //must be done before setting all pawns to no longer be eligible. See method documentation for details.
             int direction = piece.getPieceColor() == PieceColor.BLACK ? -1 : 1;
             BoardSpace captureSpace = getBoardSpace(new Position(to.getRow() + direction, to.getCol()));
+            currentMove.setAsCaptureMove(captureSpace.getPiece(), captureSpace.getPosition());
             capture(captureSpace.getPosition());
         }
         setAllPawnToNotEligibleForEnPassant(); //must be called before the moveTo method. See method documentation for details
-        if (isCapture(to))
+        if (isCapture(to)) {
+            currentMove.setAsCaptureMove(getBoardSpace(to).getPiece(), to);
             capture(to);
+        }
 
         //move the piece
         getBoardSpace(from).setPiece(null);
@@ -160,6 +172,8 @@ public class ChessGame {
         piece.moveTo(to);
 
         changeTurns();
+
+        gameHistory.add(currentMove);
 
         return true;
 
@@ -257,8 +271,6 @@ public class ChessGame {
      * Checks if the current state of the game is a stalemate
      * @return
      */
-    public boolean iaStalemate() {return false; }
-
-
+    public boolean isStalemate() {return false; }
 
 }
