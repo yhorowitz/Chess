@@ -31,28 +31,34 @@ public class GameHistory extends VBox {
         detailedDescriptionCol.setSortable(false);
 
         //set column width
-        turnNumberCol.setMinWidth(35);
-        moveCol.setMinWidth(35);
-        detailedDescriptionCol.setMinWidth(460);
+        turnNumberCol.setMinWidth(50);
+        turnNumberCol.setMaxWidth(50);
+        moveCol.setMinWidth(50);
+        moveCol.setMaxWidth(50);
+        detailedDescriptionCol.setMinWidth(529);
+
         //set column data sources
         turnNumberCol.setCellValueFactory(new PropertyValueFactory<Move, String>("moveNumber"));
         moveCol.setCellValueFactory(new PropertyValueFactory<Move, String>("algebraicNotation"));
         detailedDescriptionCol.setCellValueFactory(new PropertyValueFactory<Move, String>("details"));
 
         gameHistoryTable.setMaxHeight(150);
+        gameHistoryTable.setMaxWidth(630);
+        gameHistoryTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         gameHistoryTable.setEditable(false);
         gameHistoryTable.setPlaceholder(new Label("No moves have been made yet"));
         gameHistoryTable.getColumns().addAll(turnNumberCol, moveCol, detailedDescriptionCol);
+        gameHistoryTable.setItems(moveHistory);
 
-        this.setSpacing(5);
-        this.setPadding(new Insets(10, 0, 0, 10));
+        //this.setSpacing(5);
+        //this.setPadding(new Insets(10, 0, 0, 10));
         this.getChildren().addAll(headerLabel, gameHistoryTable);
 
     }
 
     public void addMove(int moveNumber, chess.model.Move move) {
         moveHistory.add(new Move(moveNumber + "", move.getAlgebraicNotation(), move.getDetailedDescription()));
-        gameHistoryTable.setItems(moveHistory);
+        gameHistoryTable.scrollTo(moveHistory.size() - 1);
 
     }
 
