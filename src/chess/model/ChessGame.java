@@ -171,10 +171,15 @@ public class ChessGame {
         getBoardSpace(to).setPiece(piece);
         piece.moveTo(to);
 
+        if (isCheckmate())
+            currentMove.setAsCheckmate();
+        else if (isCheck())
+            currentMove.setAsCheck();
+
         changeTurns();
 
         gameHistory.add(currentMove);
-
+        System.out.println(gameHistory.get(gameHistory.size() - 1).getDetailedDescription());
         return true;
 
     }
@@ -256,14 +261,71 @@ public class ChessGame {
      * @return
      */
     public boolean isCheckmate() {
+        /*
+            Ways to get out of check
+            1. Move King
+            2. Block with another piece
+            3. Capture the checking piece
+
+            For 1 just check if king is in check and if it has any moves
+            For 2 and 3 need to simulate every legal move by the opponents piece and see if one
+            of its moves end up with its King not being in check (there can still be check if its move puts
+            the other king in check)
+         */
+
+
+//        King whiteKing = (King) whitePieces.getAlivePiecesOfType(King.class).get(0);
+//        King blackKing = (King) blackPieces.getAlivePiecesOfType(King.class).get(0);
+//
+//        boolean whiteIsCheckmated = isWhiteInCheck() && whiteKing.getLegalMoves(this).size() == 0;
+//        boolean blackIsCheckmated = isBlackInCheck() && blackKing.getLegalMoves(this).size() == 0;
+//
+//        return whiteIsCheckmated || blackIsCheckmated;
         return false;
     }
+
 
     /**
      * Checks if the current state of the game is a check
      * @return
      */
     public boolean isCheck() {
+        return isWhiteInCheck() || isBlackInCheck();
+    }
+
+    public boolean isWhiteInCheck() {
+        //go through each piece and see if one of its legal moves is the position of one of the kings
+
+        Position whiteKingPosition = whitePieces.getAlivePiecesOfType(King.class).get(0).getPosition();
+
+        //look for white in check
+        for (ChessPiece piece : blackPieces.getAllAlivePieces()) {
+            if (piece.getClass() != King.class) {
+                for (Position position : piece.getLegalMoves(this)) {
+                    if (position.equals(whiteKingPosition))
+                        return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public boolean isBlackInCheck() {
+        //go through each piece and see if one of its legal moves is the position of one of the kings
+
+        Position blackKingPosition = blackPieces.getAlivePiecesOfType(King.class).get(0).getPosition();
+
+        //look for black in check
+        for (ChessPiece piece : whitePieces.getAllAlivePieces()) {
+            if (piece.getClass() != King.class) {
+                for (Position position : piece.getLegalMoves(this)) {
+                    if (position.equals(blackKingPosition))
+                        return true;
+                }
+            }
+        }
+
         return false;
     }
 
