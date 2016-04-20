@@ -5,7 +5,7 @@ import chess.model.pieces.*;
 /**
  * Holds a single move made by a piece
  *
- * TODO need to add support for casteling and pawn promotions
+ * TODO need to add support for castling and pawn promotions
  */
 public class Move {
 
@@ -17,10 +17,21 @@ public class Move {
     private ChessPiece capturedPiece;
     private Position capturePosition;
 
+    private boolean isCheck = false;
+    private boolean isCheckMate = false;
+
     public Move(ChessPiece piece, Position start, Position end) {
         setPiece(piece);
         setStartPosition(start);
         setEndPosition(end);
+    }
+
+    public void setAsCheck() {
+        this.isCheck = true;
+    }
+
+    public void setAsCheckMate() {
+        this.isCheckMate = true;
     }
 
     public ChessPiece getPiece() {
@@ -92,26 +103,39 @@ public class Move {
         notation.append((char)(endPosition.getCol() + 97));   //add column
         notation.append(8 - endPosition.getRow() + "");       //add row
 
+        if (isCheckMate)
+            notation.append("++");
+        else if (isCheck)
+            notation.append("+");
+
         return notation.toString();
     }
 
     public String getDetailedDescription() {
         StringBuilder notation = new StringBuilder(100);
 
-        String movingPieceColor = piece.getPieceColor().toString().toLowerCase();
-        movingPieceColor = movingPieceColor.substring(0,1).toUpperCase() + movingPieceColor.substring(1);
+        String movingPieceColor = piece.getPieceColor().toString().equals("White") ? "White" : "Black";
 
         notation.append(movingPieceColor + " " + piece.getClass().getSimpleName());
         notation.append(" moved from " + ((char)(endPosition.getCol() + 97)) + (8 - startPosition.getRow()));
         notation.append( " to " + ((char)(endPosition.getCol() + 97)) + (8 - endPosition.getRow()));
         if (isCaptureMove()) {
-            String capturedPieceColor = piece.getPieceColor().toString().toLowerCase();
-            capturedPieceColor = capturedPieceColor.substring(0,1).toUpperCase() + capturedPieceColor.substring(1);
+            String capturedPieceColor = capturedPiece.getPieceColor().toString().equals("White") ? "White" : "Black";
 
             notation.append(" capturing " + capturedPieceColor + " " + capturedPiece.getClass().getSimpleName());
             if(!endPosition.equals(capturePosition)) {
                 notation.append(" with an En Passant");
             }
+        }
+
+        if (isCheckMate) {
+            String checkMatedColor = movingPieceColor.equals("White") ? "Black" : "White";
+            notation.append(" checkmating the " + checkMatedColor + " King");
+        }
+        else if (isCheck) {
+            String checkedColor = movingPieceColor.equals("White") ? "Black" : "White";
+            notation.append(" putting the " + checkedColor + " King in check");
+
         }
 
         return notation.toString();
