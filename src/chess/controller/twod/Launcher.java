@@ -3,7 +3,6 @@ package chess.controller.twod;
 import chess.model.ChessGame;
 import chess.view.twod.ChessGameUI;
 import javafx.application.Application;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
