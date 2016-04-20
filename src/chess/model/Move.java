@@ -84,13 +84,13 @@ public class Move {
     }
 
     public String getAlgebraicNotation() {
-        StringBuilder notation = new StringBuilder(8);
+        StringBuilder notation = new StringBuilder();
 
         notation.append(piece.getNotationSymbol());         //add piece type
         if (isCaptureMove())                                //add capture notation
             notation.append("x");
-        notation.append((char)endPosition.getCol() + 97);   //add column
-        notation.append(8 - endPosition.getRow());           //add row
+        notation.append((char)(endPosition.getCol() + 97));   //add column
+        notation.append(8 - endPosition.getRow() + "");       //add row
 
         return notation.toString();
     }
@@ -98,12 +98,18 @@ public class Move {
     public String getDetailedDescription() {
         StringBuilder notation = new StringBuilder(100);
 
-        notation.append(piece.getPieceColor() + " " + piece.getClass().getSimpleName());
-        notation.append(" moved from " + ((char)startPosition.getCol() + 97) + (8 - startPosition.getRow()));
-        notation.append( " to " + ((char)endPosition.getCol() + 97) + (8 - endPosition.getRow()));
+        String movingPieceColor = piece.getPieceColor().toString().toLowerCase();
+        movingPieceColor = movingPieceColor.substring(0,1).toUpperCase() + movingPieceColor.substring(1);
+
+        notation.append(movingPieceColor + " " + piece.getClass().getSimpleName());
+        notation.append(" moved from " + ((char)(endPosition.getCol() + 97)) + (8 - startPosition.getRow()));
+        notation.append( " to " + ((char)(endPosition.getCol() + 97)) + (8 - endPosition.getRow()));
         if (isCaptureMove()) {
-            notation.append(" capturing " + capturedPiece.getPieceColor() + " " + capturedPiece.getClass().getSimpleName());
-            if(endPosition.equals(capturePosition)) {
+            String capturedPieceColor = piece.getPieceColor().toString().toLowerCase();
+            capturedPieceColor = capturedPieceColor.substring(0,1).toUpperCase() + capturedPieceColor.substring(1);
+
+            notation.append(" capturing " + capturedPieceColor + " " + capturedPiece.getClass().getSimpleName());
+            if(!endPosition.equals(capturePosition)) {
                 notation.append(" with an En Passant");
             }
         }
