@@ -17,11 +17,6 @@ public class ChessGameUI extends BorderPane {
     public ChessGameUI() {
         this.setCenter(gameBoard);
         this.setBottom(gameHistory);
-
-        System.out.println("pad left: " + this.getPadding().getLeft());
-        System.out.println("pad right: " + this.getPadding().getRight());
-        System.out.println("pad bot: " + this.getPadding().getBottom());
-        System.out.println("pad top: " + this.getPadding().getTop());
     }
 
     public void updateBoard(ChessGame game) {
