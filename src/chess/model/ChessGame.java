@@ -3,7 +3,6 @@ package chess.model;
 import chess.model.pieces.*;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -37,6 +36,20 @@ public class ChessGame {
 
         if (setUpAsNewGame) {
             setUpNewGame();
+        }
+    }
+
+    /**
+     * Create a new instance of a chess game from an older game history
+     *
+     * @param gameHistory The move history of the game to copy
+     */
+    public ChessGame(List<Move> gameHistory) {
+        createBoard();
+        setUpNewGame();
+        //simulate the moves
+        for (Move move : gameHistory) {
+            this.makeMove(move.getStartPosition(), move.getEndPosition());
         }
     }
 
@@ -150,11 +163,10 @@ public class ChessGame {
      * @param to The ending position
      * @return Whether the move was successfully completed
      */
-    public boolean makeMove(ChessPiece piece, Position from, Position to) {
+    public boolean makeMove(Position from, Position to) {
 
-        // /ensure the correct piece is being move
-        if (getBoardSpace(from).getPiece() != piece)
-            return false;
+        //get piece being moved
+        ChessPiece piece = getBoardSpace(from).getPiece();
 
         Move currentMove = new Move(piece, from, to);
 
@@ -283,27 +295,55 @@ public class ChessGame {
      * @return
      */
     public boolean isCheckmate() {
+        return isWhiteCheckmated() || isBlackCheckmated();
+    }
+
+    public boolean isWhiteCheckmated() {
+
         /*
-            Ways to get out of check
-            1. Move King
-            2. Block with another piece
-            3. Capture the checking piece
-
-            For 1 just check if king is in check and if it has any moves
-            For 2 and 3 need to simulate every legal move by the opponents piece and see if one
-            of its moves end up with its King not being in check (there can still be check if its move puts
-            the other king in check)
+         *  To determine if a color is in checkmate you just need to check if all of that colors pieces
+          *  are unable to move since a piece can not legally make a move that will keep its king in check
+          *  (if it did that would result in the king being captured next turn)
          */
+        if (isWhiteInCheck()) {
+            for (ChessPiece piece : whitePieces.getAllAlivePieces()) {
+                if (piece.getLegalMoves(this, true).size() > 0) {
+                    System.out.println("Move found" + piece.getLegalMoves(this, true).size());
+                    Position p1 = piece.getLegalMoves(this, true).get(0);
+                    Position p2 = piece.getLegalMoves(this, true).get(1);
+                    System.out.println(p1.getCol() +", " + p1.getRow());
+                    System.out.println(p2.getCol() +", " + p2.getRow());
+                    return false;
+                }
+            }
+        }
+        else {
+            return false;
+        }
+        System.out.println("White is checkmated");
 
+        return true;
+    }
 
-//        King whiteKing = (King) whitePieces.getAlivePiecesOfType(King.class).get(0);
-//        King blackKing = (King) blackPieces.getAlivePiecesOfType(King.class).get(0);
-//
-//        boolean whiteIsCheckmated = isWhiteInCheck() && whiteKing.getLegalMoves(this).size() == 0;
-//        boolean blackIsCheckmated = isBlackInCheck() && blackKing.getLegalMoves(this).size() == 0;
-//
-//        return whiteIsCheckmated || blackIsCheckmated;
-        return false;
+    public boolean isBlackCheckmated() {
+
+        if (isBlackInCheck()) {
+            for (ChessPiece piece : blackPieces.getAllAlivePieces()) {
+                if (piece.getLegalMoves(this, true).size() > 0) {
+                    System.out.println("Move found " + piece.getLegalMoves(this, true).size());
+                    Position p1 = piece.getLegalMoves(this, true).get(0);
+                    Position p2 = piece.getLegalMoves(this, true).get(1);
+                    System.out.println(p1.getCol() +", " + p1.getRow());
+                    System.out.println(p2.getCol() +", " + p2.getRow());
+                    return false;
+                }
+            }
+        }
+        else {
+            return false;
+        }
+        System.out.println("Black is checkmated");
+        return true;
     }
 
 
@@ -323,7 +363,7 @@ public class ChessGame {
         //look for white in check
         for (ChessPiece piece : blackPieces.getAllAlivePieces()) {
             if (piece.getClass() != King.class) {
-                for (Position position : piece.getLegalMoves(this)) {
+                for (Position position : piece.getLegalMoves(this, false)) {
                     if (position.equals(whiteKingPosition))
                         return true;
                 }
@@ -341,7 +381,7 @@ public class ChessGame {
         //look for black in check
         for (ChessPiece piece : whitePieces.getAllAlivePieces()) {
             if (piece.getClass() != King.class) {
-                for (Position position : piece.getLegalMoves(this)) {
+                for (Position position : piece.getLegalMoves(this, false)) {
                     if (position.equals(blackKingPosition))
                         return true;
                 }
@@ -356,6 +396,21 @@ public class ChessGame {
      * @return
      */
     public boolean isStalemate() {return false; }
+
+    public boolean moveCausesCheckForItsOwnKing(Position moveFrom, Position moveTo ) {
+        //create new instance based off of the current game
+        ChessGame simulatedGame = new ChessGame(gameHistory);
+
+        //simulate the move
+        simulatedGame.makeMove(moveFrom, moveTo);
+
+        //check if the king is in check
+        if (this.getBoardSpace(moveFrom).getPiece().getPieceColor() == PieceColor.WHITE)
+            return simulatedGame.isWhiteInCheck();
+        else
+            return simulatedGame.isBlackInCheck();
+
+    }
 
     public List<Move> getGameHistory() {
         return this.gameHistory;

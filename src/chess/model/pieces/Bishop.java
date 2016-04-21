@@ -20,7 +20,7 @@ public class Bishop extends ChessPiece {
     }
 
     @Override
-    public List<Position> getLegalMoves(ChessGame game) {
+    public List<Position> getLegalMoves(ChessGame game, boolean removeMovesThatCauseCheck) {
         return new ArrayList<>();
     }
 

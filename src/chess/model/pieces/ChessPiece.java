@@ -4,6 +4,7 @@ import chess.model.ChessGame;
 import chess.model.PieceColor;
 import chess.model.Position;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -50,9 +51,10 @@ public abstract class ChessPiece {
     /**
      * Gets all the legal moves for a piece
      * @param game
+     * @param removeMovesThatCauseCheck
      * @return
      */
-    public abstract List<Position> getLegalMoves(ChessGame game);
+    public abstract List<Position> getLegalMoves(ChessGame game, boolean removeMovesThatCauseCheck);
 
     /**
      * Gets the notation symbol for the piece
@@ -72,6 +74,25 @@ public abstract class ChessPiece {
      */
     public boolean isCaptured() {
         return this.getPosition() != null;
+    }
+
+    /**
+     * Removes all moves that cause check to its own king
+     *
+     * @param game
+     * @param currLegalMoves
+     */
+    protected void removeMovesThatCauseCheck(ChessGame game, List<Position> currLegalMoves) {
+        Iterator iter = currLegalMoves.iterator();
+        while (iter.hasNext()) {
+            Position move = (Position) iter.next();
+
+            if (move == null)
+                continue;
+
+            if (game.moveCausesCheckForItsOwnKing(this.getPosition(), move))
+                iter.remove();
+        }
     }
 
 }

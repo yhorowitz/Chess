@@ -47,7 +47,7 @@ public class PawnTest {
 
         Pawn pawn = new Pawn(pieceColor, position);
         game.getBoardSpace(position).setPiece(pawn);
-        List<Position> legalMoves = pawn.getLegalMoves(game);
+        List<Position> legalMoves = pawn.getLegalMoves(game, true);
 
         List<Position> whatResultsShouldBe = new ArrayList<>();
         whatResultsShouldBe.add(new Position(row + 1, column));
@@ -72,7 +72,7 @@ public class PawnTest {
         Pawn blockingPiece = new Pawn(PieceColor.WHITE, blockingPosition);
         game.getBoardSpace(blockingPosition).setPiece(blockingPiece);
 
-        List<Position> legalMoves = pawn.getLegalMoves(game);
+        List<Position> legalMoves = pawn.getLegalMoves(game, true);
 
         List<Position> whatResultsShouldBe = new ArrayList<>();
         whatResultsShouldBe.add(new Position(row + 1, column));
@@ -88,15 +88,13 @@ public class PawnTest {
         Pawn pawn = new Pawn(PieceColor.BLACK, startPos);
         game.getBoardSpace(startPos).setPiece(pawn);
 
-        List<Position> legalMoves = pawn.getLegalMoves(game);
+        List<Position> legalMoves = pawn.getLegalMoves(game, true);
         assertTrue(legalMoves.size() > 0);
         Position endPos = legalMoves.get(0);
-        game.makeMove(pawn, startPos, endPos);
+        game.makeMove(startPos, endPos);
         assertSame(game.getBoardSpace(endPos).getPiece(), pawn);
         assertNull(game.getBoardSpace(startPos).getPiece());
     }
-
-
 
     @Test
     public void pawnCanCaptureIfPieceIsInTheRightPlace() {
@@ -115,7 +113,7 @@ public class PawnTest {
         Pawn capturePiece2 = new Pawn(PieceColor.WHITE, capturePiecePos);
         game.getBoardSpace(capturePiecePos2).setPiece(capturePiece2);
 
-        List<Position> legalMoves = pawn.getLegalMoves(game);
+        List<Position> legalMoves = pawn.getLegalMoves(game, true);
         assertTrue(legalMoves.contains(capturePiecePos));
         assertTrue(legalMoves.contains(capturePiecePos2));
     }
@@ -137,7 +135,7 @@ public class PawnTest {
         Pawn capturePiece2 = new Pawn(PieceColor.BLACK, capturePiecePos);
         game.getBoardSpace(capturePiecePos2).setPiece(capturePiece2);
 
-        List<Position> legalMoves = pawn.getLegalMoves(game);
+        List<Position> legalMoves = pawn.getLegalMoves(game, true);
         assertFalse(legalMoves.contains(capturePiecePos));
         assertFalse(legalMoves.contains(capturePiecePos2));
     }

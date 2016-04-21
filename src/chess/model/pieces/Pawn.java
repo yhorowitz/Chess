@@ -4,10 +4,10 @@ import chess.model.BoardSpace;
 import chess.model.ChessGame;
 import chess.model.PieceColor;
 import chess.model.Position;
-import chess.view.twod.Board;
 import chess.view.twod.PawnPromotionDialog;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -79,7 +79,7 @@ public class Pawn extends ChessPiece  {
      * @return
      */
     @Override
-    public List<Position> getLegalMoves(ChessGame game) {
+    public List<Position> getLegalMoves(ChessGame game, boolean removeMovesThatCauseCheck) {
         //used to determine which direction the pawn can move based on its color
         int direction = this.getPieceColor() == PieceColor.BLACK ? 1 : -1;
         //how many spaces forward it can move based on its color
@@ -97,7 +97,7 @@ public class Pawn extends ChessPiece  {
             BoardSpace boardSpaceBeingChecked = game.getBoardSpace(spaceBeingChecked);
 
             if (boardSpaceBeingChecked != null && !game.getBoardSpace(spaceBeingChecked).isOccupied()) {
-                legalMoves.add(spaceBeingChecked);
+                    legalMoves.add(spaceBeingChecked);
             }
             else
                 break;
@@ -140,6 +140,9 @@ public class Pawn extends ChessPiece  {
                 legalMoves.add(positionForCapture);
             }
         }
+
+        if (removeMovesThatCauseCheck)
+            removeMovesThatCauseCheck(game, legalMoves);
 
         return legalMoves;
     }

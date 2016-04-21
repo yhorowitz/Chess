@@ -6,13 +6,10 @@ import chess.model.BoardSpace;
 import chess.model.Move;
 import chess.model.Position;
 import chess.model.pieces.ChessPiece;
-import chess.model.pieces.Pawn;
 import chess.view.twod.*;
-import chess.view.twod.history.GameHistory;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.util.List;
@@ -60,11 +57,11 @@ public class BoardController {
                         }
                         else if (gridSpace.isHighlighted()) {
                             //move the selected piece to the selected position and clear all highlights
-                            ChessPiece piece = BoardController.this.game.getSelectedPiece();
+                           // ChessPiece piece = BoardController.this.game.getSelectedPiece();
                             Position from = BoardController.this.game.getSelectedPosition();
                             Position to = position;
 
-                            BoardController.this.game.makeMove(piece, from, to);
+                            BoardController.this.game.makeMove(from, to);
                             BoardController.this.gameUI.updateBoard(BoardController.this.game);
 
                             deselectAllBoardPositions();
@@ -112,7 +109,7 @@ public class BoardController {
 
     private List<Position> getLegalMoves(Position position) {
         ChessPiece piece = game.getBoardSpace(position).getPiece();
-        return piece.getLegalMoves(game);
+        return piece.getLegalMoves(game, true);
     }
 
     private void highlightPositions(List<Position> positions) {
