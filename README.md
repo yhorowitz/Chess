@@ -9,3 +9,5 @@ A standard chess game played between 2 players. There is no plan to allow the us
 - Ability to view a past game, move back and forth through the moves or skip to a specific move.
 
 It will be test driven and follow an MVC architecture
+
+The art for the chess pieces were taken from: https://en.wikipedia.org/wiki/Chess_piece
