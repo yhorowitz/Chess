@@ -18,6 +18,7 @@ public class ChessGameUI extends BorderPane {
 
     public ChessGameUI() {
         this.setCenter(gameBoard);
+        this.getStyleClass().add("chessGame");
         showGameHistory();
 
         this.setMargin(gameHistory, new Insets(20, 0, 0, 0));
