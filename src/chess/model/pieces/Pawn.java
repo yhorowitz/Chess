@@ -4,6 +4,8 @@ import chess.model.BoardSpace;
 import chess.model.ChessGame;
 import chess.model.PieceColor;
 import chess.model.Position;
+import chess.view.twod.Board;
+import chess.view.twod.PawnPromotionDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,8 +94,9 @@ public class Pawn extends ChessPiece  {
         for (int i = 1; i <= spacesCanMove; i++) {
             int newRow = currentRow + (i * direction);
             Position spaceBeingChecked = new Position(newRow, currentColumn);
+            BoardSpace boardSpaceBeingChecked = game.getBoardSpace(spaceBeingChecked);
 
-            if (!game.getBoardSpace(spaceBeingChecked).isOccupied()) {
+            if (boardSpaceBeingChecked != null && !game.getBoardSpace(spaceBeingChecked).isOccupied()) {
                 legalMoves.add(spaceBeingChecked);
             }
             else
@@ -108,14 +111,14 @@ public class Pawn extends ChessPiece  {
             //check for regular capture
             positionForCapture = new Position(currentRow + direction, currentColumn - 1);
             captureSpace = game.getBoardSpace(positionForCapture);
-            if(captureSpace.isOccupied() && captureSpace.getPiece().getPieceColor() != game.getCurrentTurn()){
+            if(captureSpace != null && captureSpace.isOccupied() && captureSpace.getPiece().getPieceColor() != game.getCurrentTurn()){
                 legalMoves.add(positionForCapture);
             }
 
             //check for En Passant
             Position positionToCheck = new Position(currentRow, currentColumn - 1);
             BoardSpace spaceToCheck = game.getBoardSpace(positionToCheck);
-            if (spaceToCheck.isOccupied() && spaceToCheck.getPiece() instanceof Pawn &&
+            if (spaceToCheck != null && spaceToCheck.isOccupied() && spaceToCheck.getPiece() instanceof Pawn &&
                     ((Pawn) spaceToCheck.getPiece()).isEligibleForEnPassant()) {
                 legalMoves.add(positionForCapture);
             }
@@ -125,19 +128,31 @@ public class Pawn extends ChessPiece  {
             //check for regular capture
             positionForCapture = new Position(currentRow + direction, currentColumn + 1);
             captureSpace = game.getBoardSpace(positionForCapture);
-            if(captureSpace.isOccupied() && captureSpace.getPiece().getPieceColor() != game.getCurrentTurn()){
+            if(captureSpace != null && captureSpace.isOccupied() && captureSpace.getPiece().getPieceColor() != game.getCurrentTurn()){
                 legalMoves.add(positionForCapture);
             }
 
             //check for En Passant
             Position positionToCheck = new Position(currentRow, currentColumn + 1);
             BoardSpace spaceToCheck = game.getBoardSpace(positionToCheck);
-            if (spaceToCheck.isOccupied() && spaceToCheck.getPiece() instanceof Pawn &&
+            if (spaceToCheck != null && spaceToCheck.isOccupied() && spaceToCheck.getPiece() instanceof Pawn &&
                     ((Pawn) spaceToCheck.getPiece()).isEligibleForEnPassant()) {
                 legalMoves.add(positionForCapture);
             }
         }
 
         return legalMoves;
+    }
+
+    public boolean deservesPromotion() {
+        return this.getPosition().getRow() == 0 || this.getPosition().getRow() == 7;
+    }
+
+    public ChessPiece promote() {
+        PawnPromotionDialog promotionDialog = new PawnPromotionDialog(getPieceColor());
+        ChessPiece selectedPromotion = promotionDialog.getResult();
+        selectedPromotion.setPosition(getPosition());
+
+        return selectedPromotion;
     }
 }

@@ -121,6 +121,15 @@ public class PlayerPieceSet {
         return false;
     }
 
+    public ChessPiece getPieceAtPosition(Position position) {
+        for (ChessPiece piece : alivePieces) {
+            if (piece.getPosition().equals(position))
+                return piece;
+        }
+
+        return null;
+    }
+
     public void capture(ChessPiece piece) {
         if(!alivePieces.remove(piece))
             throw new IllegalArgumentException("That piece is not in this players set");

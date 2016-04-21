@@ -133,8 +133,12 @@ public class ChessGame {
      * @return
      */
     public BoardSpace getBoardSpace(Position position) {
+
         int row = position.getRow();
         int column = position.getCol();
+
+        if (row < 0 || row > 7 || column < 0 || column > 7)
+            return null;
 
         return board[row][column];
     }
@@ -170,6 +174,24 @@ public class ChessGame {
         getBoardSpace(from).setPiece(null);
         getBoardSpace(to).setPiece(piece);
         piece.moveTo(to);
+
+        //check if pawn gets promoted
+        if (piece.getClass() == Pawn.class && ((Pawn)piece).deservesPromotion()){
+            ChessPiece promotedPiece = null;
+            if (piece.getPieceColor() == PieceColor.BLACK) {
+                promotedPiece = ((Pawn)piece).promote();
+                blackPieces.capture(blackPieces.getPieceAtPosition(to));
+                promotedPiece = blackPieces.addPiece(promotedPiece.getClass(), to);
+                this.getBoardSpace(to).setPiece(promotedPiece);
+            }
+            else if (piece.getPieceColor() == PieceColor.WHITE) {
+                promotedPiece = ((Pawn)piece).promote();
+                whitePieces.capture(whitePieces.getPieceAtPosition(to));
+                promotedPiece = whitePieces.addPiece(promotedPiece.getClass(), to);
+                this.getBoardSpace(to).setPiece(promotedPiece);
+            }
+            currentMove.setAsPawnPromotion(promotedPiece);
+        }
 
         if (isCheckmate())
             currentMove.setAsCheckmate();

@@ -6,6 +6,13 @@ import chess.model.Move;
 import chess.model.Position;
 import chess.view.twod.history.GameHistory;
 import javafx.geometry.Insets;
+import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 
 /**
@@ -13,15 +20,36 @@ import javafx.scene.layout.BorderPane;
  */
 public class ChessGameUI extends BorderPane {
 
+    private BorderPane gamePane = new BorderPane(); //holds actual game info (ie board, history etc)
+
     private Board gameBoard = new Board();
     private GameHistory gameHistory = new GameHistory();
 
-    public ChessGameUI() {
-        this.setCenter(gameBoard);
-        this.getStyleClass().add("chessGame");
-        showGameHistory();
+    //menu bar items
+    private MenuBar menuBar = new MenuBar();
+    private Menu systemMenu = new Menu("System");
+    private Menu optionsMenu = new Menu("Options");
+    private MenuItem exitItem = new MenuItem("Exit");
+    private MenuItem toggleGameHistoryVisibility= new MenuItem("Hide Game History");
 
-        this.setMargin(gameHistory, new Insets(20, 0, 0, 0));
+    public ChessGameUI() {
+        gameBoard.getStyleClass().add("gameBoard");
+        gameHistory.getStyleClass().add("historyPanel");
+
+        gamePane.setCenter(gameBoard);
+        gamePane.setBottom(gameHistory);
+
+        //set up menu
+        exitItem.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN));
+        toggleGameHistoryVisibility.setAccelerator(new KeyCodeCombination(KeyCode.H, KeyCombination.CONTROL_DOWN));
+        systemMenu.getItems().add(exitItem);
+        optionsMenu.getItems().add(toggleGameHistoryVisibility);
+        menuBar.getMenus().add(systemMenu);
+        menuBar.getMenus().add(optionsMenu);
+
+        this.setTop(menuBar);
+        this.setCenter(gamePane);
+        showGameHistory();
     }
 
     public void updateBoard(ChessGame game) {
@@ -57,10 +85,24 @@ public class ChessGameUI extends BorderPane {
     }
 
     public void showGameHistory() {
-        this.setBottom(gameHistory);
+        gamePane.setBottom(gameHistory);
+        toggleGameHistoryVisibility.setText("Hide Game History");
     }
 
     public void hideGameHistory() {
-        this.setBottom(null);
+        gamePane.setBottom(null);
+        toggleGameHistoryVisibility.setText("Show Game History");
+    }
+
+    public MenuItem getExitMenuItem() {
+        return this.exitItem;
+    }
+
+    public MenuItem getToggleGameHistoryItem() {
+        return toggleGameHistoryVisibility;
+    }
+
+    public boolean gameHistoryIsVisible() {
+        return gamePane.getBottom() != null;
     }
 }

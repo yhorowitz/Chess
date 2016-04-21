@@ -1,7 +1,13 @@
-.chessGame {
+.gameBoard {
     -fx-background-color: #614126;
     -fx-border-color: #614126;
-    -fx-border-width: 25;
+    -fx-border-insets: 25;
+}
+
+.historyPanel {
+    -fx-background-color: #614126;
+    -fx-border-color: #614126;
+    -fx-border-insets: 0 25 25 25;
 }
 
 .boardSpace {

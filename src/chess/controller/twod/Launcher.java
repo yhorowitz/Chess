@@ -26,7 +26,7 @@ public class Launcher extends Application {
 
         Scene scene = new Scene(gameUI);
 
-        BoardController boardController = new BoardController(gameUI, game);
+        BoardController boardController = new BoardController(mainStage, gameUI, game);
 
         scene.getStylesheets().add(Launcher.class.getResource("../../view/twod/Board.css").toExternalForm());
         mainStage.setScene(scene);

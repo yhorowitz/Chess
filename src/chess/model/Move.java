@@ -20,6 +20,9 @@ public class Move {
     private boolean isCheck = false;
     private boolean isCheckmate = false;
 
+    private boolean isPawnPromotion = false;
+    private ChessPiece promotedPiece;
+
     public Move(ChessPiece piece, Position start, Position end) {
         setPiece(piece);
         setStartPosition(start);
@@ -101,6 +104,15 @@ public class Move {
         this.capturePosition = capturePosition;
     }
 
+    public void setAsPawnPromotion(ChessPiece promotedPiece) {
+        this.isPawnPromotion = true;
+        setPromotedPiece(promotedPiece);
+    }
+
+    private void setPromotedPiece(ChessPiece piece) {
+        this.promotedPiece = piece;
+    }
+
     public String getAlgebraicNotation() {
         StringBuilder notation = new StringBuilder();
 
@@ -109,6 +121,10 @@ public class Move {
             notation.append("x");
         notation.append((char)(endPosition.getCol() + 97));   //add column
         notation.append(8 - endPosition.getRow() + "");       //add row
+        if(isPawnPromotion) {
+            notation.append("=");
+            notation.append(promotedPiece.getNotationSymbol());
+        }
 
         if (isCheckmate)
             notation.append("++");
@@ -133,6 +149,11 @@ public class Move {
             if(!endPosition.equals(capturePosition)) {
                 notation.append(" with an En Passant");
             }
+        }
+
+        if (isPawnPromotion) {
+            notation.append(" promoting into a ");
+            notation.append(promotedPiece.getClass().getSimpleName());
         }
 
         if (isCheckmate) {

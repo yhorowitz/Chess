@@ -26,6 +26,9 @@ public class Board extends TilePane {
         int row = position.getRow();
         int column = position.getCol();
 
+        if (row < 0 || row > 7 || column < 0 || column > 7)
+            return null;
+
         return grid[row][column];
     }
 

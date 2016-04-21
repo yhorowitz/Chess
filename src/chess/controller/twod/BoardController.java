@@ -6,13 +6,14 @@ import chess.model.BoardSpace;
 import chess.model.Move;
 import chess.model.Position;
 import chess.model.pieces.ChessPiece;
-import chess.view.twod.Board;
-import chess.view.twod.BoardPosition;
-import chess.view.twod.ChessGameUI;
+import chess.model.pieces.Pawn;
+import chess.view.twod.*;
 import chess.view.twod.history.GameHistory;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 
 import java.util.List;
 
@@ -20,11 +21,13 @@ public class BoardController {
 
     private ChessGameUI gameUI;
     private ChessGame game;
+    private Stage mainStage;
 
-    public BoardController(ChessGameUI gameUI, ChessGame game) {
+    public BoardController(Stage mainStage, ChessGameUI gameUI, ChessGame game) {
 
         this.gameUI = gameUI;
         this.game = game;
+        this.mainStage = mainStage;
 
         for (int row = 0; row < gameUI.getGrid().length; row++) {
             for (int col = 0; col < gameUI.getGrid().length; col++) {
@@ -69,12 +72,42 @@ public class BoardController {
 
                             List<Move> gameHistory = game.getGameHistory();
                             gameUI.addMove(gameHistory.size(), gameHistory.get(gameHistory.size() - 1));
-
                         }
                     }
                 });
             }
         }
+
+        //add action listeners to menubar items
+        addEventHandlerToMenuExitItem();
+        addEventHandlerToToggleHistoryVisibilityItem();
+
+    }
+
+    private void addEventHandlerToToggleHistoryVisibilityItem() {
+        gameUI.getToggleGameHistoryItem().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (gameUI.gameHistoryIsVisible())
+                    hideGameHistory();
+                else
+                    showGameHistory();
+
+            }
+        });
+    }
+
+    private void addEventHandlerToMenuExitItem() {
+        gameUI.getExitMenuItem().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                exitApplication();
+            }
+        });
+    }
+
+    private void exitApplication() {
+        System.exit(0);
     }
 
     private List<Position> getLegalMoves(Position position) {
@@ -121,13 +154,13 @@ public class BoardController {
     private void showGameHistory() {
         if (gameUI.getBottom() == null) {
             gameUI.showGameHistory();
-            Launcher.mainStage.sizeToScene();
+            mainStage.sizeToScene();
         }
     }
 
     private void hideGameHistory() {
         gameUI.hideGameHistory();
-        Launcher.mainStage.sizeToScene();
+        mainStage.sizeToScene();
     }
 
 
