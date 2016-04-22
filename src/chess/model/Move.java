@@ -113,6 +113,10 @@ public class Move {
         this.promotedPiece = piece;
     }
 
+    public ChessPiece getPromotedPiece() {
+        return this.promotedPiece;
+    }
+
     public String getAlgebraicNotation() {
         StringBuilder notation = new StringBuilder();
 

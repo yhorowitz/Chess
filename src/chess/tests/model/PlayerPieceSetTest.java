@@ -68,7 +68,7 @@ public class PlayerPieceSetTest {
 
         List<ChessPiece> pawns = set.getAllPiecesOfType(Pawn.class);
         List<ChessPiece> queens = set.getAllPiecesOfType(Queen.class);
-        List<ChessPiece> allPieces = set.getAllPieces();
+        List<ChessPiece> allPieces = set.getAllAlivePieces();
 
         assertEquals(pawns.size(), 3);
         assertEquals(queens.size(), 1);

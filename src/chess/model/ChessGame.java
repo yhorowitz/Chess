@@ -49,7 +49,7 @@ public class ChessGame {
         setUpNewGame();
         //simulate the moves
         for (Move move : gameHistory) {
-            this.makeMove(move.getStartPosition(), move.getEndPosition());
+            this.simulateMove(move);
         }
     }
 
@@ -189,19 +189,11 @@ public class ChessGame {
 
         //check if pawn gets promoted
         if (piece.getClass() == Pawn.class && ((Pawn)piece).deservesPromotion()){
-            ChessPiece promotedPiece = null;
-            if (piece.getPieceColor() == PieceColor.BLACK) {
-                promotedPiece = ((Pawn)piece).promote();
-                blackPieces.capture(blackPieces.getPieceAtPosition(to));
-                promotedPiece = blackPieces.addPiece(promotedPiece.getClass(), to);
-                this.getBoardSpace(to).setPiece(promotedPiece);
-            }
-            else if (piece.getPieceColor() == PieceColor.WHITE) {
-                promotedPiece = ((Pawn)piece).promote();
-                whitePieces.capture(whitePieces.getPieceAtPosition(to));
-                promotedPiece = whitePieces.addPiece(promotedPiece.getClass(), to);
-                this.getBoardSpace(to).setPiece(promotedPiece);
-            }
+            PlayerPieceSet pieceSet = piece.getPieceColor() == PieceColor.BLACK ? blackPieces : whitePieces;
+            ChessPiece promotedPiece = ((Pawn)piece).promote();
+            capture(piece);
+            pieceSet.addPiece(promotedPiece);
+            this.getBoardSpace(to).setPiece(promotedPiece);
             currentMove.setAsPawnPromotion(promotedPiece);
         }
 
@@ -218,6 +210,83 @@ public class ChessGame {
 
     }
 
+    /**
+     * Switches the position of a piece in the board
+     *
+     * @param move The move being simulated
+     * @return Whether the move was successfully completed
+     */
+    public boolean simulateMove(Move move) {
+
+        Position from = move.getStartPosition();
+        Position to = move.getEndPosition();
+
+        //get piece being moved
+        ChessPiece piece = getBoardSpace(from).getPiece();
+
+        if (isEnPassant(piece, from, to)) { //must be done before setting all pawns to no longer be eligible. See method documentation for details.
+            int direction = piece.getPieceColor() == PieceColor.BLACK ? -1 : 1;
+            BoardSpace captureSpace = getBoardSpace(new Position(to.getRow() + direction, to.getCol()));
+            capture(captureSpace.getPosition());
+        }
+        setAllPawnToNotEligibleForEnPassant(); //must be called before the moveTo method. See method documentation for details
+        if (isCapture(to))
+            capture(to);
+
+        //move the piece
+        getBoardSpace(from).setPiece(null);
+        getBoardSpace(to).setPiece(piece);
+        piece.moveTo(to);
+
+        //check if pawn gets promoted
+        if (piece.getClass() == Pawn.class && ((Pawn)piece).deservesPromotion()){
+            PlayerPieceSet pieceSet = piece.getPieceColor() == PieceColor.BLACK ? blackPieces : whitePieces;
+            ChessPiece promotedPiece = move.getPromotedPiece();
+            capture(piece);
+            pieceSet.addPiece(promotedPiece);
+            this.getBoardSpace(to).setPiece(promotedPiece);
+        }
+
+        changeTurns();
+
+        return true;
+
+    }
+
+    /**
+     * Simulates a move being made
+     *
+     * @param from The position being moved from
+     * @param to The position being moved to
+     * @return Whether the move was successfully completed
+     */
+    public boolean simulateMove(Position from, Position to) {
+
+        //get piece being moved
+        ChessPiece piece = getBoardSpace(from).getPiece();
+
+        if (isEnPassant(piece, from, to)) { //must be done before setting all pawns to no longer be eligible. See method documentation for details.
+            int direction = piece.getPieceColor() == PieceColor.BLACK ? -1 : 1;
+            BoardSpace captureSpace = getBoardSpace(new Position(to.getRow() + direction, to.getCol()));
+            capture(captureSpace.getPosition());
+        }
+        setAllPawnToNotEligibleForEnPassant(); //must be called before the moveTo method. See method documentation for details
+        if (isCapture(to))
+            capture(to);
+
+        //move the piece
+        getBoardSpace(from).setPiece(null);
+        getBoardSpace(to).setPiece(piece);
+        piece.moveTo(to);
+
+        //we dont care about pawn promotion?
+
+        changeTurns();
+
+        return true;
+
+    }
+
     public boolean isCapture(Position position) {
         if (getBoardSpace(position).isOccupied())
             return true;
@@ -227,13 +296,17 @@ public class ChessGame {
 
     public void capture(Position position) {
         ChessPiece piece = getBoardSpace(position).getPiece();
+        capture(piece);
+    }
+
+    public void capture(ChessPiece piece) {
+        Position position = piece.getPosition();
         if (piece.getPieceColor() == PieceColor.BLACK)
             blackPieces.capture(piece);
         else
             whitePieces.capture(piece);
 
-        getBoardSpace(position).setPiece(null);
-    }
+        getBoardSpace(position).setPiece(null);    }
 
     /**
      * Checks if a move is performing an En Passant.
@@ -402,7 +475,7 @@ public class ChessGame {
         ChessGame simulatedGame = new ChessGame(gameHistory);
 
         //simulate the move
-        simulatedGame.makeMove(moveFrom, moveTo);
+        simulatedGame.simulateMove(moveFrom, moveTo);
 
         //check if the king is in check
         if (this.getBoardSpace(moveFrom).getPiece().getPieceColor() == PieceColor.WHITE)

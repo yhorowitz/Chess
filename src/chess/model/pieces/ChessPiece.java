@@ -88,9 +88,8 @@ public abstract class ChessPiece {
             Position move = (Position) iter.next();
 
             if (move == null)
-                continue;
-
-            if (game.moveCausesCheckForItsOwnKing(this.getPosition(), move))
+                iter.remove();
+            else if (game.moveCausesCheckForItsOwnKing(this.getPosition(), move))
                 iter.remove();
         }
     }

@@ -55,6 +55,13 @@ public class PlayerPieceSet {
         return piece;
     }
 
+    public void addPiece(ChessPiece piece) {
+        if (piece.getPosition() == null)
+            throw new IllegalArgumentException("Piece must already have its position set");
+        else
+            this.alivePieces.add(piece);
+    }
+
     public <T extends ChessPiece> List<ChessPiece> getCapturedPiecesOfType(Class<T> pieceType) {
 
         List<ChessPiece> selectedPieces = new ArrayList<>();
@@ -131,7 +138,8 @@ public class PlayerPieceSet {
     }
 
     public void capture(ChessPiece piece) {
-        if(!alivePieces.remove(piece))
+        boolean pieceRemoved = alivePieces.remove(piece);
+        if(!pieceRemoved)
             throw new IllegalArgumentException("That piece is not in this players set");
         else
             capturedPieces.add(piece);
