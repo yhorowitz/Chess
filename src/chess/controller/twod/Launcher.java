@@ -17,22 +17,20 @@ public class Launcher extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        mainStage = primaryStage;
-
         ChessGame game = new ChessGame();
         ChessGameUI gameUI = new ChessGameUI();
 
-        mainStage.setTitle("Chess");
+        primaryStage.setTitle("Chess");
 
         Scene scene = new Scene(gameUI);
 
-        BoardController boardController = new BoardController(mainStage, gameUI, game);
+        BoardController boardController = new BoardController(primaryStage, gameUI, game);
 
         scene.getStylesheets().add(Launcher.class.getResource("../../view/twod/Board.css").toExternalForm());
-        mainStage.setScene(scene);
-        mainStage.setResizable(false);
-        mainStage.sizeToScene();
-        mainStage.show();
+        primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
+        primaryStage.sizeToScene();
+        primaryStage.show();
 
     }
 }
