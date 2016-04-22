@@ -416,4 +416,12 @@ public class ChessGame {
         return this.gameHistory;
     }
 
+    public PlayerPieceSet getBlackPieces() {
+        return this.blackPieces;
+    }
+
+    public PlayerPieceSet getWhitePieces() {
+        return this.whitePieces;
+    }
+
 }

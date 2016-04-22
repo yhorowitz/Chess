@@ -2,8 +2,6 @@ package chess.view.twod.history;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -31,11 +29,7 @@ public class GameHistory extends VBox {
         detailedDescriptionCol.setSortable(false);
 
         //set column width
-        turnNumberCol.setMinWidth(50);
-        turnNumberCol.setMaxWidth(50);
-        moveCol.setMinWidth(50);
-        moveCol.setMaxWidth(50);
-        detailedDescriptionCol.setMinWidth(529);
+        changeTableWidth(700);
 
         //set column data sources
         turnNumberCol.setCellValueFactory(new PropertyValueFactory<Move, String>("moveNumber"));
@@ -43,7 +37,7 @@ public class GameHistory extends VBox {
         detailedDescriptionCol.setCellValueFactory(new PropertyValueFactory<Move, String>("details"));
 
         gameHistoryTable.setMaxHeight(150);
-        gameHistoryTable.setMaxWidth(628);
+        gameHistoryTable.setMaxWidth(820);
         gameHistoryTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         gameHistoryTable.setEditable(false);
         gameHistoryTable.setPlaceholder(new Label("No moves have been made yet"));
@@ -52,6 +46,19 @@ public class GameHistory extends VBox {
 
         this.getChildren().addAll(gameHistoryTable);
 
+    }
+
+    public void changeTableWidth(int width) {
+        gameHistoryTable.setMinWidth(width);
+        gameHistoryTable.setMaxWidth(width);
+
+        //change width of columns to match new table size
+        turnNumberCol.setMinWidth(width * .1);
+        turnNumberCol.setMaxWidth(width * .1);
+        moveCol.setMinWidth(width * .15);
+        moveCol.setMaxWidth(width * .15);
+        detailedDescriptionCol.setMinWidth(width * .75);
+        detailedDescriptionCol.setMaxWidth(width * .75);
     }
 
     public void addMove(int moveNumber, chess.model.Move move) {

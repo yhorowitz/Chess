@@ -69,6 +69,7 @@ public class BoardController {
 
                             List<Move> gameHistory = game.getGameHistory();
                             gameUI.addMove(gameHistory.size(), gameHistory.get(gameHistory.size() - 1));
+                            updateGraveyards();
                         }
                     }
                 });
@@ -78,6 +79,7 @@ public class BoardController {
         //add action listeners to menubar items
         addEventHandlerToMenuExitItem();
         addEventHandlerToToggleHistoryVisibilityItem();
+        addEventHandlerToToggleGraveyardVisibilityItem();
 
     }
 
@@ -90,6 +92,18 @@ public class BoardController {
                 else
                     showGameHistory();
 
+            }
+        });
+    }
+
+    private void addEventHandlerToToggleGraveyardVisibilityItem() {
+        gameUI.getToggleGraveyardItem().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (gameUI.graveyardIsVisible())
+                    hideGraveyard();
+                else
+                    showGraveyard();
             }
         });
     }
@@ -158,6 +172,25 @@ public class BoardController {
     private void hideGameHistory() {
         gameUI.hideGameHistory();
         mainStage.sizeToScene();
+    }
+
+    private void showGraveyard() {
+        if (gameUI.getLeft() == null) {
+            gameUI.showGraveyards();
+            gameUI.resetGameHistoryWidth();
+            mainStage.sizeToScene();
+        }
+    }
+
+    private void hideGraveyard() {
+        gameUI.hideGraveyards();
+        gameUI.resetGameHistoryWidth();
+        mainStage.sizeToScene();
+    }
+
+    private void updateGraveyards() {
+        gameUI.getBlackGraveyard().update(game.getBlackPieces());
+        gameUI.getWhiteGraveyard().update(game.getWhitePieces());
     }
 
 
