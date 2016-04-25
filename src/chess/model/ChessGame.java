@@ -169,6 +169,7 @@ public class ChessGame {
         ChessPiece piece = getBoardSpace(from).getPiece();
 
         Move currentMove = new Move(piece, from, to);
+        gameHistory.add(currentMove); //keep this at the start. trust me.
 
         if (isEnPassant(piece, from, to)) { //must be done before setting all pawns to no longer be eligible. See method documentation for details.
             int direction = piece.getPieceColor() == PieceColor.BLACK ? -1 : 1;
@@ -203,8 +204,6 @@ public class ChessGame {
             currentMove.setAsCheck();
 
         changeTurns();
-
-        gameHistory.add(currentMove);
 
         return true;
 
@@ -265,6 +264,10 @@ public class ChessGame {
         //get piece being moved
         ChessPiece piece = getBoardSpace(from).getPiece();
 
+        if (piece == null) {
+            return false;
+        }
+
         if (isEnPassant(piece, from, to)) { //must be done before setting all pawns to no longer be eligible. See method documentation for details.
             int direction = piece.getPieceColor() == PieceColor.BLACK ? -1 : 1;
             BoardSpace captureSpace = getBoardSpace(new Position(to.getRow() + direction, to.getCol()));
@@ -295,18 +298,16 @@ public class ChessGame {
     }
 
     public void capture(Position position) {
-        ChessPiece piece = getBoardSpace(position).getPiece();
-        capture(piece);
+        ChessPiece pieceToCapture = getBoardSpace(position).getPiece();
+        capture(pieceToCapture);
     }
 
-    public void capture(ChessPiece piece) {
-        Position position = piece.getPosition();
-        if (piece.getPieceColor() == PieceColor.BLACK)
-            blackPieces.capture(piece);
+    public void capture(ChessPiece pieceToCapture) {
+        if (pieceToCapture.getPieceColor() == PieceColor.BLACK)
+            blackPieces.capture(pieceToCapture);
         else
-            whitePieces.capture(piece);
-
-        getBoardSpace(position).setPiece(null);    }
+            whitePieces.capture(pieceToCapture);
+    }
 
     /**
      * Checks if a move is performing an En Passant.
@@ -381,11 +382,6 @@ public class ChessGame {
         if (isWhiteInCheck()) {
             for (ChessPiece piece : whitePieces.getAllAlivePieces()) {
                 if (piece.getLegalMoves(this, true).size() > 0) {
-                    System.out.println("Move found" + piece.getLegalMoves(this, true).size());
-                    Position p1 = piece.getLegalMoves(this, true).get(0);
-                    Position p2 = piece.getLegalMoves(this, true).get(1);
-                    System.out.println(p1.getCol() +", " + p1.getRow());
-                    System.out.println(p2.getCol() +", " + p2.getRow());
                     return false;
                 }
             }
@@ -403,11 +399,6 @@ public class ChessGame {
         if (isBlackInCheck()) {
             for (ChessPiece piece : blackPieces.getAllAlivePieces()) {
                 if (piece.getLegalMoves(this, true).size() > 0) {
-                    System.out.println("Move found " + piece.getLegalMoves(this, true).size());
-                    Position p1 = piece.getLegalMoves(this, true).get(0);
-                    Position p2 = piece.getLegalMoves(this, true).get(1);
-                    System.out.println(p1.getCol() +", " + p1.getRow());
-                    System.out.println(p2.getCol() +", " + p2.getRow());
                     return false;
                 }
             }
@@ -471,6 +462,8 @@ public class ChessGame {
     public boolean isStalemate() {return false; }
 
     public boolean moveCausesCheckForItsOwnKing(Position moveFrom, Position moveTo ) {
+        ChessPiece piece = getBoardSpace(moveFrom).getPiece();
+
         //create new instance based off of the current game
         ChessGame simulatedGame = new ChessGame(gameHistory);
 
@@ -478,7 +471,7 @@ public class ChessGame {
         simulatedGame.simulateMove(moveFrom, moveTo);
 
         //check if the king is in check
-        if (this.getBoardSpace(moveFrom).getPiece().getPieceColor() == PieceColor.WHITE)
+        if (piece.getPieceColor() == PieceColor.WHITE)
             return simulatedGame.isWhiteInCheck();
         else
             return simulatedGame.isBlackInCheck();
