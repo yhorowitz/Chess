@@ -111,7 +111,7 @@ public class Pawn extends ChessPiece  {
             //check for regular capture
             positionForCapture = new Position(currentRow + direction, currentColumn - 1);
             captureSpace = game.getBoardSpace(positionForCapture);
-            if(captureSpace != null && captureSpace.isOccupied() && captureSpace.getPiece().getPieceColor() != game.getCurrentTurn()){
+            if(captureSpace != null && captureSpace.isOccupied() && captureSpace.getPiece().getPieceColor() != this.getPieceColor()){
                 legalMoves.add(positionForCapture);
             }
 
@@ -128,7 +128,7 @@ public class Pawn extends ChessPiece  {
             //check for regular capture
             positionForCapture = new Position(currentRow + direction, currentColumn + 1);
             captureSpace = game.getBoardSpace(positionForCapture);
-            if(captureSpace != null && captureSpace.isOccupied() && captureSpace.getPiece().getPieceColor() != game.getCurrentTurn()){
+            if(captureSpace != null && captureSpace.isOccupied() && captureSpace.getPiece().getPieceColor() != this.getPieceColor()){
                 legalMoves.add(positionForCapture);
             }
 
