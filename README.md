@@ -7,6 +7,4 @@ A standard chess game played between 2 players. There is no plan to allow the us
 - The game history will be shown (it will have an option to be hidden).
 - Captured pieces will be shown (In the mysterious and dangerous Ancient Chess Graveyard).
 
-It will be test driven and follow an MVP architecture
-
 The art for the chess pieces were taken from: https://en.wikipedia.org/wiki/Chess_piece
