@@ -57,6 +57,12 @@ public abstract class ChessPiece {
     public abstract List<Position> getLegalMoves(ChessGame game, boolean removeMovesThatCauseCheck);
 
     /**
+     * Gets the notation letter for the piece
+     * @return
+     */
+    public abstract String getNotationLetter();
+
+    /**
      * Gets the notation symbol for the piece
      * @return
      */

@@ -26,7 +26,13 @@ public class Rook extends ChessPiece  {
     }
 
     @Override
-    public String getNotationSymbol() {
+    public String getNotationLetter() {
         return "R";
+    }
+
+    @Override
+    public String getNotationSymbol(){
+        int add = getPieceColor() == PieceColor.BLACK ? 6: 0;
+        return (char)(0x2656 + add) + "";
     }
 }

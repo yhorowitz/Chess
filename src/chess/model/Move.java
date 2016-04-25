@@ -121,6 +121,27 @@ public class Move {
     public String getAlgebraicNotation() {
         StringBuilder notation = new StringBuilder();
 
+        notation.append(piece.getNotationLetter());         //add piece type
+        if (isCaptureMove())                                //add capture notation
+            notation.append("x");
+        notation.append((char)(endPosition.getCol() + 97));   //add column
+        notation.append(8 - endPosition.getRow() + "");       //add row
+        if(isPawnPromotion) {
+            notation.append("=");
+            notation.append(promotedPiece.getNotationLetter());
+        }
+
+        if (isCheckmate)
+            notation.append("++");
+        else if (isCheck)
+            notation.append("+");
+
+        return notation.toString();
+    }
+
+    public String getSymbolicAlgebraicNotation() {
+        StringBuilder notation = new StringBuilder();
+
         notation.append(piece.getNotationSymbol());         //add piece type
         if (isCaptureMove())                                //add capture notation
             notation.append("x");
@@ -128,7 +149,7 @@ public class Move {
         notation.append(8 - endPosition.getRow() + "");       //add row
         if(isPawnPromotion) {
             notation.append("=");
-            notation.append(promotedPiece.getNotationSymbol());
+            notation.append(promotedPiece.getNotationLetter());
         }
 
         if (isCheckmate)

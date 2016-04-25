@@ -26,7 +26,14 @@ public class King extends ChessPiece  {
     }
 
     @Override
-    public String getNotationSymbol() {
+    public String getNotationLetter() {
         return "K";
     }
+
+    @Override
+    public String getNotationSymbol(){
+        int add = getPieceColor() == PieceColor.BLACK ? 6: 0;
+        return (char)(0x2654 + add) + "";
+    }
+
 }

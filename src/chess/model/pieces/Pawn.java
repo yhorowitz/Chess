@@ -26,9 +26,16 @@ public class Pawn extends ChessPiece  {
     }
 
     @Override
-    public String getNotationSymbol() {
+    public String getNotationLetter() {
         return "";
     }
+
+    @Override
+    public String getNotationSymbol(){
+        int add = getPieceColor() == PieceColor.BLACK ? 6: 0;
+        return (char)(0x2659 + add) + "";
+    }
+
 
     /**
      * Checks if this piece is eligible to have the En Passant move used against it

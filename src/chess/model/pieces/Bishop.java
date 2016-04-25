@@ -25,7 +25,13 @@ public class Bishop extends ChessPiece {
     }
 
     @Override
-    public String getNotationSymbol() {
+    public String getNotationLetter() {
         return "B";
+    }
+
+    @Override
+    public String getNotationSymbol(){
+        int add = getPieceColor() == PieceColor.BLACK ? 6: 0;
+        return (char)(0x2657 + add) + "";
     }
 }

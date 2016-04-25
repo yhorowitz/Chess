@@ -26,7 +26,13 @@ public class Queen extends ChessPiece  {
     }
 
     @Override
-    public String getNotationSymbol() {
+    public String getNotationLetter() {
         return "Q";
+    }
+
+    @Override
+    public String getNotationSymbol(){
+        int add = getPieceColor() == PieceColor.BLACK ? 6: 0;
+        return (char)(0x2655 + add) + "";
     }
 }
