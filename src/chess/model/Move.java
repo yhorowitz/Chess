@@ -32,6 +32,7 @@ public class Move {
     public boolean isCheck() {
         return isCheck;
     }
+
     public boolean isCheckmate() {
         return isCheckmate;
     }
@@ -141,13 +142,13 @@ public class Move {
     public String getDetailedDescription() {
         StringBuilder notation = new StringBuilder(100);
 
-        String movingPieceColor = piece.getPieceColor().toString().toLowerCase().equals("white") ? "White" : "Black";
+        String movingPieceColor = piece.getPieceColor().toString().equalsIgnoreCase("white") ? "White" : "Black";
 
         notation.append(movingPieceColor + " " + piece.getClass().getSimpleName());
         notation.append(" moved from " + ((char)(startPosition.getCol() + 97)) + (8 - startPosition.getRow()));
         notation.append( " to " + ((char)(endPosition.getCol() + 97)) + (8 - endPosition.getRow()));
         if (isCaptureMove()) {
-            String capturedPieceColor = capturedPiece.getPieceColor().toString().equals("White") ? "White" : "Black";
+            String capturedPieceColor = capturedPiece.getPieceColor().toString().equalsIgnoreCase("White") ? "White" : "Black";
 
             notation.append(" capturing " + capturedPieceColor + " " + capturedPiece.getClass().getSimpleName());
             if(!endPosition.equals(capturePosition)) {
