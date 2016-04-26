@@ -19,6 +19,7 @@ public class Move {
 
     private boolean isCheck = false;
     private boolean isCheckmate = false;
+    private boolean isStalemate = false;
 
     private boolean isPawnPromotion = false;
     private ChessPiece promotedPiece;
@@ -110,6 +111,10 @@ public class Move {
         setPromotedPiece(promotedPiece);
     }
 
+    public void setAsStalemate() {
+        this.isStalemate = true;
+    }
+
     private void setPromotedPiece(ChessPiece piece) {
         this.promotedPiece = piece;
     }
@@ -122,8 +127,11 @@ public class Move {
         StringBuilder notation = new StringBuilder();
 
         notation.append(piece.getNotationLetter());         //add piece type
-        if (isCaptureMove())                                //add capture notation
+        if (isCaptureMove())  {                             //add capture notation
+            if (piece.getClass() == Pawn.class)
+                notation.append((char)(startPosition.getCol() + 97));
             notation.append("x");
+        }
         notation.append((char)(endPosition.getCol() + 97));   //add column
         notation.append(8 - endPosition.getRow() + "");       //add row
         if(isPawnPromotion) {
@@ -132,7 +140,7 @@ public class Move {
         }
 
         if (isCheckmate)
-            notation.append("++");
+            notation.append("#");
         else if (isCheck)
             notation.append("+");
 
@@ -143,8 +151,11 @@ public class Move {
         StringBuilder notation = new StringBuilder();
 
         notation.append(piece.getNotationSymbol());         //add piece type
-        if (isCaptureMove())                                //add capture notation
+        if (isCaptureMove())  {                             //add capture notation
+            if (piece.getClass() == Pawn.class)
+                notation.append((char)(piece.getPosition().getCol() + 97));
             notation.append("x");
+        }
         notation.append((char)(endPosition.getCol() + 97));   //add column
         notation.append(8 - endPosition.getRow() + "");       //add row
         if(isPawnPromotion) {
@@ -153,7 +164,7 @@ public class Move {
         }
 
         if (isCheckmate)
-            notation.append("++");
+            notation.append("#");
         else if (isCheck)
             notation.append("+");
 
