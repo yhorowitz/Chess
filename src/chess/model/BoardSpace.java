@@ -32,4 +32,8 @@ public class BoardSpace {
         return this.piece != null;
     }
 
+    public boolean isEmpty() {
+        return !isOccupied();
+    }
+
 }
