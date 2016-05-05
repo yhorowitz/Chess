@@ -13,7 +13,6 @@ import java.util.List;
 
 public class Pawn extends ChessPiece  {
 
-    private boolean moved = false;
     private boolean eligibleForEnPassant = false;
 
     public Pawn(PieceColor pieceColor) {
@@ -50,14 +49,6 @@ public class Pawn extends ChessPiece  {
         this.eligibleForEnPassant = eligible;
     }
 
-    /**
-     * Checks if the pawn has moved yet. Needed to know if it can move 1 space or 2
-     * @return
-     */
-    public boolean hasMoved() {
-        return moved;
-    }
-
     @Override
     public void moveTo(Position position) {
 
@@ -66,7 +57,6 @@ public class Pawn extends ChessPiece  {
             setEligibleForEnPassant(true);
 
         super.moveTo(position);
-        this.moved = true;
     }
 
     /**

@@ -14,6 +14,7 @@ public abstract class ChessPiece {
 
     private PieceColor pieceColor;
     private Position position;
+    private boolean hasMoved = false;
 
     public PieceColor getPieceColor() {
         return this.pieceColor;
@@ -37,6 +38,11 @@ public abstract class ChessPiece {
      */
     public void moveTo(Position position) {
         setPosition(position);
+        this.hasMoved = true;
+    }
+
+    public boolean hasMoved() {
+        return hasMoved;
     }
 
     /**
