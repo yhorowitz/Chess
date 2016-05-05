@@ -24,6 +24,9 @@ public class Move {
     private boolean isPawnPromotion = false;
     private ChessPiece promotedPiece;
 
+    private boolean isKingSideCastle = false;
+    private boolean isQueenSideCastle = false;
+
     public Move(ChessPiece piece, Position start, Position end) {
         setPiece(piece);
         setStartPosition(start);
@@ -121,6 +124,14 @@ public class Move {
 
     public ChessPiece getPromotedPiece() {
         return this.promotedPiece;
+    }
+
+    public void setAsKingSideCastle(){
+        isKingSideCastle = true;
+    }
+
+    public void setAsQueenSideCastle(){
+        isQueenSideCastle = true;
     }
 
     public String getAlgebraicNotation() {
