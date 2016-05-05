@@ -80,6 +80,7 @@ public class BoardController {
         addEventHandlerToMenuExitItem();
         addEventHandlerToToggleHistoryVisibilityItem();
         addEventHandlerToToggleGraveyardVisibilityItem();
+        addEventHandlerToInvertBoardItem();
 
     }
 
@@ -113,6 +114,17 @@ public class BoardController {
             @Override
             public void handle(ActionEvent event) {
                 exitApplication();
+            }
+        });
+    }
+
+    private void addEventHandlerToInvertBoardItem() {
+        gameUI.getInvertBoardItem().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                deselectAllBoardPositions();
+                removeHighlightFromAllBoardPositions();
+                gameUI.invertBoard(game);
             }
         });
     }

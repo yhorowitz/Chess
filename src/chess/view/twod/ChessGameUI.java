@@ -35,6 +35,7 @@ public class ChessGameUI extends BorderPane {
     private MenuItem exitItem = new MenuItem("Exit");
     private MenuItem toggleGameHistoryVisibility= new MenuItem("Hide Game History");
     private MenuItem toggleGraveyardVisibility= new MenuItem("Hide Graveyards");
+    private MenuItem invertBoard= new MenuItem("Invert Board");
 
     public ChessGameUI() {
         gameBoard.getStyleClass().add("gameBoard");
@@ -57,9 +58,11 @@ public class ChessGameUI extends BorderPane {
         exitItem.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN));
         toggleGameHistoryVisibility.setAccelerator(new KeyCodeCombination(KeyCode.H, KeyCombination.CONTROL_DOWN));
         toggleGraveyardVisibility.setAccelerator(new KeyCodeCombination(KeyCode.G, KeyCombination.CONTROL_DOWN));
+        invertBoard.setAccelerator(new KeyCodeCombination(KeyCode.I, KeyCombination.CONTROL_DOWN));
         systemMenu.getItems().add(exitItem);
         optionsMenu.getItems().add(toggleGameHistoryVisibility);
         optionsMenu.getItems().add(toggleGraveyardVisibility);
+        optionsMenu.getItems().add(invertBoard);
         menuBar.getMenus().add(systemMenu);
         menuBar.getMenus().add(optionsMenu);
 
@@ -125,6 +128,10 @@ public class ChessGameUI extends BorderPane {
         toggleGraveyardVisibility.setText("Show Graveyards");
     }
 
+    public void invertBoard(ChessGame game) {
+        this.gameBoard.invertBoard(game);
+    }
+
     public MenuItem getExitMenuItem() {
         return this.exitItem;
     }
@@ -135,6 +142,10 @@ public class ChessGameUI extends BorderPane {
 
     public MenuItem getToggleGraveyardItem() {
         return toggleGraveyardVisibility;
+    }
+
+    public MenuItem getInvertBoardItem() {
+        return invertBoard;
     }
 
     public boolean gameHistoryIsVisible() {

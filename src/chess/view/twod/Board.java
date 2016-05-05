@@ -7,7 +7,7 @@ import javafx.scene.layout.*;
 public class Board extends TilePane {
 
     private BoardPosition[][] grid;
-    
+
     public Board() {
         initBoard();
         update(new ChessGame());
@@ -29,7 +29,14 @@ public class Board extends TilePane {
         if (row < 0 || row > 7 || column < 0 || column > 7)
             return null;
 
-        return grid[row][column];
+        for (BoardPosition[] boardRow : grid) {
+            for(BoardPosition pos : boardRow) {
+                if (pos.getPosition().equals(position))
+                    return pos;
+            }
+        }
+
+        return null;
     }
 
     public void initBoard(){
@@ -49,6 +56,20 @@ public class Board extends TilePane {
 
             }
         }
+
+    }
+
+    public void invertBoard(ChessGame game) {
+
+        //invert each position
+        for (int row = 0; row < grid.length; row++) {
+            for ( int col = 0; col < grid[row].length; col++) {
+                grid[row][col].invertPosition();
+            }
+        }
+
+        //updateGame
+        update(game);
 
     }
 

@@ -25,6 +25,13 @@ public class BoardPosition extends Button {
         this.position = position;
     }
 
+    public void invertPosition() {
+        int currRow = this.getPosition().getRow();
+        int currCol = this.getPosition().getCol();
+
+        this.setPosition(new Position(7 - currRow, 7 - currCol));
+    }
+
     public Position getPosition() {
         return this.position;
     }
