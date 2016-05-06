@@ -32,10 +32,10 @@ public class King extends ChessPiece  {
         //check all spaces around the king
         BoardSpace upperLeft = game.getBoardSpace(new Position(currRow - 1, currCol - 1));
         BoardSpace upper = game.getBoardSpace(new Position(currRow - 1, currCol));
-        BoardSpace upperRight = game.getBoardSpace(new Position(currRow + 1, currCol +1));
+        BoardSpace upperRight = game.getBoardSpace(new Position(currRow - 1, currCol + 1));
         BoardSpace left = game.getBoardSpace(new Position(currRow, currCol - 1));
         BoardSpace right = game.getBoardSpace(new Position(currRow, currCol + 1));
-        BoardSpace bottomLeft = game.getBoardSpace(new Position(currRow - 1, currCol + 1));
+        BoardSpace bottomLeft = game.getBoardSpace(new Position(currRow + 1, currCol - 1));
         BoardSpace bottom = game.getBoardSpace(new Position(currRow + 1, currCol));
         BoardSpace bottomRight = game.getBoardSpace(new Position(currRow + 1, currCol + 1));
 
