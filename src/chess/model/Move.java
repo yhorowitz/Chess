@@ -134,6 +134,14 @@ public class Move {
         isQueenSideCastle = true;
     }
 
+    public boolean isKingSideCastle(){
+        return isKingSideCastle;
+    }
+
+    public boolean isQueenSideCastle() {
+        return isQueenSideCastle;
+    }
+
     public String getAlgebraicNotation() {
         StringBuilder notation = new StringBuilder();
 
@@ -154,6 +162,12 @@ public class Move {
             notation.append("#");
         else if (isCheck)
             notation.append("+");
+
+        //if it is a castling move, overwrite the notation with castling notation
+        if (isKingSideCastle)
+            notation = new StringBuilder("O-O");
+        else if (isQueenSideCastle)
+            notation = new StringBuilder("O-O-O");
 
         return notation.toString();
     }
@@ -203,6 +217,11 @@ public class Move {
             notation.append(" promoting into a ");
             notation.append(promotedPiece.getClass().getSimpleName());
         }
+
+        if (isKingSideCastle)
+            notation.append(" castling on the King side");
+        else if (isQueenSideCastle)
+            notation.append(" castling on the Queen side");
 
         if (isCheckmate) {
             String checkMatedColor = movingPieceColor.equals("White") ? "Black" : "White";

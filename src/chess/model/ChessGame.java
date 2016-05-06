@@ -188,20 +188,24 @@ public class ChessGame {
         getBoardSpace(to).setPiece(piece);
         piece.moveTo(to);
 
-        //check if castling, if yes move rook
+          //check if castling, if yes move rook
         if (isKingSideCastling(getBoardSpace(to).getPiece(), from, to)) {
             Rook rookToMove = (Rook) getBoardSpace(new Position(to.getRow(), to.getCol() + 1)).getPiece();
 
             getBoardSpace(new Position(to.getRow(), to.getCol() + 1)).setPiece(null);
             getBoardSpace(new Position(to.getRow(), to.getCol() - 1)).setPiece(rookToMove);
             rookToMove.moveTo(new Position(to.getRow(), to.getCol() - 1));
+
+            currentMove.setAsKingSideCastle();
         }
         else if (isQueenSideCastling(getBoardSpace(to).getPiece(), from, to)) {
-            Rook rookToMove = (Rook) getBoardSpace(new Position(to.getRow(), to.getCol() - 4)).getPiece();
+            Rook rookToMove = (Rook) getBoardSpace(new Position(to.getRow(), to.getCol() - 1)).getPiece();
 
             getBoardSpace(new Position(to.getRow(), to.getCol() - 1)).setPiece(null);
             getBoardSpace(new Position(to.getRow(), to.getCol() + 1)).setPiece(rookToMove);
             rookToMove.moveTo(new Position(to.getRow(), to.getCol() + 1));
+
+            currentMove.setAsQueenSideCastle();
         }
 
         //check if pawn gets promoted
@@ -253,6 +257,23 @@ public class ChessGame {
         getBoardSpace(to).setPiece(piece);
         piece.moveTo(to);
 
+        //check if castling, if yes move rook
+        if (move.isQueenSideCastle()) {
+            Rook rookToMove = (Rook) getBoardSpace(new Position(to.getRow(), to.getCol() + 1)).getPiece();
+
+            getBoardSpace(new Position(to.getRow(), to.getCol() + 1)).setPiece(null);
+            getBoardSpace(new Position(to.getRow(), to.getCol() - 1)).setPiece(rookToMove);
+            rookToMove.moveTo(new Position(to.getRow(), to.getCol() - 1));
+        }
+        else if (move.isQueenSideCastle()) {
+            Rook rookToMove = (Rook) getBoardSpace(new Position(to.getRow(), to.getCol() - 1)).getPiece();
+
+            getBoardSpace(new Position(to.getRow(), to.getCol() - 1)).setPiece(null);
+            getBoardSpace(new Position(to.getRow(), to.getCol() + 1)).setPiece(rookToMove);
+            rookToMove.moveTo(new Position(to.getRow(), to.getCol() + 1));
+        }
+
+
         //check if pawn gets promoted
         if (piece.getClass() == Pawn.class && ((Pawn)piece).deservesPromotion()){
             PlayerPieceSet pieceSet = piece.getPieceColor() == PieceColor.BLACK ? blackPieces : whitePieces;
@@ -297,6 +318,22 @@ public class ChessGame {
         getBoardSpace(from).setPiece(null);
         getBoardSpace(to).setPiece(piece);
         piece.moveTo(to);
+
+        //check if castling, if yes move rook
+        if (isKingSideCastling(getBoardSpace(to).getPiece(), from, to)) {
+            Rook rookToMove = (Rook) getBoardSpace(new Position(to.getRow(), to.getCol() + 1)).getPiece();
+
+            getBoardSpace(new Position(to.getRow(), to.getCol() + 1)).setPiece(null);
+            getBoardSpace(new Position(to.getRow(), to.getCol() - 1)).setPiece(rookToMove);
+            rookToMove.moveTo(new Position(to.getRow(), to.getCol() - 1));
+        }
+        else if (isQueenSideCastling(getBoardSpace(to).getPiece(), from, to)) {
+            Rook rookToMove = (Rook) getBoardSpace(new Position(to.getRow(), to.getCol() - 1)).getPiece();
+
+            getBoardSpace(new Position(to.getRow(), to.getCol() - 1)).setPiece(null);
+            getBoardSpace(new Position(to.getRow(), to.getCol() + 1)).setPiece(rookToMove);
+            rookToMove.moveTo(new Position(to.getRow(), to.getCol() + 1));
+        }
 
         //we dont care about pawn promotion?
 
