@@ -258,7 +258,7 @@ public class ChessGame {
         piece.moveTo(to);
 
         //check if castling, if yes move rook
-        if (move.isQueenSideCastle()) {
+        if (move.isKingSideCastle()) {
             Rook rookToMove = (Rook) getBoardSpace(new Position(to.getRow(), to.getCol() + 1)).getPiece();
 
             getBoardSpace(new Position(to.getRow(), to.getCol() + 1)).setPiece(null);
@@ -450,7 +450,6 @@ public class ChessGame {
         else {
             return false;
         }
-        System.out.println("White is checkmated");
 
         return true;
     }
@@ -467,7 +466,7 @@ public class ChessGame {
         else {
             return false;
         }
-        System.out.println("Black is checkmated");
+
         return true;
     }
 
