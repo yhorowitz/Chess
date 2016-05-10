@@ -21,7 +21,60 @@ public class Bishop extends ChessPiece {
 
     @Override
     public List<Position> getLegalMoves(ChessGame game, boolean removeMovesThatCauseCheck) {
-        return new ArrayList<>();
+        List<Position> legalMoves = new ArrayList<>();
+    	int curCol;
+    	
+    	//add legal moves up and right
+    	curCol = 1;
+    	for (int i = this.getPosition().getRow() - 1; i > 0 && curCol < 8; i--) {
+    		Position posToLookAt = new Position(i, this.getPosition().getCol() + curCol);
+    		BoardSpace spaceToLookAt = game.getBoardSpace(posToLookAt);
+    		
+    		if (spaceToLookAt == null){
+    			break;
+    		}
+    		if (spaceToLookAt.isEmpty()) {
+    			legalMoves.add(posToLookAt);
+    		}
+    		else if (spaceToLookAt.getPiece().getPieceColor() != this.getPieceColor()) {
+    			legalMoves.add(posToLookAt);
+    			break;
+    		}
+    		else {
+    			break;
+    		}
+    		
+    		curCol++;
+    	}
+    	
+    	//add legal moves up and left
+    	curCol = 1;
+    	for (int i = this.getPosition().getRow() - 1; i > 0 && curCol < 8; i--) {
+    		Position posToLookAt = new Position(i, this.getPosition().getCol() - curCol);
+    		BoardSpace spaceToLookAt = game.getBoardSpace(posToLookAt);
+    		
+    		if (spaceToLookAt == null){
+    			break;
+    		}
+    		if (spaceToLookAt.isEmpty()) {
+    			legalMoves.add(posToLookAt);
+    		}
+    		else if (spaceToLookAt.getPiece().getPieceColor() != this.getPieceColor()) {
+    			legalMoves.add(posToLookAt);
+    			break;
+    		}
+    		else {
+    			break;
+    		}
+    		
+    		curCol++;
+    	}
+    	
+    	
+    	
+    	
+    	
+    	return legalMoves;
     }
 
     @Override
