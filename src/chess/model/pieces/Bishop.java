@@ -70,7 +70,51 @@ public class Bishop extends ChessPiece {
     		curCol++;
     	}
     	
+    	//add legal moves down and right
+    	curCol = 1;
+    	for (int i = this.getPosition().getRow() + 1; i < 8 && curCol < 8; i++) {
+    		Position posToLookAt = new Position(i, this.getPosition().getCol() + curCol);
+    		BoardSpace spaceToLookAt = game.getBoardSpace(posToLookAt);
+    		
+    		if (spaceToLookAt == null){
+    			break;
+    		}
+    		if (spaceToLookAt.isEmpty()) {
+    			legalMoves.add(posToLookAt);
+    		}
+    		else if (spaceToLookAt.getPiece().getPieceColor() != this.getPieceColor()) {
+    			legalMoves.add(posToLookAt);
+    			break;
+    		}
+    		else {
+    			break;
+    		}
+    		
+    		curCol++;
+    	}
     	
+    	//add legal moves down and left
+    	curCol = 1;
+    	for (int i = this.getPosition().getRow() + 1; i < 8 && curCol < 8; i++) {
+    		Position posToLookAt = new Position(i, this.getPosition().getCol() - curCol);
+    		BoardSpace spaceToLookAt = game.getBoardSpace(posToLookAt);
+    		
+    		if (spaceToLookAt == null){
+    			break;
+    		}
+    		if (spaceToLookAt.isEmpty()) {
+    			legalMoves.add(posToLookAt);
+    		}
+    		else if (spaceToLookAt.getPiece().getPieceColor() != this.getPieceColor()) {
+    			legalMoves.add(posToLookAt);
+    			break;
+    		}
+    		else {
+    			break;
+    		}
+    		
+    		curCol++;
+    	}    	
     	
     	
     	
