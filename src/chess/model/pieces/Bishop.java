@@ -116,7 +116,8 @@ public class Bishop extends ChessPiece {
     		curCol++;
     	}    	
     	
-    	
+    	if (removeMovesThatCauseCheck)
+    		removeMovesThatCauseCheck(game, legalMoves);
     	
     	return legalMoves;
     }
