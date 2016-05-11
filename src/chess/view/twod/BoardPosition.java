@@ -77,7 +77,13 @@ public class BoardPosition extends Button {
                     pieceColor + "/" +
                     pieceType + ".png"));
 
-            this.setGraphic(new ImageView(image));
+            ImageView imgView = new ImageView();
+            imgView.setPreserveRatio(true);
+            imgView.setFitWidth(this.getWidth() * .7);
+            imgView.setFitHeight(this.getHeight() * .7);
+            imgView.setImage(image);
+
+            this.setGraphic(imgView);
         }
 
     }
