@@ -26,7 +26,7 @@ public class Bishop extends ChessPiece {
     	
     	//add legal moves up and right
     	curCol = 1;
-    	for (int i = this.getPosition().getRow() - 1; i > 0 && curCol < 8; i--) {
+    	for (int i = this.getPosition().getRow() - 1; i >= 0 && curCol < 8; i--) {
     		Position posToLookAt = new Position(i, this.getPosition().getCol() + curCol);
     		BoardSpace spaceToLookAt = game.getBoardSpace(posToLookAt);
     		
@@ -49,7 +49,7 @@ public class Bishop extends ChessPiece {
     	
     	//add legal moves up and left
     	curCol = 1;
-    	for (int i = this.getPosition().getRow() - 1; i > 0 && curCol < 8; i--) {
+    	for (int i = this.getPosition().getRow() - 1; i >= 0 && curCol < 8; i--) {
     		Position posToLookAt = new Position(i, this.getPosition().getCol() - curCol);
     		BoardSpace spaceToLookAt = game.getBoardSpace(posToLookAt);
     		
