@@ -1,5 +1,6 @@
 package chess.model.pieces;
 
+import chess.model.BoardSpace;
 import chess.model.ChessGame;
 import chess.model.PieceColor;
 import chess.model.Position;
