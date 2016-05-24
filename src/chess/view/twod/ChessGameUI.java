@@ -44,7 +44,7 @@ public class ChessGameUI extends BorderPane {
 
         graveyardPane.setSpacing(5);
         Label decorativeSwirl = new Label();
-        Image image = new Image(getClass().getResourceAsStream("../../res/images/decorative_swirl.png"));
+        Image image = new Image(getClass().getResourceAsStream("/images/decorative_swirl.png"));
         decorativeSwirl.setGraphic(new ImageView(image));
         graveyardPane.getChildren().add(blackGraveyard);
         graveyardPane.getChildren().add(decorativeSwirl);

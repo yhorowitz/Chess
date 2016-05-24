@@ -8,8 +8,6 @@ import javafx.stage.Stage;
 
 public class Launcher extends Application {
 
-    public static Stage mainStage;
-
     public static void main(String[] args) {
         Application.launch(args);
     }
@@ -26,7 +24,7 @@ public class Launcher extends Application {
 
         BoardController boardController = new BoardController(primaryStage, gameUI, game);
 
-        scene.getStylesheets().add(Launcher.class.getResource("../../view/twod/Board.css").toExternalForm());
+        scene.getStylesheets().add(Launcher.class.getResource("/chess/view/twod/Board.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.sizeToScene();

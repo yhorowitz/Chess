@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
+import java.net.URL;
 import java.util.List;
 
 /**
@@ -138,14 +139,20 @@ public class Graveyard extends GridPane{
     private <T extends ChessPiece> Image getFilledImageForPieceType(Class<T> pieceType) {
         String color = this.color.toString().toLowerCase();
         String type = pieceType.getSimpleName().toLowerCase();
-        Image image = new Image(getClass().getResourceAsStream("../../res/images/pieces/captured/" + color + "/" + type + ".png"));
+        Image image = new Image(getClass().getResourceAsStream("/images/pieces/captured/" + color + "/" + type + ".png"));
         return image;
     }
 
     private <T extends ChessPiece> Image getEmptyImageForPieceType(Class<T> pieceType) {
+
+
         String color = this.color.toString().toLowerCase();
         String type = pieceType.getSimpleName().toLowerCase();
-        Image image = new Image(getClass().getResourceAsStream("../../res/images/pieces/empty/" + color + "/" + type + ".png"));
+        //URL location = Graveyard.class.getProtectionDomain().getCodeSource().getLocation();
+        //System.out.println(location.getFile());
+        //System.out.println(getClass().getResourceAsStream("../../chess/res/images/pieces/empty/" + color + "/" + type + ".png"));
+
+        Image image = new Image(getClass().getResourceAsStream("/images/pieces/empty/" + color + "/" + type + ".png"));
         return image;
     }
 
